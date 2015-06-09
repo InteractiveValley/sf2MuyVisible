@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="richpolis_backend.usuario.class">InteractiveValley\BackendBundle\Entity\Usuario</parameter>
+        <parameter key="richpolis_backend.util_rpsstms.class">InteractiveValley\BackendBundle\Utils\UtilsRpsStms</parameter>
+        <parameter key="richpolis.isactive.extension.class">InteractiveValley\BackendBundle\Twig\IsActiveExtension</parameter>
+    </parameters>
+    
+    <services>
+        <service id="rpsstms" class="%richpolis_backend.util_rpsstms.class%">
+        </service>
+        
+        <!-- "isActive" twig.extension -->
+        <service id="richpolis.twig.is_active_extension" class="%richpolis.isactive.extension.class%">
+            <tag name="twig.extension" />
+        </service>
+
+    </services>
+    
+</container>

@@ -1,0 +1,125 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Administrador{% endblock %}
+
+{% block stylesheets %}
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{{asset('css/bootstrap.css')}}">
+    <link rel="stylesheet" href="{{asset('css/font-awesome.css')}}">
+    <link rel="stylesheet" href="{{asset('css/style.css')}}">
+    <link rel="stylesheet" href="{{asset('css/bootstrap-responsive.html')}}">
+    <link rel="stylesheet" href="{{asset('css/admin.css')}}">
+{% endblock %}
+
+{% block body %}
+
+    {% set route = app.request.get('_route') %}
+
+    {% set publicaciones = "" %}
+    {% set usuarios = "" %}
+
+    {% if route == "publicaciones" %}
+        {% set publicaciones = "class=open" %}
+    {% elseif route == "usuarios" %}
+        {% set usuarios = "class=open" %}    
+    {% endif %}
+
+    <header>
+        <div class="navbar navbar-fixed-top bs-docs-nav" role="banner">
+            <div class="container">
+                <!-- Menu button for smallar screens -->
+                <div class="navbar-header">
+                    <button class="navbar-toggle btn-navbar" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+                        <span>Menu</span>
+                    </button>
+                    <a href="#" class="pull-left menubutton hidden-xs">
+                        <i class="fa fa-bars"></i>
+                    </a>
+                    <!-- Site name for smallar screens -->
+                    <a href="{{path('backend_homepage')}}" class="navbar-brand">
+                        <span class="bold">Dashboard</span>
+                    </a>
+                </div>
+
+                <!-- Navigation starts -->
+                <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">         
+
+                    <!-- Links -->
+                    <ul class="nav navbar-nav pull-right">
+                        <li class="dropdown pull-right user-data">            
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                <img src="/apple-touch-icon.png" width="25" height="25"/>
+                                {{app.user.name|default('anonimo')}} <b class="caret"></b>
+                            </a>
+                            <!-- Dropdown menu -->
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="{{path('backend_logout')}}">
+                                        <i class="fa fa-key"></i> Salir
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <!-- Main content starts -->
+    <div class="content">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-dropdown">
+                <a href="#">Navegador</a>
+            </div>
+            <!--- Sidebar navigation -->
+            <!-- If the main navigation has sub navigation, then add the class "has_sub" to "li" of main navigation. -->
+            <ul id="nav">
+                <!-- Main menu with font awesome icon -->
+                <li>
+                    <a {{publicaciones}}  href="{{path('publicaciones')}}">
+                        <i class="fa fa-th-large"></i> <span>Publicaciones</span>
+                    </a>
+                </li>
+                <li>
+                    <a {{usuarios}} href="{{path('usuarios')}}">
+                        <i class="fa fa-user"></i> <span>Usuarios</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- Sidebar ends -->
+        {% block mainbar %} {% endblock %}
+    </div>
+    <!-- Content ends -->
+    <!-- Footer starts -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Copyright info -->
+                    <!--p class="copy">Copyright &copy; 2012 | <a href="#">Your Site</a> </p-->
+                    <p></p>
+                </div>
+            </div>
+        </div>
+    </footer> 	
+    <!-- Footer ends -->
+    <!-- Scroll to top -->
+    <span class="totop"><a href="#"><i class="fa fa-chevron-up"></i></a></span>
+    <div class="loader"></div>
+{% endblock %}
+
+{% block javascripts %}
+    <!-- JS -->
+    <script src="{{asset('js/jquery.js')}}"></script>
+    <!--script src="{{asset('js/underscore-min.js')}}"></script-->
+    <!--script src="{{asset('js/backbone-min.js')}}"></script-->
+    <!--script src="{{asset('js/swig.js')}}"></script-->
+    <script src="{{asset('js/bootstrap.js')}}"></script>
+    <script>
+        $(document).ready(function () {
+            $(".loader").fadeOut();
+        });
+    </script>
+{% endblock %}

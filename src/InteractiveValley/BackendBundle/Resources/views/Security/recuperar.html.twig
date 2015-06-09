@@ -1,0 +1,78 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+
+{% block title %}Recuperar contraseña{% endblock %}
+
+{% if error is not defined %}
+    {% set error = false %}
+{% endif %} 
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %} 
+
+{% block body %}
+    <!-- Form area -->
+    <div class="admin-form">
+        <div class="container">
+            <div class="text-center">
+                <a href="{{path('backend_homepage')}}" style="background-color: #F4F4F4;padding: 43px 30px;">
+                    <img src="{{ asset('images/logo.png') }}" style="max-height: 100px;"/>
+                </a>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Widget starts -->
+                    <div class="widget">
+                        <!-- Widget head -->
+                        <div class="widget-head">
+                            <i class="icon-lock"></i> Recuperar contraseña
+                        </div>
+                        <div class="widget-content">
+                            <div class="padd contenido-formulario">
+                                <!-- Login form -->
+                                <form class="form-horizontal" action='{{ path('backend_recuperar') }}'  method="post">
+                                    <!-- Email -->
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-3" for="email">Email</label>
+                                        <div class="col-lg-9">
+                                            <input type="email" id="email" name="email" value="" placeholder="Email">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-9 col-lg-offset-3">
+                                        <button type="button" class="btn btn-primary" onclick="history.back(1);">Regresar</button>
+                                        <button type="submit" class="btn btn-danger">Recuperar contraseña</button>
+                                    </div>
+                                    <br />
+                                </form>
+                            </div>
+                        </div>
+                        <div class="widget-foot">
+                            <!--Not Registred? <a href="#">Register here</a>-->
+                            {% if error %}
+                                <div>{{ error.message }}</div>
+                            {% else %}
+                                <br/>
+                            {% endif %}
+                        </div>
+                    </div>  
+                </div>
+            </div>
+        </div> 
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <img src="{{asset('images/interactivevalley.png')}}"/>
+            <!--p class="text-center">Mosaico Real Estate Management | Los Cormoran 102, Lomas de las Águilas, Álvaro Obregón C.P. 01730, México DF |  63 78 99 05</p-->
+        </div>
+    </footer>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function () {
+            $("body").css({'paddingTop': '30px'});
+            $("footer").css({'position': 'fixed', 'bottom': '0px', 'width': '100%'});
+            $(".admin-form").css({'margin': '0px auto'});
+        });
+    </script>
+{% endblock %}   

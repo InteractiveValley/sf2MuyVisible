@@ -1,0 +1,40 @@
+{% extends "FrontendBundle::layout.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <header></header>
+    <!-- particles.js container -->
+    <section id="particles-js">
+      <div class="container">
+        <figure class="logo_par"><img src="img/unnamed.png" alt=""></figure>
+        <nav><a href="#"><span class="flaticon-facebook2"></span></a><a href="#"><span class="flaticon-twitter"></span></a></nav>
+        <p class="text">MUY VISIBLE ES UN EQUIPO DE PROFESIONALES CREATIVOS EN BÚSQUEDA CONSTANTE</br>
+    DE LA CREACIÓN DE LOS MEJORES CONTENIDOS.</p>
+        <div class="advertising"><a href="contacto.html">CONTACTO &amp; ADVERTISING</a></div>
+        <p class="text_2">Ya sea que quieras saludarnos o platicar sobre publicidad, escribenos y nos pondremos en contacto contigo.</p>
+        <section class="formulario">
+          <form action="">
+        <input class="form" type="text" placeholder="Nombre*" required>
+        <input class="form" type="text" placeholder="Email*" required><br><br>
+        <input class="form" type="text" placeholder="Asunto">
+        <input class="form" type="text" placeholder="Teléfono*" required><br><br>
+        <textarea class="form_area" placeholder="Mensaje" rows="7"></textarea>
+        <input class="submit" type="submit" placeholder="ENVIAR">
+        </form>
+        </section>
+        <div class="direction">CIUDAD DE MEXICO | SANTAFE</div>
+      </div>
+    </section>
+    <footer></footer>
+{% endblock %}
+
+{% block javascripts %}
+    <!-- scripts -->
+    <script src="particles.js"></script>
+    <script src="js/app.js"></script>
+    <!-- stats.js -->
+    <script src="js/lib/stats.js"></script>
+{% endblock %}

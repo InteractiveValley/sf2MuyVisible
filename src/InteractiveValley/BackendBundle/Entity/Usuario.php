@@ -1,0 +1,583 @@
+<?php
+
+namespace InteractiveValley\BackendBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
+
+/**
+ * Usuario
+ *
+ * @ORM\Table(name="usuarios")
+ * @ORM\Entity(repositoryClass="InteractiveValley\BackendBundle\Entity\UsuarioRepository")
+ * @ORM\HasLifecycleCallbacks()
+ * @UniqueEntity("email")
+ */
+class Usuario implements UserInterface, \Serializable
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255)
+     * @Assert\NotBlank(message="Ingresa tu nombre")
+     */
+    private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=255)
+     * @Assert\Email(message="Email invalido")
+     */
+    private $email;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="password", type="string", length=255)
+     */
+    private $password;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="salt", type="string", length=255)
+     */
+    private $salt;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="image", type="string", length=255, nullable=true)
+     */
+    private $image;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="type", type="integer")
+     */
+    private $type;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="is_active", type="boolean", nullable=true)
+     */
+    private $isActive;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime", nullable=true)
+     */
+    private $createdAt;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
+     */
+    private $updatedAt;
+
+    /**
+     * @var PublicacionesBundle:Publicacion
+     *
+     * @ORM\OneToMany(targetEntity="InteractiveValley\PublicacionesBundle\Entity\Publicacion",mappedBy="author",cascade={"remove"})
+     * @ORM\OrderBy({"title" = "ASC"})
+     */
+    private $publications;
+    
+    const GROUP_USERS    =   1;
+    const GROUP_ADMIN       =   2;
+    const GROUP_SUPER_ADMIN =   3;
+    
+    public function __toString(){
+        return $this->getName();
+    }
+    
+    public function getStringCompleto(){
+        return $this->getName();
+    }
+    
+    public function getStringTypeGroup(){
+        $arreglo=array(
+            self::GROUP_ADMIN=>'Administrador',
+            self::GROUP_SUPER_ADMIN=>'Superadmin',
+        );
+        return $arreglo[$this->getGrupo()];
+    }
+    
+    static function getArrayTypeGroup($is_super_admin=false){
+        if($is_super_admin){
+            $sTipoGrupo=array(
+                self::GROUP_ADMIN=>'Administrador',
+                self::GROUP_SUPER_ADMIN=>'Superadmin',
+            );
+        }else{
+            $sTipoGrupo=array(
+                self::GROUP_ADMIN=>'Administrador'
+            );
+        }
+        return $sTipoGrupo;
+    }
+    
+    static function getPreferedTypeGroup(){
+        return array(self::GROUP_ADMIN);
+    }
+
+    
+    public function __construct()
+    {
+        // may not be needed, see section on salt below
+        $this->salt = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
+        $this->isActive = true;
+        $this->type = Usuario::GROUP_ADMIN;
+    }
+    
+    /*
+     * Timestable
+     */
+    
+    /**
+     ** @ORM\PrePersist
+     */
+    public function setCreatedAtValue()
+    {
+        if(!$this->getCreatedAt())
+        {
+          $this->createdAt = new \DateTime();
+        }
+        if(!$this->getUpdatedAt())
+        {
+          $this->updatedAt = new \DateTime();
+        }
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function setUpdatedAtValue()
+    {
+        $this->updatedAt = new \DateTime();
+    }
+    
+    public function eraseCredentials()
+    {
+    }
+    
+    public function getRoles() {
+        if ($this->getType() == self::GROUP_USERS) {
+            return array('ROLE_USER', 'ROLE_API');
+        } elseif ($this->getType() == self::GROUP_SUPER_ADMIN) {
+            return array('ROLE_SUPER_ADMIN', 'ROLE_API');
+        } else {
+            return array('ROLE_ADMIN', 'ROLE_API');
+        }
+    }
+    
+    /**
+     * Get username
+     *
+     * @return string | email
+     */
+    public function getUsername()
+    {
+        return $this->email;
+    }
+
+
+    /*** uploads ***/
+    
+    /**
+     * @Assert\File(maxSize="6000000")
+     */
+    private $file;
+
+    /**
+     * Sets file.
+     *
+     * @param UploadedFile $file
+     */
+    public function setFile(UploadedFile $file = null)
+    {
+        $this->file = $file;
+        // check if we have an old image path
+        if (isset($this->image)) {
+            // store the old name to delete after the update
+            $this->temp = $this->image;
+            $this->image = null;
+        } else {
+            $this->image = 'initial';
+        }
+    }
+
+    /**
+     * Get file.
+     *
+     * @return UploadedFile
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+    
+    /**
+    * @ORM\PrePersist
+    * @ORM\PreUpdate
+    */
+    public function preUpload()
+    {
+      if (null !== $this->getFile()) {
+            // do whatever you want to generate a unique name
+            $filename = sha1(uniqid(mt_rand(), true));
+            $this->image = $filename.'.'.$this->getFile()->guessExtension();
+        }
+    }
+
+    /**
+    * @ORM\PostPersist
+    * @ORM\PostUpdate
+    */
+    public function upload()
+    {
+      if (null === $this->getFile()) {
+            return;
+        }
+
+        // if there is an error when moving the file, an exception will
+        // be automatically thrown by move(). This will properly prevent
+        // the entity from being persisted to the database on error
+        $this->getFile()->move($this->getUploadRootDir(), $this->image);
+
+        // check if we have an old image
+        if (isset($this->temp)) {
+            // delete the old image
+            unlink($this->getUploadRootDir().'/'.$this->temp);
+            // clear the temp image path
+            $this->temp = null;
+        }
+        $this->file = null;
+    }
+
+    /**
+    * @ORM\PostRemove
+    */
+    public function removeUpload()
+    {
+      if ($file = $this->getAbsolutePath()) {
+        if(file_exists($file)){
+            unlink($file);
+        }
+      }
+    }
+    
+    protected function getUploadDir()
+    {
+        return '/uploads/usuarios';
+    }
+
+    protected function getUploadRootDir()
+    {
+        return __DIR__.'/../../../../web'.$this->getUploadDir();
+    }
+    
+    public function getWebPath()
+    {
+        return null === $this->image ? null : $this->getUploadDir().'/'.$this->image;
+    }
+    
+    public function getAbsolutePath()
+    {
+        return null === $this->image ? null : $this->getUploadRootDir().'/'.$this->image;
+    }
+    
+    /**
+     * @see \Serializable::serialize()
+     */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->name,
+            $this->email
+        ));
+    }
+
+    /**
+     * @see \Serializable::unserialize()
+     */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->name,
+            $this->email
+        ) = unserialize($serialized);
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return Usuario
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     * @return Usuario
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string 
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set password
+     *
+     * @param string $password
+     * @return Usuario
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Get password
+     *
+     * @return string 
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * Set salt
+     *
+     * @param string $salt
+     * @return Usuario
+     */
+    public function setSalt($salt)
+    {
+        $this->salt = $salt;
+
+        return $this;
+    }
+
+    /**
+     * Get salt
+     *
+     * @return string 
+     */
+    public function getSalt()
+    {
+        return $this->salt;
+    }
+
+    /**
+     * Set image
+     *
+     * @param string $image
+     * @return Usuario
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return string 
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * Set type
+     *
+     * @param integer $type
+     * @return Usuario
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return integer 
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Set isActive
+     *
+     * @param boolean $isActive
+     * @return Usuario
+     */
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * Get isActive
+     *
+     * @return boolean 
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     * @return Usuario
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     * @return Usuario
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime 
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    
+
+    /**
+     * Add publications
+     *
+     * @param \InteractiveValley\PublicacionesBundle\Entity\Publicacion $publications
+     * @return Usuario
+     */
+    public function addPublication(\InteractiveValley\PublicacionesBundle\Entity\Publicacion $publications)
+    {
+        $this->publications[] = $publications;
+
+        return $this;
+    }
+
+    /**
+     * Remove publications
+     *
+     * @param \InteractiveValley\PublicacionesBundle\Entity\Publicacion $publications
+     */
+    public function removePublication(\InteractiveValley\PublicacionesBundle\Entity\Publicacion $publications)
+    {
+        $this->publications->removeElement($publications);
+    }
+
+    /**
+     * Get publications
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPublications()
+    {
+        return $this->publications;
+    }
+}
