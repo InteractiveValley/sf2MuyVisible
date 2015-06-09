@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Muy Visible</title>
+	<link rel="stylesheet" type="text/css" href="css/styles.css">
+	<link rel="stylesheet" type="text/css" href="css/flaticon.css"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+</head>
+<body class="noticias">
+	<header class="head_noticias">
+	   <div class="publicidad_head"><img src="img/banner1.png" alt=""></div>
+	   <figure><a href="index.html"><img src="img/muyvisiblelogo-pequeño.png" alt=""></a></figure>
+	</header>
+	<section>
+	<figure class="img_cabezera"><img src="img/3046722-poster-p-1-the-psychology-of-living-in-skyscrapers.jpg" alt=""></figure>
+	</section>
+	<section class="cuerpo">
+		<section class="central">
+		   <article class="contenido">
+		   	<div class="titulo">
+		   		<h1>Hola soy el título de una nota que tiene el título bastante extenso.</h1>
+		   		<p class="resumen">HOLA SOY EL RESUMEN DE LA NOTA HOLA SOY EL RESUMEN DE LA NOTA HOLA SOY EL RESUMEN DE LA NOTA HOLA SOY EL RESUMEN</p>
+		   		<div class="contador">
+		   			<table>
+		   				<tr class="numero">
+		   				<td>0</td><td>0</td><td>0</td><td>0</td>
+		   				</tr>
+		   				<tr class="comentarios">
+		   				<td>FACEBOOK</td><td>TWEETS</td><td>PLUS</td><td>VIEWS</td>
+		   				</tr>
+		   			</table>
+		   		</div>
+		   	</div>
+		   	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ornare a nunc eget gravida. Maecenas ultrices et massa vel varius. Nullam dictum mi ut turpis interdum bibendum. Aliquam vestibulum, lectus ut luctus condimentum, nisl metus viverra justo, nec ornare orci velit et dui. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam dictum risus ligula, ut aliquet sapien efficitur sed. Aenean ultrices egestas pretium. Sed quis placerat dui. Pellentesque eu mollis tellus.</p>
+		   	<img src="img/3045574-poster-p-1-5-things-ui-ux-designers-can-learn-from-walt-disney.jpg" alt="">
+		   	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ornare a nunc eget gravida. Maecenas ultrices et massa vel varius. Nullam dictum mi ut turpis interdum bibendum. Aliquam vestibulum, lectus ut luctus condimentum, nisl metus viverra justo, nec ornare orci velit et dui. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam dictum risus ligula, ut aliquet sapien efficitur sed. Aenean ultrices egestas pretium. Sed quis placerat dui. Pellentesque eu mollis tellus.</p>
+		   	<img src="img/3045574-poster-p-1-5-things-ui-ux-designers-can-learn-from-walt-disney.jpg" alt="">
+		   	<div class="fecha">Mayo 12,2015 | 8:00 AM</div>
+		   	<div class="sociales">
+		   		<span class="share">COMPARTIR</span><br>
+		   		<a href="#"><div class="facebook"><span class="flaticon-facebook55">FACEBOOK</span></div></a>
+		   		<a href="#"><div class="twitter"><span class="flaticon-twitter1">TWITTER</span></div></a>
+		   		<a href="#"><div class="shares"><span class="flaticon-share14">SHARE</span></div></a>
+		   	</div>
+		   	<div class="comentarios_face">Comentarios Facebook</div>
+		   </article>
+	    </section>
+	    <section class="derecha">
+        <div class="derecha_2">
+	    <div class="publicidad_der"><img style="width:100%" src="img/box.png" alt=""></div>
+	    <div class="sociales_2">
+		   		<span class="share">COMPARTIR</span><br><br>
+		   		<a href="#"><div class="facebook"><span class="flaticon-facebook55">FACEBOOK</span></div></a>
+		   		<a href="#"><div class="twitter"><span class="flaticon-twitter1">TWITTER</span></div></a>
+		   		<a href="#"><div class="shares"><span class="flaticon-share14">SHARE</span></div></a>
+		</div>
+		<div class="sociales_2">
+		   		<span class="share">VINCULO DE PUBLICACION</span><br><br>
+		   		<input type="text" value="url">
+		   		<div class="copy"><a href="#">COPIAR</a></div>
+		   		<a href="#"><div class="mas_notas"><img src="img/lentes.png" alt="">  Ver más NOTAS</div></a>
+		</div>
+        </div>
+	    </section>
+	</section>
+	
+	<footer></footer>
+	<script>
+posicionarMenu();
+
+$(window).scroll(function() {    
+    posicionarMenu();
+});
+
+function posicionarMenu() {
+    var altura_del_header = $('header').outerHeight(true);
+    var altura_del_menu = $('header').outerHeight(true);
+
+    if ($(window).scrollTop() >= 0){
+        $('header').addClass('fixed');
+        $('.img_cabezera').css('margin-top', (altura_del_menu) + 'px');
+    } else {
+        $('header').removeClass('fixed');
+        $('.img_cabezera').css('margin-top', '0');
+    }
+}
+
+</script>
+<script>
+$(function(){
+$(window).scroll(function(){
+if ($(window).scrollTop() > 620)
+{
+$("header").fadeOut();
+}
+else
+{
+$("header").fadeIn();
+}
+});
+});
+</script>
+<script>
+$(function(){
+$(window).scroll(function(){
+if ($(window).scrollTop() > 745)
+{
+$(".derecha_2").addClass('fijo');
+}
+else
+{
+$(".derecha_2").removeClass('fijo');
+}
+});
+});
+</script>
+</body>
+</html>
