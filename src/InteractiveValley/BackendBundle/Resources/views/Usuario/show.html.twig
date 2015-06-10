@@ -25,7 +25,7 @@
                 <span class="divider">/</span>
                 <a href="{{path('usuarios')}}" class="bread-current">Usuarios</a>
                 <span class="divider">/</span>
-                <a href="{{path('usuarios_show',{'id': entity.id})}}" class="bread-current">{{entity.nombre}}</a>
+                <a href="{{path('usuarios_show',{'id': entity.id})}}" class="bread-current">{{entity.name}}</a>
                 {% if is_granted('ROLE_ADMIN') %}
                     <a href="{{path('usuarios_new')}}" class="btn btn-info pull-right" style="color: white; margin-left: 5px;">Crear registro</a>
                 {% endif %}
@@ -45,7 +45,7 @@
                         <div class="col-md-12">
                             <div class="widget">
                                 <div class="widget-head">
-                                    <div class="pull-left">Registro del cliente "{{entity.nombre}}"</div>
+                                    <div class="pull-left">Registro del usuario "{{entity.name}}"</div>
                                     <div class="clearfix"></div>
                                 </div>
 

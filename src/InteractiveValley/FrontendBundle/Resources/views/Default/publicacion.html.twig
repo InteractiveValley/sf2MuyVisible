@@ -1,0 +1,136 @@
+{% extends "FrontendBundle::layout.html.twig" %}
+
+{% set urlAbsolutaFoto = 'http://'
+                ~ app.request.server.get('SERVER_NAME')
+                ~ asset('images/logo.png') %}
+
+{% block redes_sociales %}
+    <meta property="og:url" content="{{url('publicacion',{'slug':publicacion.slug})}}" />
+    <meta property="og:title" content="{{publicacion.title}}" />
+    <meta property="og:image" content="{{urlAbsolutaFoto}}" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="muyvisible.com" />
+    <!--meta property="fb:admins" content="USER_ID1,USER_ID2"/-->
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@MuyVisible">
+    <meta name="twitter:title" content="{{publicacion.title}}">
+    <meta name="twitter:description" content="{{publicacion.resume}}">
+    <meta name="twitter:creator" content="@richpolis">
+    <meta name="twitter:image:src" content="{{urlAbsolutaFoto}}">
+    <meta name="twitter:domain" content="{{url('publicacion',{'slug':publicacion.slug})}}">
+{% endblock %}    
+
+{% block class_body ' class="noticias"' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" media="screen" href="{{asset('css/muyvisible/publicacion.css')}}"/>
+{% endblock %}
+
+{% block body %}
+    <header class="head_noticias">
+        <div class="publicidad_head"><img src="/images/banner1.png" alt=""></div>
+        <figure><a href="{{path('homepage')}}"><img src="/images/muyvisible_mini_logo.png" alt=""></a></figure>
+    </header>
+    <section>
+        <figure class="img_cabezera">
+            <img src="{{publicacion.webPath}}" alt="">
+        </figure>
+    </section>
+    <section class="cuerpo">
+        <section class="central">
+            <article class="contenido">
+                <div class="titulo">
+                    <h1>{{publicacion.title}}</h1>
+                    <p class="resumen">{{publicacion.resume}}</p>
+                    <div class="contador">
+                        <table>
+                            <tr class="numero">
+                                <td class="count-likes">{{publicacion.contLikes}}</td>
+                                <td class="count-tweets">{{publicacion.contTwits}}</td>
+                                <!--td class="count-plus">0</td-->
+                                <td class="count-views">{{publicacion.contViews}}</td>
+                            </tr>
+                            <tr class="comentarios">
+                                <td>FACEBOOK</td>
+                                <td>TWEETS</td>
+                                <!--td>PLUS</td-->
+                                <td>VIEWS</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="contenido-publicacion">
+                    {{ publicacion.description | raw }}
+                </div>
+                <div class="fecha">{{ publicacion.createdAt | translate_date }} | {{ publicacion.createdAt|date("G:i A") }}</div>
+                <div class="sociales">
+                    <span class="share">COMPARTIR</span><br>
+                    <a href="#"><div class="facebook"><span class="flaticon-facebook55">FACEBOOK</span></div></a>
+                    <a href="#"><div class="twitter"><span class="flaticon-twitter1">TWITTER</span></div></a>
+                    <a href="#"><div class="shares"><span class="flaticon-share14">SHARE</span></div></a>
+                </div>
+                <div class="comentarios_face">Comentarios Facebook</div>
+            </article>
+        </section>
+        <section class="derecha">
+            <div class="derecha_2">
+                <div class="publicidad_der"><img style="width:100%" src="/images/box.png" alt=""></div>
+                <div class="sociales_2">
+                    <span class="share">COMPARTIR</span><br><br>
+                    <a href="#"><div class="facebook"><span class="flaticon-facebook55">FACEBOOK</span></div></a>
+                    <a href="#"><div class="twitter"><span class="flaticon-twitter1">TWITTER</span></div></a>
+                    <a href="#"><div class="shares"><span class="flaticon-share14">SHARE</span></div></a>
+                </div>
+                <div class="sociales_2">
+                    <span class="share">VINCULO DE PUBLICACION</span><br><br>
+                    <input type="text" value="{{url('publicacion',{'slug':publicacion.slug})}}">
+                    <div class="copy"><a href="#">COPIAR</a></div>
+                    <a href="#">
+                        <div class="mas_notas">
+                            <img src="/images/lentes.png" alt="">
+                            Ver más NOTAS
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </section>
+
+    <footer></footer>
+    {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(function () {
+            $(window).scroll(function () {
+                if ($(window).scrollTop() > 620){
+                    $("header").fadeOut();
+                }else{
+                    $("header").fadeIn();
+                }
+                if ($(window).scrollTop() > 745){
+                    $(".derecha_2").addClass('fijo');
+                }else{
+                    $(".derecha_2").removeClass('fijo');
+                }
+                posicionarMenu();
+            });
+            posicionarMenu();
+        });
+        function posicionarMenu() {
+            var altura_del_header = $('header').outerHeight(true);
+            var altura_del_menu = $('header').outerHeight(true);
+
+            if ($(window).scrollTop() >= 0){
+                $('header').addClass('fixed');
+                $('.img_cabezera').css('margin-top', (altura_del_menu) + 'px');
+            } else {
+                $('header').removeClass('fixed');
+                $('.img_cabezera').css('margin-top', '0');
+            }
+        }
+    </script>
+{% endblock %}

@@ -49,7 +49,7 @@ class PublicacionController extends Controller
         $form->handleRequest($request);
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $this->
+            $this->setTitleSluggable($entity,true);
             $em->persist($entity);
             $em->flush();
 

@@ -1,0 +1,24 @@
+{% if mensaje is not defined %}
+    {% set mensaje = "" %}
+{% endif %}
+{% if status is not defined %}
+    {% set status = "new" %}
+{% endif %}
+{% if status =='send' %}
+<div class="alert alert-success" style="color: white; font-weight: bold; font-size: 1.2em;">
+    {{ mensaje }}
+</div>
+{% elseif status == 'notsend' %}
+<div class="alert alert-error">
+    {{ mensaje }}
+</div>
+{% endif %}
+<form onsubmit="return false;" id="formContacto" action="{{path('contacto')}}" method="post" novalidate="novalidate" role="form">
+    {{ form_widget(form.name, {'attr': {'class': 'form','placeholder':'Nombre' }}) }}
+    {{ form_widget(form.email, {'attr': {'class': 'form','placeholder':'Email' }}) }}
+    {{ form_widget(form.subject, {'attr': {'class': 'form','placeholder':'Asunto' }}) }}
+    {{ form_widget(form.phone, {'attr': {'class': 'form','placeholder':'Teléfono' }}) }}
+    {{ form_widget(form.body, {'attr': {'class': 'form_area','rows':'5','placeholder':'Mensaje' }}) }}
+    <input id="botonEnviarFormContacto" class="submit" type="submit" placeholder="ENVIAR">
+    {{ form_rest(form) }}    
+</form>

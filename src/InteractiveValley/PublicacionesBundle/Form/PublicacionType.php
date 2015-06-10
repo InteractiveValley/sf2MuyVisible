@@ -38,7 +38,7 @@ class PublicacionType extends AbstractType
                    'data-theme' => 'advanced',
                     )
                 ))
-            ->add('image','file',array('label'=>'Portada','attr'=>array('class'=>'form-control')))
+            ->add('file','file',array('label'=>'Portada','attr'=>array('class'=>'form-control')))
             ->add('contComments','hidden')
             ->add('contLikes','hidden')
             ->add('contTwits','hidden')
