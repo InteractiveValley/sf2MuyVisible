@@ -118,7 +118,7 @@ class Usuario implements UserInterface, \Serializable
             self::GROUP_ADMIN=>'Administrador',
             self::GROUP_SUPER_ADMIN=>'Superadmin',
         );
-        return $arreglo[$this->getGrupo()];
+        return $arreglo[$this->getType()];
     }
     
     static function getArrayTypeGroup($is_super_admin=false){

@@ -80,8 +80,8 @@ class DefaultController extends Controller
                 $datos = $form->getData();
                 $message = \Swift_Message::newInstance()
                         ->setSubject('Contacto desde pagina')
-                        ->setFrom($this->container->getParameter('richpolis.emails.to_email'))
-                        ->setTo('richpolis@gmail.com')
+                        ->setFrom($datos->getEmail())
+                        ->setTo($this->container->getParameter('richpolis.emails.to_email'))
                         ->setBody($this->renderView('FrontendBundle:Default:contactoEmail.html.twig', array('datos' => $datos)), 'text/html');
                 $this->get('mailer')->send($message);
                 // Redirige - Esto es importante para prevenir que el usuario
@@ -118,5 +118,4 @@ class DefaultController extends Controller
                     'mensaje' => $mensaje
         ));
     }
-    
 }

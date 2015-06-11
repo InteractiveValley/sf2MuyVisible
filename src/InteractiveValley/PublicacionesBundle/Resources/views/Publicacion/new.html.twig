@@ -10,8 +10,8 @@
     <link rel="stylesheet" href="{{asset('css/jquery.gritter.css')}}">
     <!-- jQuery Validation Engine stylesheet -->
     <link rel="stylesheet" href="{{asset('css/validationEngine.jquery.css')}}">
-    <!-- CLEditor -->
-    <link rel="stylesheet" href="{{asset('css/jquery.cleditor.css')}}"> 
+    <!-- SummerNote -->
+    <link rel="stylesheet" href="{{asset('css/summernote.css')}}"> 
 {% endblock %}
 
 {% block mainbar %}
@@ -82,7 +82,7 @@
     <script src="{{asset('js/layouts/topRight.js')}}"></script> <!-- jQuery Notify -->
     <script src="{{asset('js/layouts/top.js')}}"></script> <!-- jQuery Notify -->
     <!-- jQuery Notification ends -->
-    <script src="{{asset('js/jquery.cleditor.min.js')}}"></script> <!-- CLEditor -->
+    <script src="{{asset('js/summernote.min.js')}}"></script> <!-- SummerNote -->
     <script src="{{asset('js/languages/jquery.validationEngine-es.js')}}"></script> <!-- jQuery Validation Engine Language File -->
     <script src="{{asset('js/jquery.validationEngine.js')}}"></script> <!-- jQuery Validation Engine -->
     <script src="{{asset('js/jquery.slimscroll.min.js')}}"></script> <!-- jQuery SlimScroll -->
@@ -105,10 +105,17 @@
             $(".contenido-formulario form").submit();
         });
             
-        /* CL Editor */
-        $(".cleditor").cleditor({
-            width: "auto",
-            height: "auto"
+        /* SummerEditor */
+        $(".resume").summernote();
+        var $descripcion = $(".description");
+        $descripcion.summernote({
+            height: 300,                 // set editor height
+            minHeight: null,             // set minimum height of editor
+            maxHeight: null,             // set maximum height of editor
+            focus: true,
+            onImageUpload: function(files) {
+                sendFile(files[0],$descripcion,'editor.insertImage');
+            }
         });
 
         {% if errores | length > 0 %}
@@ -122,6 +129,26 @@
             {% endfor %}    
         {% endif %}
     });
+    function sendFile(file,editor,welEditable) {
+        debugger;
+        data = new FormData();
+        data.append("file", file);
+        $.ajax({
+            data: data,
+            type: "POST",
+            url: "{{path('publicaciones_image_upload')}}",
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(url) {
+                 console.log(url);
+                 editor.summernote(welEditable, url);
+            },error: function(data){
+                console.log(data);
+                alert("Error");
+            }
+        });
+    }
     </script>
 
 {% endblock %}

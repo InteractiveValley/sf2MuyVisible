@@ -26,7 +26,7 @@ class PublicacionType extends AbstractType
                 'label'=>'Resumen',
                 'required'=>true,
                 'attr'=>array(
-                    'class'=>'cleditor tinymce form-control placeholder',
+                    'class'=>'resume form-control placeholder',
                    'data-theme' => 'advanced',
                     )
                 ))
@@ -34,7 +34,7 @@ class PublicacionType extends AbstractType
                 'label'=>'Descripcion',
                 'required'=>true,
                 'attr'=>array(
-                    'class'=>'cleditor tinymce form-control placeholder',
+                    'class'=>'description form-control placeholder',
                    'data-theme' => 'advanced',
                     )
                 ))

@@ -3,6 +3,7 @@
 namespace InteractiveValley\PublicacionesBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -290,5 +291,48 @@ class PublicacionController extends Controller
         }   
         $entity->setSlug($slug);
         return true;
+    }
+    
+    /**
+     * upload images.
+     *
+     * @Route("/image/upload", name="publicaciones_image_upload")
+     * @Method("POST")
+     */
+    public function uploadImageAction(Request $request){
+        //$name = $this->randomString();
+        $ext = explode('.',$_FILES['file']['name']);
+        //$filename = $name.'.'.$ext[1];
+        $filename = $this->randomString($ext);
+        $destination = $this->getAbsolutePath($filename);
+        $location =  $_FILES["file"]["tmp_name"];
+        move_uploaded_file($location,$destination);
+        return new Response($this->getWebPath($filename));
+    }
+    public function randomString($ext) {
+        do{
+            $filename = sha1(rand(11111, 99999));
+        } while (file_exists($this->getAbsolutePath($filename.'.'.$ext[1])));
+        return $filename.'.'.$ext[1];
+    }
+    
+    protected function getUploadDir()
+    {
+        return '/uploads/publicaciones';
+    }
+
+    protected function getUploadRootDir()
+    {
+        return __DIR__.'/../../../../web'.$this->getUploadDir();
+    }
+    
+    protected function getWebPath($filename)
+    {
+        return $this->getUploadDir().'/'.$filename;
+    }
+    
+    protected function getAbsolutePath($filename)
+    {
+        return $this->getUploadRootDir().'/'.$filename;
     }
 }
