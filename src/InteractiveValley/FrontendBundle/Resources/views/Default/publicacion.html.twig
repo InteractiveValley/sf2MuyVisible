@@ -5,10 +5,12 @@
                 ~ asset('images/logo.png') %}
 
 {% block redes_sociales %}
-    <meta property="og:url" content="{{url('publicacion',{'slug':publicacion.slug})}}" />
-    <meta property="og:title" content="{{publicacion.title}}" />
-    <meta property="og:image" content="{{urlAbsolutaFoto}}" />
     <meta property="og:type" content="article" />
+    <meta property="og:title" content="{{publicacion.title}}" />
+    <meta property="og:url" content="{{url('publicacion',{'slug':publicacion.slug})}}" />
+    <meta property="og:locale" content="es_ES">
+    <meta property="og:image" content="{{urlAbsolutaFoto}}" />
+    <meta property="og:description" content="{{publicacion.resume}}">
     <meta property="og:site_name" content="muyvisible.com" />
     <!--meta property="fb:admins" content="USER_ID1,USER_ID2"/-->
 
@@ -29,21 +31,29 @@
 {% endblock %}
 
 {% block body %}
-    <header class="head_noticias">
-        <div class="publicidad_head"><img src="/images/banner1.png" alt=""></div>
-        <figure><a href="{{path('homepage')}}"><img src="/images/muyvisible_mini_logo.png" alt=""></a></figure>
-    </header>
-    <section>
-        <figure class="img_cabezera">
-            <img src="{{publicacion.webPath}}" alt="">
-        </figure>
-    </section>
+    {% if publicacion.image | length > 0 %}
+        <header class="head_noticias">
+            <div class="publicidad_head"><img src="/images/banner1.png" alt=""></div>
+            <figure><a href="{{path('homepage')}}"><img src="/images/muyvisible_mini_logo.png" alt=""></a></figure>
+        </header>
+        <section>
+            <figure class="img_cabezera">
+                <img src="{{publicacion.webPath}}" alt="">
+            </figure>
+        </section>
+    {% else %}
+        <header class="head_noticias no-fixed">
+            <div class="publicidad_head"><img src="/images/banner1.png" alt=""></div>
+            <figure><a href="{{path('homepage')}}"><img src="/images/muyvisible_mini_logo.png" alt=""></a></figure>
+        </header>
+        <div class="sin-portada"></div>   
+    {% endif  %}
     <section class="cuerpo">
         <section class="central">
             <article class="contenido">
                 <div class="titulo">
                     <h1>{{publicacion.title}}</h1>
-                    <p class="resumen">{{publicacion.resume}}</p>
+                    <p class="resumen">{{publicacion.resume | raw}}</p>
                     <div class="contador">
                         <table>
                             <tr class="numero">

@@ -21,7 +21,7 @@
         "sensio/framework-extra-bundle": "~3.0,>=3.0.2",
         "incenteev/composer-parameter-handler": "~2.0",
         "doctrine/doctrine-fixtures-bundle": "2.2.*",
-        "stfalcon/tinymce-bundle": "dev-master"
+        "liip/imagine-bundle": "*"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
