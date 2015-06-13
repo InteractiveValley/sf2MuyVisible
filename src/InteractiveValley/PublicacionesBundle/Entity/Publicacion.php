@@ -142,6 +142,22 @@ class Publicacion
      */
     private $author;
     
+    const STATUS_EN_PROCESO  =   1;
+    const STATUS_REVISAR     =   2;
+    const STATUS_POSTEADO    =   3;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="status", type="integer")
+     */
+    private $status = 0;
+    
+    public function __construct() {
+        $this->status = self::STATUS_EN_PROCESO;
+        $this->isActive = true;
+    }
+    
     /*
      * Timestable
      */
@@ -674,5 +690,28 @@ class Publicacion
     public function getAuthor()
     {
         return $this->author;
+    }
+
+    /**
+     * Set status
+     *
+     * @param integer $status
+     * @return Publicacion
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return integer 
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 }

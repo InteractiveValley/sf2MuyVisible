@@ -44,6 +44,7 @@ class PublicacionType extends AbstractType
             ->add('contTwits','hidden')
             ->add('contViews','hidden')
             ->add('position','hidden')
+            ->add('status','hidden')
             ->add('isActive',null,array('label'=>'Activo?','attr'=>array(
                 'class'=>'checkbox-inline',
                 'placeholder'=>'Es activo',

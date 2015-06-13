@@ -1,0 +1,21 @@
+<table id="datatable" class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Portada</th>
+            <th>Titulo</th>
+            <th>Resumen</th>
+            <th>Es Activo?</th>
+            <th>Fecha creacion</th>
+            <th>Usuario</th>
+            <th>Views</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody id="cuerpoTabla">
+        {% for entity in entities %}
+            {% include 'BackendBundle:Default:item.html.twig' with { 'entity': entity } %}
+        {% endfor %}
+    </tbody>
+</table>

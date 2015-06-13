@@ -1,17 +1,8 @@
 {% extends 'BackendBundle::layout.html.twig' %}
 
 {% block stylesheets %}
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="{{asset('css/bootstrap.css')}}">
-    <!-- Font awesome icon -->
-    <link rel="stylesheet" href="{{asset('css/font-awesome.css')}}"> 
-    <!-- jQuery UI -->
-    <link rel="stylesheet" href="{{asset('css/jquery-ui-1.9.2.custom.min.css')}}"> 
-    <!-- Uniform -->
-    <link rel="stylesheet" href="{{asset('css/uniform.default.html')}}"> 
-    <!-- Bootstrap toggle -->
-    <link rel="stylesheet" href="{{asset('css/bootstrap-switch.css')}}">
-    <!-- Bootstrap toggle -->
+  {{ parent() }}
+    <!-- Datatables -->
     <link rel="stylesheet" href="{{asset('js/datatables/css/dataTables.bootstrap.css')}}">
     <!-- Main stylesheet -->
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
@@ -19,8 +10,6 @@
     <link rel="stylesheet" href="{{asset('css/widgets.css')}}">   
     <!-- Gritter Notifications stylesheet -->
     <link rel="stylesheet" href="{{asset('css/jquery.gritter.css')}}"> 
-    <!-- Admin stylesheet -->
-    <link rel="stylesheet" href="{{asset('css/admin.css')}}">
 {% endblock %}
 
 {% block mainbar %}
@@ -28,17 +17,14 @@
     <div class="mainbar">
         <!-- Page heading -->
         <div class="page-head">
-            <h2 class="pull-left">Dashboard</h2>
-            <div class="pull-right">
-                <!--div id="reportrange" class="pull-right">
-                    <i class="fa fa-calendar"></i>
-                    <span></span> <b class="caret"></b>
-                </div-->
-            </div>
+            <h2 class="pull-left">Publicaciones</h2>
             <div class="clearfix"></div>
             <!-- Breadcrumb -->
             <div class="bread-crumb">
-                <a href="#"><i class="fa fa-home"></i>Dashboard</a> 
+                <a href="{{path('backend_homepage')}}"><i class="fa fa-home"></i>Dashboard</a> 
+                  <span class="divider">/</span>  
+                  <a href="{{path('publicaciones')}}" class="bread-current">Publicaciones</a>
+                  <a href="{{path('publicaciones_new')}}" class="btn btn-info pull-right" style="color: white; margin-left: 5px;">Crear registro</a>
             </div>
             <div class="clearfix"></div>
         </div>
@@ -46,33 +32,102 @@
         <!-- Matter -->
         <div class="matter">
             <div class="container">
-                <!-- Todas las publicaciones tipo Publicacion o Noticia -->
+            <!-- Table -->
+                <div class="row">
+                <div class="col-md-12">
+                    <div class="widget">
+                        <div class="widget-head">
+                            <div class="pull-left">Registro de publicaciones</div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="widget-content">
+                            {% include 'BackendBundle:Default:table.html.twig' with { 'entities': entities } %}
+                        </div>
+                        <div class="widget-foot">
+                                <br/>
+                                <br/>
+                                <div class="clearfix"></div>
+                        </div>        
+                    </div>
+                </div>
             </div>
         </div>
-  </div>
+    </div>
+    <!-- Matter ends -->
+    </div>
     <!-- Mainbar ends -->        
     <div class="clearfix"></div>
 {% endblock %}
 
 {% block javascripts %}
-    {{ parent() }}
+{{ parent() }}
 
-    <script src="{{asset('js/jquery-ui-1.9.2.custom.min.js')}}"></script> <!-- jQuery UI -->
+<script src="{{asset('js/jquery-ui-1.9.2.custom.min.js')}}"></script> <!-- jQuery UI -->
+<!-- jQuery Notification - Noty -->
+<script src="{{asset('js/jquery.noty.js')}}"></script> <!-- jQuery Notify -->
+<script src="{{asset('js/themes/default.js')}}"></script> <!-- jQuery Notify -->
+<script src="{{asset('js/layouts/bottom.js')}}"></script> <!-- jQuery Notify -->
+<script src="{{asset('js/layouts/topRight.js')}}"></script> <!-- jQuery Notify -->
+<script src="{{asset('js/layouts/top.js')}}"></script> <!-- jQuery Notify -->
+<!-- jQuery Notification ends -->
 
-    <!-- jQuery Notification - Noty -->
-    <script src="{{asset('js/jquery.noty.js')}}"></script> <!-- jQuery Notify -->
-    <script src="{{asset('js/themes/default.js')}}"></script> <!-- jQuery Notify -->
-    <script src="{{asset('js/layouts/bottom.js')}}"></script> <!-- jQuery Notify -->
-    <script src="{{asset('js/layouts/topRight.js')}}"></script> <!-- jQuery Notify -->
-    <script src="{{asset('js/layouts/top.js')}}"></script> <!-- jQuery Notify -->
-    <!-- jQuery Notification ends -->
+<script src="{{asset('js/datatables/js/jquery.dataTables.js')}}"></script>
+<script src="{{asset('js/jquery.slimscroll.min.js')}}"></script> <!-- jQuery SlimScroll -->
 
-    <script src="{{asset('js/datatables/js/jquery.dataTables.js')}}"></script>
+<script src="{{asset('js/bootbox.min.js')}}"></script> <!-- Filter for support page -->
+<script src="{{asset('js/custom.js')}}"></script> <!-- Custom codes -->
 
-    <script src="{{asset('js/sparklines.js')}}"></script> <!-- Sparklines -->
-    <script src="{{asset('js/jquery.uniform.min.html')}}"></script> <!-- jQuery Uniform -->
-    <script src="{{asset('js/jquery.slimscroll.min.js')}}"></script> <!-- jQuery SlimScroll -->
-    <script src="{{asset('js/bootstrap-switch.min.js')}}"></script> <!-- Bootstrap Toggle -->
-    <script src="{{asset('js/filter.js')}}"></script> <!-- Filter for support page -->
-    <script src="{{asset('js/custom.js')}}"></script> <!-- Custom codes -->
+<script>
+    var editarRegistro = function (url) {
+        location.href = url;
+    };
+
+    var eliminarRegistro = function () {
+    {% if is_granted('ROLE_ADMIN') %}
+          bootbox.confirm("Esta seguro de eliminar el registro?", function (result) {
+              if (result) {
+                  $("#formEliminar").submit();
+              }
+          });
+    {% else %}
+          noty({text: 'No tienes los permisos suficientes para realizar esta accion', layout: 'bottom', type: 'warning', timeout: 2000});
+    {% endif %}      
+    };
+    
+    $(document).ready(function () {
+          $('#datatable').dataTable({
+              "sPaginationType": "full_numbers",
+              "sNext": "Siguiente",
+              "sLast": "Ultimo",
+              "sFirst": "Primero",
+              "sPrevious": "Anterior",
+          });
+    });
+    
+    function backend(id,clase){
+        $(".loader").fadeIn();
+        var $registro = $("#registro-"+id);
+        var url = $registro.find(clase).data('url');
+        alert(url);
+        $.ajax({
+            url: url,
+            type: 'PATCH',
+            dataType: 'html',
+            success: function(data){
+                $registro.html($(data).html());
+                notySuccess('Actualizacion realizada');
+                $(".loader").fadeOut();
+            },
+            error: function(data){
+                notyError('Error de actualizacion');
+                console.log(data);
+                $(".loader").fadeOut();
+            },
+        });
+    }
+      
+</script>
+
+
 {% endblock %}
+

@@ -61,7 +61,7 @@ class Usuario implements UserInterface, \Serializable
     /**
      * @var string
      *
-     * @ORM\Column(name="image", type="string", length=255)
+     * @ORM\Column(name="image", type="string", length=255, nullable=true)
      */
     private $image;
 
@@ -118,7 +118,7 @@ class Usuario implements UserInterface, \Serializable
             self::GROUP_ADMIN=>'Administrador',
             self::GROUP_SUPER_ADMIN=>'Superadmin',
         );
-        return $arreglo[$this->getGrupo()];
+        return $arreglo[$this->getType()];
     }
     
     static function getArrayTypeGroup($is_super_admin=false){
@@ -180,9 +180,9 @@ class Usuario implements UserInterface, \Serializable
     }
     
     public function getRoles() {
-        if ($this->getGrupo() == self::GROUP_USERS) {
+        if ($this->getType() == self::GROUP_USERS) {
             return array('ROLE_USER', 'ROLE_API');
-        } elseif ($this->getGrupo() == self::GROUP_SUPER_ADMIN) {
+        } elseif ($this->getType() == self::GROUP_SUPER_ADMIN) {
             return array('ROLE_SUPER_ADMIN', 'ROLE_API');
         } else {
             return array('ROLE_ADMIN', 'ROLE_API');
@@ -547,4 +547,37 @@ class Usuario implements UserInterface, \Serializable
     }
 
     
+
+    /**
+     * Add publications
+     *
+     * @param \InteractiveValley\PublicacionesBundle\Entity\Publicacion $publications
+     * @return Usuario
+     */
+    public function addPublication(\InteractiveValley\PublicacionesBundle\Entity\Publicacion $publications)
+    {
+        $this->publications[] = $publications;
+
+        return $this;
+    }
+
+    /**
+     * Remove publications
+     *
+     * @param \InteractiveValley\PublicacionesBundle\Entity\Publicacion $publications
+     */
+    public function removePublication(\InteractiveValley\PublicacionesBundle\Entity\Publicacion $publications)
+    {
+        $this->publications->removeElement($publications);
+    }
+
+    /**
+     * Get publications
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPublications()
+    {
+        return $this->publications;
+    }
 }

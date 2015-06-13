@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Component\Security\Core\SecurityContext;
+use InteractiveValley\PublicacionesBundle\Entity\Publicacion;
 
 class DefaultController extends Controller
 {
@@ -16,7 +16,14 @@ class DefaultController extends Controller
      * @Template("BackendBundle:Default:index.html.twig")
      */
     public function backendAction(){
-        return array();
+        $em = $this->getDoctrine()->getManager();
+
+        $entities = $em->getRepository('PublicacionesBundle:Publicacion')
+                       ->findBy(array(),array('status'=>'ASC','title'=>'ASC'));
+
+        return array(
+            'entities' => $entities,
+        );
     }
     
     /**
@@ -98,5 +105,47 @@ class DefaultController extends Controller
             }
         }
         return array('msg' => $msg);
+    }
+    
+    /**
+     * Revisar una publicacion.
+     *
+     * @Route("/publicacion/{id}/revisar", name="publicacion_revisar", requirements={"id" = "\d+"})
+     * @Method("PATCH")
+     */
+    public function revisarAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $publicacion = $em->getRepository('PublicacionesBundle:Publicacion')->find($id);
+
+        if (!$publicacion) {
+            throw $this->createNotFoundException('Unable to find envio entity.');
+        }
+        $publicacion->setStatus(Publicacion::STATUS_REVISAR);
+        $em->flush();
+
+        return $this->render("BackendBundle:Default:item.html.twig", array(
+                    'entity' => $publicacion
+        ));
+    }
+    
+    /**
+     * Publicar la publicacion.
+     *
+     * @Route("/publicacion/{id}/publicar", name="publicacion_publicar", requirements={"id" = "\d+"})
+     * @Method("PATCH")
+     */
+    public function publicarAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $publicacion = $em->getRepository('PublicacionesBundle:Publicacion')->find($id);
+
+        if (!$publicacion) {
+            throw $this->createNotFoundException('Unable to find envio entity.');
+        }
+        $publicacion->setStatus(Publicacion::STATUS_POSTEADO);
+        $em->flush();
+
+        return $this->render("BackendBundle:Default:item.html.twig", array(
+                    'entity' => $publicacion
+        ));
     }
 }

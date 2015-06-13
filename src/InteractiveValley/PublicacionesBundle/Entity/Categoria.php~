@@ -226,4 +226,67 @@ class Categoria
     {
         return $this->updatedAt;
     }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->publications = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Categoria
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string 
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Add publications
+     *
+     * @param \InteractiveValley\PublicacionesBundle\Entity\Publicacion $publications
+     * @return Categoria
+     */
+    public function addPublication(\InteractiveValley\PublicacionesBundle\Entity\Publicacion $publications)
+    {
+        $this->publications[] = $publications;
+
+        return $this;
+    }
+
+    /**
+     * Remove publications
+     *
+     * @param \InteractiveValley\PublicacionesBundle\Entity\Publicacion $publications
+     */
+    public function removePublication(\InteractiveValley\PublicacionesBundle\Entity\Publicacion $publications)
+    {
+        $this->publications->removeElement($publications);
+    }
+
+    /**
+     * Get publications
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPublications()
+    {
+        return $this->publications;
+    }
 }

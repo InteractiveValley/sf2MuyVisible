@@ -9,6 +9,7 @@
         <parameter key="richpolis_backend.util_rpsstms.class">InteractiveValley\BackendBundle\Utils\UtilsRpsStms</parameter>
         <parameter key="richpolis.isactive.extension.class">InteractiveValley\BackendBundle\Twig\IsActiveExtension</parameter>
         <parameter key="richpolis.translate_date.extension.class">InteractiveValley\BackendBundle\Twig\TranslateDateExtension</parameter>
+        <parameter key="richpolis.status.extension.class">InteractiveValley\BackendBundle\Twig\StatusExtension</parameter>
     </parameters>
     
     <services>
@@ -22,6 +23,11 @@
         
         <!-- "translate_date" twig.extension -->
         <service id="richpolis.twig.translate_date_extension" class="%richpolis.translate_date.extension.class%">
+            <tag name="twig.extension" />
+        </service>
+        
+        <!-- "status" twig.extension -->
+        <service id="richpolis.twig.status_extension" class="%richpolis.status.extension.class%">
             <tag name="twig.extension" />
         </service>
     </services>
