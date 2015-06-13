@@ -31,7 +31,7 @@ class PublicacionType extends AbstractType
                     )
                 ))
             ->add('description',null,array(
-                'label'=>'Descripcion',
+                'label'=>'Contenido',
                 'required'=>true,
                 'attr'=>array(
                     'class'=>'description form-control placeholder',

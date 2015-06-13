@@ -1,26 +1,55 @@
 {% extends "FrontendBundle::layout.html.twig" %}
 
-{% set urlAbsolutaFoto = 'http://'
-                ~ app.request.server.get('SERVER_NAME')
-                ~ asset('images/logo.png') %}
+{% set urlAbsoluta = 'http://' ~ app.request.server.get('SERVER_NAME') %}
 
+{% set urlAbsolutaFoto = urlAbsoluta ~ asset('images/logo.png') %}
+                                
 {% block redes_sociales %}
     <meta property="og:type" content="article" />
     <meta property="og:title" content="{{publicacion.title}}" />
     <meta property="og:url" content="{{url('publicacion',{'slug':publicacion.slug})}}" />
     <meta property="og:locale" content="es_ES">
-    <meta property="og:image" content="{{urlAbsolutaFoto}}" />
     <meta property="og:description" content="{{publicacion.resume}}">
-    <meta property="og:site_name" content="muyvisible.com" />
-    <!--meta property="fb:admins" content="USER_ID1,USER_ID2"/-->
+    {% if publicacion.image | length > 0 %}
+    <meta property="og:image" content="{{ (publicacion.webPath | imagine_filter('image_social') )}}" />
+    {% else %}
+    <meta property="og:image" content="{{ urlAbsolutaFoto }}" />
+    {% endif %}    
+    <meta property="og:site_name" content="muyvisible.com">
+    <!--meta property="fb:app_id" content="123388861116012"-->
+    <!--meta property="fb:admins" content="100000062710915"-->
+    <meta property="article:published_time" content="{{publicacion.createdAt|date('c')}}">
+    <meta property="article:modified_time" content="{{publicacion.updatedAt|date('c')}}">
+    <!--meta property="article:publisher" content="https://www.facebook.com/MuyVisible"-->
+    <meta property="article:section" content="MuyVisible">
 
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:site" content="@MuyVisible">
+    <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{publicacion.title}}">
     <meta name="twitter:description" content="{{publicacion.resume}}">
-    <meta name="twitter:creator" content="@richpolis">
-    <meta name="twitter:image:src" content="{{urlAbsolutaFoto}}">
-    <meta name="twitter:domain" content="{{url('publicacion',{'slug':publicacion.slug})}}">
+    <meta name="twitter:url" content="{{url('publicacion',{'slug':publicacion.slug})}}">
+    <meta name="twitter:site" content="@MuyVisible">
+    {% if publicacion.image | length > 0 %}
+    <meta property="og:image" content="{{ (publicacion.webPath | imagine_filter('image_social') )}}" />
+    {% else %}
+    <meta property="og:image" content="{{ urlAbsolutaFoto }}" />
+    {% endif %}
+    <meta name="twitter:domain" content="muyvisible.com">
+    
+    <meta itemprop="name" content="{{publicacion.title}}">
+    <meta itemprop="description" content="{{publicacion.resume}}">
+    {% if publicacion.image | length > 0 %}
+    <meta itemprop="image" content="{{ (publicacion.webPath | imagine_filter('image_social') )}}" />
+    {% else %}
+    <meta itemprop="image" content="{{ urlAbsolutaFoto }}" />
+    {% endif %}
+    
+    <meta name="pubexchange:headline" content="{{publicacion.title}}">
+    <meta name="pubexchange:description" content="{{publicacion.resume}}">
+    {% if publicacion.image | length > 0 %}
+    <meta name="pubexchange:image" content="{{ (publicacion.webPath | imagine_filter('image_social') )}}" />
+    {% else %}
+    <meta name="pubexchange:image" content="{{ urlAbsolutaFoto }}" />
+    {% endif %}
 {% endblock %}    
 
 {% block class_body ' class="noticias"' %}
@@ -76,9 +105,13 @@
                 </div>
                 <div class="fecha">{{ publicacion.createdAt | translate_date }} | {{ publicacion.createdAt|date("G:i A") }}</div>
                 <div class="sociales">
+                    {% set urlPagina = url('publicacion',{'slug':publicacion.slug}) %}
+                    {% set title = publicacion.title %}
+                    {% set via = ' by @MuyVisible' %}
+                    <a href="" class="share-bottom-btn share-bottom-fb medium button js-share-bottom-btn-social" data-service="Facebook" data-popup-width="555" data-popup-height="370"><i class="share-bottom-icon icon icon-facebook"></i>Facebook</a>
                     <span class="share">COMPARTIR</span><br>
-                    <a href="#"><div class="facebook"><span class="flaticon-facebook55">FACEBOOK</span></div></a>
-                    <a href="#"><div class="twitter"><span class="flaticon-twitter1">TWITTER</span></div></a>
+                    <a class="compartir" href="http://www.facebook.com/sharer.php?u={{urlPagina}}&display=popup"><div class="facebook"><span class="flaticon-facebook55">FACEBOOK</span></div></a>
+                    <a class="compartir" href="http://twitter.com/share?url=/&text={{title ~' ' ~ urlPagina ~ ' ' ~ via | url_encode }}"><div class="twitter"><span class="flaticon-twitter1">TWITTER</span></div></a>
                     <a href="#"><div class="shares"><span class="flaticon-share14">SHARE</span></div></a>
                 </div>
                 <div class="comentarios_face">Comentarios Facebook</div>
@@ -89,8 +122,8 @@
                 <div class="publicidad_der"><img style="width:100%" src="/images/box.png" alt=""></div>
                 <div class="sociales_2">
                     <span class="share">COMPARTIR</span><br><br>
-                    <a href="#"><div class="facebook"><span class="flaticon-facebook55">FACEBOOK</span></div></a>
-                    <a href="#"><div class="twitter"><span class="flaticon-twitter1">TWITTER</span></div></a>
+                    <a class="compartir" href="http://www.facebook.com/sharer.php?u={{urlPagina}}&display=popup"><div class="facebook"><span class="flaticon-facebook55">FACEBOOK</span></div></a>
+                    <a class="compartir" href="http://twitter.com/share?url=/&text={{title ~' ' ~ urlPagina ~ ' ' ~ via | url_encode }}"><div class="twitter"><span class="flaticon-twitter1">TWITTER</span></div></a>
                     <a href="#"><div class="shares"><span class="flaticon-share14">SHARE</span></div></a>
                 </div>
                 <div class="sociales_2">
@@ -128,6 +161,14 @@
                 }
                 posicionarMenu();
             });
+            
+            $('.compartir').on('click',function(e){
+               e.preventDefault();
+               e.stopPropagation();
+               window.open($(this).attr('href'),'','width=600,height=400,left=50,top=50,toolbar=yes');
+               return false;
+            });
+            
             posicionarMenu();
         });
         function posicionarMenu() {
