@@ -10,7 +10,8 @@
 {% block body %}
     <header></header>
     <!-- particles.js container -->
-    <section id="particles-js">
+    <div id="particles-js"></div>
+    <section class="homepage">
         <div class="container">
             <figure class="logo_par">
                 <img src="{{asset('images/logo.png')}}" alt="">
@@ -28,6 +29,7 @@
             <p class="text_2">
                 Ya sea que quieras saludarnos o platicar sobre publicidad, escríbenos y nos pondremos en contacto contigo.
             </p>
+            
             <section id="contacto" class="formulario contenido-form">
                 {% include 'FrontendBundle:Default:formContacto.html.twig' with {'form': form } %}
             </section>
@@ -40,10 +42,18 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="{{asset('js/particles/particles.js')}}"></script>
-    <script src="{{asset('js/particles/app.js')}}"></script>
     <script src="{{asset('js/particles/stats.js')}}"></script>
+    <script src="{{asset('js/particles/app.js')}}"></script>
     <script>
         $(document).on('ready',function(){
+            
+            linkInterno = $('a[href^="#"]');
+            linkInterno.on('click',function(e) {
+                e.preventDefault();
+                var href = $(this).attr('href');
+                $('html, body').animate({ scrollTop : $( href ).offset().top }, 'slow');
+            });
+            
             inicializarBotonEnviarContacto();
         });
         function inicializarBotonEnviarContacto() {

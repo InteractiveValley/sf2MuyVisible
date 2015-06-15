@@ -82,18 +82,21 @@ canvas{
     background-position: 50% 50%;
     background-repeat: repeat;
     width: 100%;
-    height: 115%;
-    position: absolute;
+    height: 100%;
+    position: fixed;
+    z-index: 1000;
 }
 
 
 .container{
-    position: absolute;
     width: 100%;
+    max-width: 940px;
     height: auto;
     background-color: #141720;
     background: transparent;
-
+    margin: 0 auto;
+    z-index: 2000;
+    position: relative;
 }
 .formulario{
     max-width: 550px;
@@ -237,3 +240,30 @@ img{
     color: #fff;
 }
 
+.mayusculas{
+    text-transform: uppercase;
+}
+
+.message{
+    padding: 20px 0px;
+    margin: 10px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    line-height: 16px;
+    text-transform: uppercase;
+    border: 2px solid #8a8a8a;
+}
+
+.message.message-success{
+    color: #33be40;
+    border: 2px solid #33be40;
+    border-radius: 15px;
+}
+
+.message.message-error{
+    color: #98012e;
+    border: 2px solid #98012e;
+    border-radius: 15px;
+}

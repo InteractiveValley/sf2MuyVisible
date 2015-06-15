@@ -5,11 +5,11 @@
     {% set status = "new" %}
 {% endif %}
 {% if status =='send' %}
-<div class="alert alert-success" style="color: white; font-weight: bold; font-size: 1.2em;">
+<div class="message message-success">
     {{ mensaje }}
 </div>
 {% elseif status == 'notsend' %}
-<div class="alert alert-error">
+<div class="message message-error">
     {{ mensaje }}
 </div>
 {% endif %}
