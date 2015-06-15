@@ -1,6 +1,6 @@
 <?php
 
-namespace InteractiveValley\BackendBundle\Entity;
+namespace InteractiveValley\BackendBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 

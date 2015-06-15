@@ -119,9 +119,11 @@
                         {% set title = publicacion.title %}
                         {% set via = ' by @MuyVisible' %}
                         <span class="share">COMPARTIR</span><br>
-                        <a class="compartir" href="http://www.facebook.com/sharer.php?u={{urlPagina}}&display=popup"><div class="facebook text-center"><span class="flaticon-facebook55">&nbsp;FACEBOOK</span></div></a>
-                        <a class="compartir" href="http://twitter.com/share?url=/&text={{title ~' ' ~ urlPagina ~ ' ' ~ via | url_encode }}"><div class="twitter text-center"><span class="flaticon-twitter1">&nbsp;TWITTER</span></div></a>
-                        <a href="#"><div class="shares text-center"><span class="flaticon-share14">&nbsp;SHARE</span></div></a>
+                        <div class="flex-container">
+                            <a class="flex-a facebook compartir" href="http://www.facebook.com/sharer.php?u={{urlPagina}}&display=popup"><span class="flaticon-facebook55"></span>&nbsp;FACEBOOK</a>
+                            <a class="flex-a twitter compartir" href="http://twitter.com/share?url=/&text={{title ~' ' ~ urlPagina ~ ' ' ~ via | url_encode }}"><span class="flaticon-twitter1"></span>&nbsp;TWITTER</a>
+                            <a class="flex-a shares" href="#"><span class="flaticon-share14"></span>&nbsp;SHARE</a>
+                        </div>
                     </div>
                     <div class="comentarios_face">
                         <div class="fb-comments" data-href="{{url('publicacion',{'slug':publicacion.slug})}}" data-numposts="5"></div>
@@ -134,27 +136,25 @@
                 <div class="publicidad_der"><img style="width:300px;" src="/images/box.png" alt=""></div>
                 <div class="sociales_2">
                     <span class="share">COMPARTIR</span>
-                    <a class="compartir" href="http://www.facebook.com/sharer.php?u={{urlPagina}}&display=popup">
-                        <div class="red-social facebook text-center">
-                            <span class="flaticon-facebook55">&nbsp;FACEBOOK</span>
-                        </div>
+                    <a class="red-social facebook compartir" href="http://www.facebook.com/sharer.php?u={{urlPagina}}&display=popup">
+                        <span class="icon flaticon-facebook55"></span>&nbsp;FACEBOOK
                     </a>
-                    <a class="compartir" href="http://twitter.com/share?url=/&text={{title ~' ' ~ urlPagina ~ ' ' ~ via | url_encode }}">
-                        <div class="red-social twitter text-center">
-                            <span class="flaticon-twitter1">&nbsp;TWITTER</span>
-                        </div>
+                    <a class="red-social twitter compartir" href="http://twitter.com/share?url=/&text={{title ~' ' ~ urlPagina ~ ' ' ~ via | url_encode }}">
+                        <span class="icon flaticon-twitter1"></span>&nbsp;TWITTER
                     </a>
-                    <a href="#">
-                        <div class="red-social shares text-center">
-                            <span class="flaticon-share14">&nbsp;SHARE</span>
-                        </div>
+                    <a class="red-social shares text-center" href="#">
+                        <span class="icon flaticon-share14"></span>&nbsp;SHARE
                     </a>
                 </div>
                 <div class="sociales_2 compartir-url">
                     <span class="share">VINCULO DE PUBLICACION</span>
-                    <input class="url-publicacion" type="text" value="{{url('publicacion',{'slug':publicacion.slug})}}">
-                    <div class="copy"><a class="botonCopiarUrlPublicacion" href="#">COPIAR</a></div>
-                    <a href="#">
+                    <div class="group-url-publicacion">
+                        <input class="url-publicacion" type="text" value="{{url('publicacion',{'slug':publicacion.slug})}}">
+                        <a  class="copy botonCopiarUrlPublicacion" href="#">COPIAR</a>
+                    </div>
+                </div>
+                 <div class="sociales_2 compartir-url margin-top">
+                     <a href="#">
                         <div class="mas_notas">
                             <img src="/images/lentes.png" alt="">
                             Ver más NOTAS
@@ -276,7 +276,11 @@
             });
             var anchoCentral = $(".central").width();
             setTimeout(function(){
-                $("iframe").css({'width': (anchoCentral-98)+'px'});
+                if(anchoCentral>500){
+                    $("iframe").css({'width': (anchoCentral-98)+'px'});
+                }else{
+                    $("iframe").css({'width': anchoCentral+'px'});
+                }
             },2000);
             
             $(".botonCopiarUrlPublicacion").on("click",function(e){
