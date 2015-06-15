@@ -16,7 +16,7 @@
     <meta property="og:image" content="{{ urlAbsolutaFoto }}" />
     {% endif %}    
     <meta property="og:site_name" content="muyvisible.com">
-    <!--meta property="fb:app_id" content="123388861116012"-->
+    <meta property="fb:app_id" content="1461130887533217">
     <!--meta property="fb:admins" content="100000062710915"-->
     <meta property="article:published_time" content="{{publicacion.createdAt|date('c')}}">
     <meta property="article:modified_time" content="{{publicacion.updatedAt|date('c')}}">
@@ -57,6 +57,14 @@
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" media="screen" href="{{asset('css/muyvisible/publicacion.css')}}"/>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v2.3&appId=1461130887533217";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
 {% endblock %}
 
 {% block body %}
@@ -78,9 +86,10 @@
         <div class="sin-portada"></div>   
     {% endif  %}
     <section class="cuerpo">
+        <div class="main-wrapper">
         <section class="central">
-            <article class="contenido">
-                <div class="titulo">
+            <article class="publicacion">
+                <header class="titulo">
                     <h1>{{publicacion.title}}</h1>
                     <p class="resumen">{{publicacion.resume | raw}}</p>
                     <div class="contador">
@@ -99,37 +108,52 @@
                             </tr>
                         </table>
                     </div>
-                </div>
+                </header>
                 <div class="contenido-publicacion">
                     {{ publicacion.description | raw }}
                 </div>
-                <div class="fecha">{{ publicacion.createdAt | translate_date }} | {{ publicacion.createdAt|date("G:i A") }}</div>
-                <div class="sociales">
-                    {% set urlPagina = url('publicacion',{'slug':publicacion.slug}) %}
-                    {% set title = publicacion.title %}
-                    {% set via = ' by @MuyVisible' %}
-                    <a href="" class="share-bottom-btn share-bottom-fb medium button js-share-bottom-btn-social" data-service="Facebook" data-popup-width="555" data-popup-height="370"><i class="share-bottom-icon icon icon-facebook"></i>Facebook</a>
-                    <span class="share">COMPARTIR</span><br>
-                    <a class="compartir" href="http://www.facebook.com/sharer.php?u={{urlPagina}}&display=popup"><div class="facebook"><span class="flaticon-facebook55">FACEBOOK</span></div></a>
-                    <a class="compartir" href="http://twitter.com/share?url=/&text={{title ~' ' ~ urlPagina ~ ' ' ~ via | url_encode }}"><div class="twitter"><span class="flaticon-twitter1">TWITTER</span></div></a>
-                    <a href="#"><div class="shares"><span class="flaticon-share14">SHARE</span></div></a>
-                </div>
-                <div class="comentarios_face">Comentarios Facebook</div>
+                <footer>
+                    <div class="fecha">{{ publicacion.createdAt | translate_date }} | {{ publicacion.createdAt|date("G:i A") }}</div>
+                    <div class="sociales">
+                        {% set urlPagina = url('publicacion',{'slug':publicacion.slug}) %}
+                        {% set title = publicacion.title %}
+                        {% set via = ' by @MuyVisible' %}
+                        <span class="share">COMPARTIR</span><br>
+                        <a class="compartir" href="http://www.facebook.com/sharer.php?u={{urlPagina}}&display=popup"><div class="facebook text-center"><span class="flaticon-facebook55">&nbsp;FACEBOOK</span></div></a>
+                        <a class="compartir" href="http://twitter.com/share?url=/&text={{title ~' ' ~ urlPagina ~ ' ' ~ via | url_encode }}"><div class="twitter text-center"><span class="flaticon-twitter1">&nbsp;TWITTER</span></div></a>
+                        <a href="#"><div class="shares text-center"><span class="flaticon-share14">&nbsp;SHARE</span></div></a>
+                    </div>
+                    <div class="comentarios_face">
+                        <div class="fb-comments" data-href="{{url('publicacion',{'slug':publicacion.slug})}}" data-numposts="5"></div>
+                    </div>
+                </footer>
             </article>
         </section>
-        <section class="derecha">
+        <aside class="derecha">
             <div class="derecha_2">
-                <div class="publicidad_der"><img style="width:100%" src="/images/box.png" alt=""></div>
+                <div class="publicidad_der"><img style="width:300px;" src="/images/box.png" alt=""></div>
                 <div class="sociales_2">
-                    <span class="share">COMPARTIR</span><br><br>
-                    <a class="compartir" href="http://www.facebook.com/sharer.php?u={{urlPagina}}&display=popup"><div class="facebook"><span class="flaticon-facebook55">FACEBOOK</span></div></a>
-                    <a class="compartir" href="http://twitter.com/share?url=/&text={{title ~' ' ~ urlPagina ~ ' ' ~ via | url_encode }}"><div class="twitter"><span class="flaticon-twitter1">TWITTER</span></div></a>
-                    <a href="#"><div class="shares"><span class="flaticon-share14">SHARE</span></div></a>
+                    <span class="share">COMPARTIR</span>
+                    <a class="compartir" href="http://www.facebook.com/sharer.php?u={{urlPagina}}&display=popup">
+                        <div class="red-social facebook text-center">
+                            <span class="flaticon-facebook55">&nbsp;FACEBOOK</span>
+                        </div>
+                    </a>
+                    <a class="compartir" href="http://twitter.com/share?url=/&text={{title ~' ' ~ urlPagina ~ ' ' ~ via | url_encode }}">
+                        <div class="red-social twitter text-center">
+                            <span class="flaticon-twitter1">&nbsp;TWITTER</span>
+                        </div>
+                    </a>
+                    <a href="#">
+                        <div class="red-social shares text-center">
+                            <span class="flaticon-share14">&nbsp;SHARE</span>
+                        </div>
+                    </a>
                 </div>
-                <div class="sociales_2">
-                    <span class="share">VINCULO DE PUBLICACION</span><br><br>
-                    <input type="text" value="{{url('publicacion',{'slug':publicacion.slug})}}">
-                    <div class="copy"><a href="#">COPIAR</a></div>
+                <div class="sociales_2 compartir-url">
+                    <span class="share">VINCULO DE PUBLICACION</span>
+                    <input class="url-publicacion" type="text" value="{{url('publicacion',{'slug':publicacion.slug})}}">
+                    <div class="copy"><a class="botonCopiarUrlPublicacion" href="#">COPIAR</a></div>
                     <a href="#">
                         <div class="mas_notas">
                             <img src="/images/lentes.png" alt="">
@@ -138,10 +162,92 @@
                     </a>
                 </div>
             </div>
-        </section>
+        </aside>
+        </div>
     </section>
 
     <footer></footer>
+    
+    <div id="share-modal" class="reveal-modal large open" style=" display: none;">
+            <ul class="block-grid eight-up mobile-four-up">
+                <li class="active">
+                    <a class="googleplus button js-social-button js-social-button-service" href="https://plus.google.com/share?url=http%3A%2F%2Fwww.fastcodesign.com%2F3047272%2Fattention-shoppers-brace-yourselves-for-beacons" data-social-slug="googleplus" data-popup-width="480" data-popup-height="665">
+                        <span class="overlay">
+                            <i class="icon-google-plus"></i>
+                            <span class="label hide-for-medium-down">Google +</span>
+                        </span>
+                        <img src="//b.fastcompany.net/multisite_files/fastcompany/static/sites/images/201410/all/spacer-1px.gif" width="1" height="1" class="spacer">
+                    </a>
+                </li>
+                <li class="">
+                    <a class="twitter button js-social-button js-social-button-service" href="http://twitter.com/share?url=%2F&amp;text=Attention%20shoppers%3A%20brace%20yourselves%20for%20beacons%20http%3A%2F%2Fwww.fastcodesign.com%2F3047272%2Fattention-shoppers-brace-yourselves-for-beacons%20by%20%40giovannicalabro%20via%20%40FastCoDesign" data-social-slug="twitter" data-popup-width="555" data-popup-height="395">
+                        <span class="overlay">
+                            <i class="icon-twitter"></i>
+                            <span class="label hide-for-medium-down">Twitter</span>
+                        </span>
+                        <img src="//b.fastcompany.net/multisite_files/fastcompany/static/sites/images/201410/all/spacer-1px.gif" width="1" height="1" class="spacer">
+                    </a>
+                </li>
+                <li class="">
+                    <a class="facebook button js-social-button js-social-button-service" href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Fwww.fastcodesign.com%2F3047272%2Fattention-shoppers-brace-yourselves-for-beacons&amp;app_id=123388861116012&amp;display=popup" data-social-slug="facebook" data-popup-width="555" data-popup-height="370">
+                        <span class="overlay">
+                            <i class="icon-facebook"></i>
+                            <span class="label hide-for-medium-down">Facebook</span>
+                        </span>
+                        <img src="//b.fastcompany.net/multisite_files/fastcompany/static/sites/images/201410/all/spacer-1px.gif" width="1" height="1" class="spacer">
+                    </a>
+                </li>
+                <li class="">
+                    <a class="linkedin button js-social-button js-social-button-service" href="http://www.linkedin.com/shareArticle?mini=true&amp;url=http%3A%2F%2Fwww.fastcodesign.com%2F3047272%2Fattention-shoppers-brace-yourselves-for-beacons&amp;media=Attention%20Shoppers%3A%20Brace%20Yourselves%20For%20Beacons" data-social-slug="linkedin" data-popup-width="600" data-popup-height="465">
+                        <span class="overlay">
+                            <i class="icon-linkedin"></i>
+                            <span class="label hide-for-medium-down">Linkedin</span>
+                        </span>
+                        <img src="//b.fastcompany.net/multisite_files/fastcompany/static/sites/images/201410/all/spacer-1px.gif" width="1" height="1" class="spacer">
+                    </a>
+                </li>
+                <li class="">
+                    <a class="pinterest button js-social-button js-social-button-service" href="http://www.pinterest.com/pin/create/button/?url=http%3A%2F%2Fwww.fastcodesign.com%2F3047272%2Fattention-shoppers-brace-yourselves-for-beacons&amp;description=Attention%20Shoppers%3A%20Brace%20Yourselves%20For%20Beacons&amp;media=http%3A%2F%2Fwww.fastcompany.com%2Fmultisite_files%2Ffastcompany%2Fimagecache%2F620x350%2Fposter%2F2015%2F06%2F3047272-poster-p-1-attention-shoppers-brace-yourselves-for-beacons.jpg" data-social-slug="pinterest" data-popup-width="750" data-popup-height="316">
+                        <span class="overlay">
+                            <i class="icon-pinterest"></i>
+                            <span class="label hide-for-medium-down">Pinterest</span>
+                        </span>
+                        <img src="//b.fastcompany.net/multisite_files/fastcompany/static/sites/images/201410/all/spacer-1px.gif" width="1" height="1" class="spacer">
+                    </a>
+                </li>
+                <li class="">
+                    <a class="stumbleupon button js-social-button js-social-button-service" href="http://www.stumbleupon.com/submit?url=http%3A%2F%2Fwww.fastcodesign.com%2F3047272%2Fattention-shoppers-brace-yourselves-for-beacons&amp;title=Attention%20Shoppers%3A%20Brace%20Yourselves%20For%20Beacons" data-social-slug="stumbleupon" data-popup-width="980" data-popup-height="575">
+                        <span class="overlay">
+                            <i class="icon-stumbleupon"></i>
+                            <span class="label hide-for-medium-down">Stumbleupon</span>
+                        </span>
+                        <img src="//b.fastcompany.net/multisite_files/fastcompany/static/sites/images/201410/all/spacer-1px.gif" width="1" height="1" class="spacer">
+                    </a>
+                </li>
+                <li class="">
+                    <a class="reddit button js-social-button js-social-button-service" href="http://www.reddit.com/submit?url=http%3A%2F%2Fwww.fastcodesign.com%2F3047272%2Fattention-shoppers-brace-yourselves-for-beacons&amp;title=Attention%20Shoppers%3A%20Brace%20Yourselves%20For%20Beacons" data-social-slug="reddit" data-popup-width="980" data-popup-height="750">
+                        <span class="overlay">
+                            <i class="icon-reddit"></i>
+                            <span class="label hide-for-medium-down">Reddit</span>
+                        </span>
+                        <img src="//b.fastcompany.net/multisite_files/fastcompany/static/sites/images/201410/all/spacer-1px.gif" width="1" height="1" class="spacer">
+                    </a>
+                </li>
+                <li>
+                    <a class="email button js-social-button js-social-button-email" href="mailto:?body=Attention Shoppers: Brace Yourselves For Beacons%0A%0AThe spread of mobile payment platforms opens a door for stores to cater to customers' personal preferences on site.%0A%0Ahttp://www.fastcodesign.com/3047272/attention-shoppers-brace-yourselves-for-beacons" data-social-slug="email" data-popup-width="500" data-popup-height="400">
+                        <span class="overlay">
+                            <i class="icon-envelope"></i>
+                            <span class="label hide-for-medium-down">Email</span>
+                        </span>
+                        <img src="//b.fastcompany.net/multisite_files/fastcompany/static/sites/images/201410/all/spacer-1px.gif" width="1" height="1" class="spacer">
+                    </a>
+                </li>
+            </ul>
+            <button class="button close-reveal-modal share-modal-close">
+                <i class="icon-times"></i>
+            </button>
+        </div>
+    
     {% endblock %}
 
 {% block javascripts %}
@@ -150,11 +256,11 @@
         $(function () {
             $(window).scroll(function () {
                 if ($(window).scrollTop() > 620){
-                    $("header").fadeOut();
+                    $(".head_noticias").fadeOut();
                 }else{
-                    $("header").fadeIn();
+                    $(".head_noticias").fadeIn();
                 }
-                if ($(window).scrollTop() > 745){
+                if ($(window).scrollTop() > 715){
                     $(".derecha_2").addClass('fijo');
                 }else{
                     $(".derecha_2").removeClass('fijo');
@@ -168,18 +274,26 @@
                window.open($(this).attr('href'),'','width=600,height=400,left=50,top=50,toolbar=yes');
                return false;
             });
+            var anchoCentral = $(".central").width();
+            setTimeout(function(){
+                $("iframe").css({'width': (anchoCentral-98)+'px'});
+            },2000);
             
+            $(".botonCopiarUrlPublicacion").on("click",function(e){
+               e.preventDefault();
+               window.clipboardData.setData("Text", $(".url-publicacion").val());
+            });
             posicionarMenu();
         });
         function posicionarMenu() {
-            var altura_del_header = $('header').outerHeight(true);
-            var altura_del_menu = $('header').outerHeight(true);
+            var altura_del_header = $('.head_noticias').outerHeight(true);
+            var altura_del_menu = $('.head_noticias').outerHeight(true);
 
             if ($(window).scrollTop() >= 0){
-                $('header').addClass('fixed');
+                $('.head_noticias').addClass('fixed');
                 $('.img_cabezera').css('margin-top', (altura_del_menu) + 'px');
             } else {
-                $('header').removeClass('fixed');
+                $('.head_noticias').removeClass('fixed');
                 $('.img_cabezera').css('margin-top', '0');
             }
         }

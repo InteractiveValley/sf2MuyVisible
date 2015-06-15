@@ -8,10 +8,11 @@ body{
     margin:0;
     color:#4a4a4a;
 }
-header{
+header.header_noticias{
     border-bottom: solid 1px #c4e5fc;
     display: flex;
 }
+
 .noticias{
     font-family:"ACaslonPro-Regular";
     -ms-text-size-adjust:100%;
@@ -19,6 +20,7 @@ header{
     font-size: 16px;
     background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPjxwYXRoIGQ9Ik0tMiAxMEwxMCAtMlpNMTAgNkw2IDEwWk0tMiAyTDIgLTIiIHN0cm9rZT0iIzIyMiIgc3Ryb2tlLXdpZHRoPSI0LjUiPjwvcGF0aD4KPC9zdmc+"),url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPgo8bGluZWFyR3JhZGllbnQgaWQ9ImciIHgyPSIxIiB5Mj0iMSI+CjxzdG9wIHN0b3AtY29sb3I9IiNGMTkiPjwvc3RvcD4KPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMENGIj48L3N0b3A+CjwvbGluZWFyR3JhZGllbnQ+CjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZykiPjwvcmVjdD4KPC9zdmc+");
 }
+
 a{
     text-decoration: none;
     color: #4a4a4a;
@@ -26,6 +28,7 @@ a{
     -o-transition: color .5s ease-out;
     transition: color .5s ease-out;
 }
+
 h1{
     color: #4a4a4a;
     line-height: 60px;
@@ -38,11 +41,12 @@ h1{
     font-weight: normal;
     margin-top: 20px;
 }
+
 p{
     margin: 0;
 }
-.mas_notas{
 
+.mas_notas{
     margin-top: 100px;
     background-color: #40d3f4;
     text-align: center;
@@ -51,8 +55,9 @@ p{
     font-size: 1.2em;
     padding-top: 15px;
     padding-bottom: 15px;
-    color: #ffffff
+    color: #ffffff;
 }
+
 .home_visible_2{
     padding-top: 56px
 }
@@ -74,9 +79,6 @@ p{
     margin-bottom: 40px;
     margin-top:30px;
 }
-.contenido img{
-    width: 100%;
-}
 .contador table tr td{
     padding-right: 17px;
     max-height: 32px;
@@ -91,12 +93,69 @@ p{
     font-size: 1em;
     color: #d9d9d9;
 }
-.contenido .resumen{
+.cuerpo{
+    z-index: 1000;
+    background-color:  white;
+    margin-top: 33%;
+    width: 980px;
+    max-width: 100%;
+    min-width: 768px;
+    margin: 0 auto;
+    position: relative;
+    height:  100%;
+    display:  block;
+}
+
+.cuerpo .main-wrapper{
+      display: block;
+      height: 100%;
+      background-color: #fff;
+      margin-left: -13000px;
+      padding-left: 13000px;
+      overflow: hidden;
+}
+
+.cuerpo .main-wrapper:before, .cuerpo .main-wrapper:after
+{
+    content: '';
+    display: table;
+}
+
+.central{
+    width: 66%;
+    float: left;
+    background: #ffffff;
+    padding: 0px 15px;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.derecha{
+    background: #ffffff;
+    min-width: 314px;
+    width: 33%;
+    float: right;
+    padding: 30px 7px 0px 7px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.derecha_2.fijo{
+    position: fixed;
+    top: 30px;
+}
+
+
+
+.publicacion img{
+    width: 100%;
+}
+.publicacion .resumen{
     font-size: 1em;
     font-family: "Open Sans";
     color: #4a4a4a
 }
-.contenido p{
+.publicacion p{
     font-size: 1em;
     font-family: "Open Sans";
     max-width: 585px;
@@ -104,34 +163,26 @@ p{
     text-align: justify;
     color: #4a4a4a
 }
-.contenido{
+.publicacion{
     margin-left: auto;
-    max-width: 687px;
+    max-width: 100%;
+    padding-left: 96px;
+    box-sizing: border-box;
 }
-.contenido .titulo{
+.publicacion .titulo{
     max-width: 585px;
     margin-left: auto
 }
-.cuerpo{
+
+.publicacion figure{
+    margin: 0;
+    margin-bottom: 18px;
     position: relative;
-    width: 87%;
-    display: flex;
-    margin-right: auto;
+    text-align: right;
+    border: none !important;
+    margin-left: -96px;
 }
-.derecha{
-    max-width:300px;
-}
-.derecha{
-    float: right;
-    width: 30%;
-    background: #ffffff;
-    max-width:320px;
-}
-.central{
-    width: 70%;
-    float: left;
-    background: #ffffff
-}
+
 .head_noticias figure{
     max-width: 173px;
     width: 100%;
@@ -374,6 +425,7 @@ a:hover{
     color: #ffffff;
     background: #3b5998;
 }
+
 .twitter{
     width: 32%;
     text-align: left;
@@ -396,27 +448,14 @@ a:hover{
 }
 .sociales_2{
     font-family:"Museo-500";
-    margin-left: 15px;
-    margin-right: 15px;
-    padding-left: 5px;
-    padding-right: 5px;
-    padding-top: 11px;
-    padding-bottom: 49px;
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
 }
-.sociales_2 .facebook{
+.sociales_2 .red-social{
     text-align: left;
     width: 75%;
-    margin-bottom: 20px;
-}
-.sociales_2 .twitter{
-    text-align: left;
-    width: 75%;
-    margin-bottom: 20px;
-}
-.sociales_2 .shares{
-    text-align: left;
-    width: 75%;
-    margin-bottom: 20px;
+    margin-bottom: 15px
 }
 .sociales_2 input{
     width: 90%;
@@ -428,9 +467,7 @@ a:hover{
     display: inline-block;
 }
 .publicidad_der{
-    padding-right: 15px;
-    padding-left:15px;
-    padding-top: 20px;
+    padding: 0px;
 }
 .sociales_2 .copy{
     text-align: right;
@@ -442,6 +479,25 @@ a:hover{
     margin-left: auto;
     padding-top: 10px;
 }
+
+.sociales_2 .share{
+    padding: 10px 0px 5px;
+    display: block;
+}
+
+.top_cabezera{
+    margin-top: 82px;
+}
+
+.fixed
+{
+    position:fixed; 
+    top:0;
+    z-index: 1;
+    width: 100%;
+}
+
+
 @media (min-width: 481px) and (max-width: 975px) {
     /* Estilos para un tamaño entre 481px y 975px */
     .sociales_2 .facebook{
@@ -457,25 +513,9 @@ a:hover{
         margin-bottom: 20px;
     }
 }
-.top_cabezera{
-    margin-top: 82px;
-}
-.fixed
-{
-    position:fixed; 
-    top:0;
-    z-index: 1;
-    width: 100%;
-}
-.fijo{
-    position: fixed;
-    top: 0px;
-}
-.cuerpo{
 
-    width: 100%;
 
-}
+
 @media (max-width: 480px) {
     .head_noticias figure {
         margin: 0 auto
@@ -485,7 +525,7 @@ a:hover{
         width: 100%;
 
     }
-    .contenido p{
+    .publicacion p{
         padding-left: 10px;
         padding-right: 10px;
     }
@@ -505,7 +545,7 @@ a:hover{
         width: 100%
     }
     .twitter{
-        width: 100%;	
+        width: 100%;    
     }
     .shares{
         width: 100%;

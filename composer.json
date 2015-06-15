@@ -21,7 +21,9 @@
         "sensio/framework-extra-bundle": "~3.0,>=3.0.2",
         "incenteev/composer-parameter-handler": "~2.0",
         "doctrine/doctrine-fixtures-bundle": "2.2.*",
-        "liip/imagine-bundle": "*"
+        "liip/imagine-bundle": "*",
+        "hwi/oauth-bundle": "0.4.*@dev",
+        "facebook/php-sdk-v4" : "4.0.*"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

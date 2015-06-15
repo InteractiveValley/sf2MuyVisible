@@ -11,6 +11,15 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use InteractiveValley\PublicacionesBundle\Entity\Publicacion;
 use InteractiveValley\PublicacionesBundle\Form\PublicacionType;
 
+use Facebook\FacebookSession;
+use Facebook\FacebookRedirectLoginHelper;
+use Facebook\FacebookRequest;
+use Facebook\FacebookResponse;
+use Facebook\FacebookSDKException;
+use Facebook\FacebookRequestException;
+use Facebook\FacebookAuthorizationException;
+use Facebook\GraphObject;
+
 /**
  * Publicacion controller.
  *
@@ -18,7 +27,31 @@ use InteractiveValley\PublicacionesBundle\Form\PublicacionType;
  */
 class PublicacionController extends Controller
 {
-
+    var $helper = null;
+    var $sessionFacebook = null;
+    var $FacebookAccessToken = null;
+    
+    public function __construct() {
+        FacebookSession::setDefaultApplication('1461130887533217', '33874002b6d1e73fc66abd426e9dcebc');
+        //get user login token from FB
+        $this->helper = new FacebookRedirectLoginHelper( $this->generateUrl( 'facebooklogin', array(), true ) );
+        $this->helper->disableSessionStatusCheck();
+        try {
+           $this->sessionFacebook = $this->helper->getSessionFromRedirect();
+        } catch(FacebookRequestException $ex) {
+             echo $ex;
+          // When Facebook returns an error
+        } catch(Exception $ex) {
+            echo $ex;
+          // When validation fails or other local issues
+        }
+        if ($this->sessionFacebook) {
+            $this->FacebookAccessToken = $this->sessionFacebook->getToken();
+           // Logged in
+        }
+    }
+    
+    
     /**
      * Lists all Publicacion entities.
      *
