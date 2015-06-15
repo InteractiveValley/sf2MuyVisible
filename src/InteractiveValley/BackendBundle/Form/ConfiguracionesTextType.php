@@ -25,8 +25,7 @@ class ConfiguracionesTextType extends AbstractType
                 'label'=>'Texto largo',
                 'required'=>true,
                 'attr'=>array(
-                    'class'=>'cleditor tinymce form-control placeholder',
-                   'data-theme' => 'advanced',
+                    'class'=>'description form-control placeholder'
                     )
                 ))
             ->add('slug','hidden')

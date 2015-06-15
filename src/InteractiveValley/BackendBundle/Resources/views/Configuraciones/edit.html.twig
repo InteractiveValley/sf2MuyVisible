@@ -26,7 +26,8 @@
 <link rel="stylesheet" href="{{asset('css/jquery.gritter.css')}}">
 <!-- jQuery Validation Engine stylesheet -->
 <link rel="stylesheet" href="{{asset('css/validationEngine.jquery.css')}}">
-<link rel="stylesheet" href="{{asset('bundles/fmelfinder/css/elfinder.min.css')}}">
+    <!-- SummerNote -->
+    <link rel="stylesheet" href="{{asset('css/summernote.css')}}"> 
 {% endblock %}
 
 {% block mainbar %}
@@ -112,16 +113,6 @@
   {{ parent() }}
 
 <script src="{{asset('js/jquery-ui-1.9.2.custom.min.js')}}"></script> <!-- jQuery UI -->
-<script src="{{asset('js/fullcalendar.min.js')}}"></script> <!-- Full Google Calendar - Calendar -->
-<script src="{{asset('js/jquery.rateit.min.js')}}"></script> <!-- RateIt - Star rating -->
-<script src="{{asset('js/jquery.prettyPhoto.js')}}"></script> <!-- prettyPhoto -->
-
-<!-- jQuery Flot -->
-<script src="{{asset('js/excanvas.min.js')}}"></script>
-<script src="{{asset('js/jquery.flot.js')}}"></script>
-<script src="{{asset('js/jquery.flot.resize.js')}}"></script>
-<script src="{{asset('js/jquery.flot.pie.js')}}"></script>
-<script src="{{asset('js/jquery.flot.stack.js')}}"></script>
 
 <!-- jQuery Notification - Noty -->
 <script src="{{asset('js/jquery.noty.js')}}"></script> <!-- jQuery Notify -->
@@ -134,15 +125,8 @@
 <script src="{{asset('js/languages/jquery.validationEngine-es.js')}}"></script> <!-- jQuery Validation Engine Language File -->
 <script src="{{asset('js/jquery.validationEngine.js')}}"></script> <!-- jQuery Validation Engine -->
 
-<!-- Daterangepicker -->
-<script src="{{asset('js/moment.min.js')}}"></script>
-<script src="{{asset('js/daterangepicker.js')}}"></script>
-
-
-<script src="{{asset('js/sparklines.js')}}"></script> <!-- Sparklines -->
 <script src="{{asset('js/jquery.gritter.min.js')}}"></script> <!-- jQuery Gritter -->
-<script src="{{asset('js/jquery.cleditor.min.js')}}"></script> <!-- CLEditor -->
-<script src="{{asset('js/bootstrap-datetimepicker.min.js')}}"></script> <!-- Date picker -->
+<script src="{{asset('js/summernote.min.js')}}"></script> <!-- SummerNote -->
 <script src="{{asset('js/jquery.uniform.min.html')}}"></script> <!-- jQuery Uniform -->
 <script src="{{asset('js/jquery.slimscroll.min.js')}}"></script> <!-- jQuery SlimScroll -->
 <script src="{{asset('js/bootstrap-switch.min.js')}}"></script> <!-- Bootstrap Toggle -->
@@ -161,6 +145,14 @@ $(document).ready(function(){
   $("#botonGuardar").on("click",function(){
     $("#formconfiguracions").submit();
   });
+  
+  var $descripcion = $(".description");
+        $descripcion.summernote({
+            height: 300,                 // set editor height
+            minHeight: null,             // set minimum height of editor
+            maxHeight: null,             // set maximum height of editor
+            focus: false
+        });
   
   {% if errores | length > 0 %}
     {% for error in errores %}
