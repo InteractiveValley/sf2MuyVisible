@@ -85,6 +85,7 @@
     <script src="{{asset('js/layouts/top.js')}}"></script> <!-- jQuery Notify -->
     <!-- jQuery Notification ends -->
     <script src="{{asset('js/summernote.min.js')}}"></script> <!-- SummerNote -->
+    <script src="{{asset('js/plugin/summernote-ext-video.js')}}"></script>
     <script src="{{asset('js/languages/jquery.validationEngine-es.js')}}"></script> <!-- jQuery Validation Engine Language File -->
     <script src="{{asset('js/jquery.validationEngine.js')}}"></script> <!-- jQuery Validation Engine -->
     <script src="{{asset('js/jquery.slimscroll.min.js')}}"></script> <!-- jQuery SlimScroll -->
@@ -130,7 +131,10 @@
             focus: true,
             onImageUpload: function(files) {
                 sendFile(files[0],$descripcion,'editor.insertImage');
-            }
+            },
+            toolbar : [
+                ['group', [ 'video' ]]
+            ]
         });
 
         {% if errores | length > 0 %}
