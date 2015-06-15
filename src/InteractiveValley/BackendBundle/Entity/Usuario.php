@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * Usuario
  *
  * @ORM\Table(name="usuarios")
- * @ORM\Entity(repositoryClass="InteractiveValley\BackendBundle\Entity\UsuarioRepository")
+ * @ORM\Entity(repositoryClass="InteractiveValley\BackendBundle\Repository\UsuarioRepository")
  * @ORM\HasLifecycleCallbacks()
  * @UniqueEntity("email")
  */

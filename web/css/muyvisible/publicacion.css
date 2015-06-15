@@ -47,15 +47,15 @@ p{
 }
 
 .mas_notas{
-    margin-top: 100px;
     background-color: #40d3f4;
-    text-align: center;
-    width: 100%;
-    vertical-align: middle;
-    font-size: 1.2em;
-    padding-top: 15px;
-    padding-bottom: 15px;
     color: #ffffff;
+    font-size: 1.2em;
+    margin-top: 10px;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    text-align: center;
+    vertical-align: middle;
+    width: 100%;
 }
 
 .home_visible_2{
@@ -158,7 +158,6 @@ p{
 .publicacion p{
     font-size: 1em;
     font-family: "Open Sans";
-    max-width: 585px;
     margin-left: auto;
     text-align: justify;
     color: #4a4a4a
@@ -170,7 +169,7 @@ p{
     box-sizing: border-box;
 }
 .publicacion .titulo{
-    max-width: 585px;
+    max-width: 100%;
     margin-left: auto
 }
 
@@ -418,7 +417,6 @@ a:hover{
     font-size: 1.2em
 }
 .facebook{
-    width: 32%;
     text-align: left;
     padding-bottom: 15px;
     padding-top: 15px;
@@ -427,7 +425,6 @@ a:hover{
 }
 
 .twitter{
-    width: 32%;
     text-align: left;
     padding-bottom: 15px;
     padding-top: 15px;
@@ -435,7 +432,6 @@ a:hover{
     background: #55acee;
 }
 .shares{
-    width: 32%;
     text-align: left;
     padding-bottom: 15px;
     padding-top: 15px;
@@ -455,24 +451,56 @@ a:hover{
 .sociales_2 .red-social{
     text-align: left;
     width: 75%;
-    margin-bottom: 15px
+    margin-bottom: 15px;
+    display: inline-block;
+    vertical-align: top;
+    color: white;
 }
-.sociales_2 input{
-    width: 90%;
-    border: solid 1px #bcbcbc;
-    padding: 5px;
-    color: #55acee;
+.sociales_2 .red-social .icon{
+    margin-left: 20px;
 }
+
+.sociales_2 .red-social.facebook,
+.sociales_2 .red-social.twitter,
+.sociales_2 .red-social.shares
+{
+    padding: 15px 0px;
+}
+
 .sociales a div{
     display: inline-block;
 }
 .publicidad_der{
     padding: 0px;
 }
-.sociales_2 .copy{
-    text-align: right;
-    padding-right: 20px;
+
+.compartir-url .group-url-publicacion{
+    width: 100%;
 }
+
+.compartir-url .group-url-publicacion .url-publicacion,
+.compartir-url .group-url-publicacion .copy{
+    display: inline-block;
+    vertical-align: top;
+}
+
+.compartir-url .group-url-publicacion .url-publicacion{
+    border: solid 1px #bcbcbc;
+    padding: 7px 5px;
+    color: #55acee;
+    width: 70%;
+    
+}
+
+.compartir-url .group-url-publicacion .copy{
+    background-color: #40d3f4;
+    color: #ffffff;
+    font-size: 1em;
+    line-height: 1em;
+    padding: 7px 5px;
+    float: right;
+}
+
 .sociales_2 a{
     color: #55acee;
     text-align: right;
@@ -497,6 +525,62 @@ a:hover{
     width: 100%;
 }
 
+.margin-top{
+    margin-top: 16px;
+}
+
+.flex-container {
+  /* We first create a flex layout context */
+  display: flex;
+  
+  /* Then we define the flow direction and if we allow the items to wrap 
+   * Remember this is the same as:
+   * flex-direction: row;
+   * flex-wrap: wrap;
+   */
+  flex-flow: row wrap;
+  
+  /* Then we define how is distributed the remaining space */
+  justify-content: space-around;
+}
+
+.flex-container .flex-a{
+    width: 32%;
+    font-family:"Museo-500";
+    -webkit-transition: all .5s ease-in;
+    -o-transition: all .5s ease-in;
+    transition: all .5s ease-in;
+    opacity: 1;
+    text-align: center;
+}
+
+.flex-container .flex-a:hover{
+    color: white;
+    opacity: .8;
+}
+
+@media (max-width: 768px){
+    .central{
+        width: 55%;
+        padding: 0px 15px;
+    }
+    .derecha{
+        padding: 30px 7px 0px 7px;
+        margin-right: 20px;
+    }
+
+    .publicacion{
+        padding-left: 0px;
+    }
+
+    .publicacion figure{
+        margin-left: 0px;
+    }
+    .sociales{
+        margin: 0px;
+        padding: 11px 0px 20px;
+    }
+}
 
 @media (min-width: 481px) and (max-width: 975px) {
     /* Estilos para un tamaño entre 481px y 975px */
@@ -516,6 +600,7 @@ a:hover{
 
 
 
+
 @media (max-width: 480px) {
     .head_noticias figure {
         margin: 0 auto
@@ -523,11 +608,8 @@ a:hover{
     .cuerpo{
 
         width: 100%;
+        min-width: 100%;
 
-    }
-    .publicacion p{
-        padding-left: 10px;
-        padding-right: 10px;
     }
     h1{
         font-size: 1.5em;
@@ -544,7 +626,7 @@ a:hover{
     .facebook{
         width: 100%
     }
-    .twitter{
+    .twitter{   
         width: 100%;    
     }
     .shares{
@@ -558,6 +640,7 @@ a:hover{
     }
     .central{
         width: 100%;
+        min-width: 100%;
     }
     .contador{
         display: none;
@@ -572,20 +655,8 @@ a:hover{
     .space{
         width: 0%;
     }
-    .form_contact tr td{
-        padding-right: 1px;
-        padding-bottom: 1px;
-    }
-    .form_contact tr td input {
-        padding-left: 0px;
-        font-size: 0.7em
-    }
-    .form_contact tr td textarea{
-        padding-left: 0px;
-        font-size: 0.7em
-    }
-    .form_contact tr td .submit{
-        max-width: 100%;
+    .flex-container .flex-a{
+        font-size: .7em;
     }
 }
 

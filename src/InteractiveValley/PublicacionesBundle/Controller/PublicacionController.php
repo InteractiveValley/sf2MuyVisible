@@ -32,23 +32,23 @@ class PublicacionController extends Controller
     var $FacebookAccessToken = null;
     
     public function __construct() {
-        FacebookSession::setDefaultApplication('1461130887533217', '33874002b6d1e73fc66abd426e9dcebc');
-        //get user login token from FB
-        $this->helper = new FacebookRedirectLoginHelper( $this->generateUrl( 'facebooklogin', array(), true ) );
-        $this->helper->disableSessionStatusCheck();
-        try {
-           $this->sessionFacebook = $this->helper->getSessionFromRedirect();
-        } catch(FacebookRequestException $ex) {
-             echo $ex;
-          // When Facebook returns an error
-        } catch(Exception $ex) {
-            echo $ex;
-          // When validation fails or other local issues
-        }
-        if ($this->sessionFacebook) {
-            $this->FacebookAccessToken = $this->sessionFacebook->getToken();
-           // Logged in
-        }
+        // FacebookSession::setDefaultApplication('1461130887533217', '33874002b6d1e73fc66abd426e9dcebc');
+        // //get user login token from FB
+        // $this->helper = new FacebookRedirectLoginHelper( $this->generateUrl( 'facebooklogin', array(), true ) );
+        // $this->helper->disableSessionStatusCheck();
+        // try {
+        //    $this->sessionFacebook = $this->helper->getSessionFromRedirect();
+        // } catch(FacebookRequestException $ex) {
+        //      echo $ex;
+        //   // When Facebook returns an error
+        // } catch(Exception $ex) {
+        //     echo $ex;
+        //   // When validation fails or other local issues
+        // }
+        // if ($this->sessionFacebook) {
+        //     $this->FacebookAccessToken = $this->sessionFacebook->getToken();
+        //    // Logged in
+        // }
     }
     
     

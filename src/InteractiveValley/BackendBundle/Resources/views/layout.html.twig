@@ -17,11 +17,14 @@
 
     {% set publicaciones = "" %}
     {% set usuarios = "" %}
+    {% set configuraciones = "" %}
 
     {% if route == "publicaciones" %}
         {% set publicaciones = "class=open" %}
     {% elseif route == "usuarios" %}
-        {% set usuarios = "class=open" %}    
+        {% set usuarios = "class=open" %}
+    {% elseif route == "configuraciones" %}
+        {% set configuraciones = "class=open" %} 
     {% endif %}
 
     <header>
@@ -84,6 +87,11 @@
                 <li>
                     <a {{usuarios}} href="{{path('usuarios')}}">
                         <i class="fa fa-user"></i> <span>Usuarios</span>
+                    </a>
+                </li>
+                <li>
+                    <a {{configuraciones}} href="{{path('configuraciones')}}">
+                        <i class="fa fa-gears"></i> <span>Configuraciones</span>
                     </a>
                 </li>
             </ul>
