@@ -24,8 +24,16 @@
         opacity:0.6;
  	filter:alpha(opacity=60);*/
         color: white;
-        z-index: 10001;
+        z-index: 10001; 
+        text-align: center;
 }
+
+.bgmodal .close-modal{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+
 .bgmodal2{
     margin: 0 auto;
     padding: 0 auto;

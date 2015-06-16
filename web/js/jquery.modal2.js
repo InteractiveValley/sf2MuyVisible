@@ -30,7 +30,7 @@
         var wscr = $(window).width();
         var hscr = $(window).height();
 
-        $('#bgtransparent').animate({width: wscr, height: 20}, 'slow', null, function () {
+        $('#bgtransparent').animate({width: wscr, height: hscr}, 'fast', null, function () {
             $(this).animate({height: hscr}, 'slow', null, function () {
                 var moddiv = $('<div>').attr({'id': 'dialog-modal'});
                 moddiv.addClass('bgmodal2');

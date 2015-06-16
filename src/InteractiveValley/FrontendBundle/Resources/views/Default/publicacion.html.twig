@@ -2,6 +2,12 @@
 
 {% set urlAbsoluta = 'http://' ~ app.request.server.get('SERVER_NAME') %}
 
+{% if publicacion.image | length > 0 %}
+    {% set urlAbsolutaFoto = (publicacion.webPath | imagine_filter('image_social') ) %}
+{% else %}
+    {% set urlAbsolutaFoto = urlAbsoluta ~ asset('images/logo.png') %}
+{% endif %}
+
 {% set urlAbsolutaFoto = urlAbsoluta ~ asset('images/logo.png') %}
                                 
 {% block redes_sociales %}
@@ -10,11 +16,7 @@
     <meta property="og:url" content="{{url('publicacion',{'slug':publicacion.slug})}}" />
     <meta property="og:locale" content="es_ES">
     <meta property="og:description" content="{{publicacion.resume}}">
-    {% if publicacion.image | length > 0 %}
-    <meta property="og:image" content="{{ (publicacion.webPath | imagine_filter('image_social') )}}" />
-    {% else %}
     <meta property="og:image" content="{{ urlAbsolutaFoto }}" />
-    {% endif %}    
     <meta property="og:site_name" content="muyvisible.com">
     <meta property="fb:app_id" content="1461130887533217">
     <!--meta property="fb:admins" content="100000062710915"-->
@@ -28,28 +30,16 @@
     <meta name="twitter:description" content="{{publicacion.resume}}">
     <meta name="twitter:url" content="{{url('publicacion',{'slug':publicacion.slug})}}">
     <meta name="twitter:site" content="@MuyVisible">
-    {% if publicacion.image | length > 0 %}
-    <meta property="og:image" content="{{ (publicacion.webPath | imagine_filter('image_social') )}}" />
-    {% else %}
     <meta property="og:image" content="{{ urlAbsolutaFoto }}" />
-    {% endif %}
     <meta name="twitter:domain" content="muyvisible.com">
     
     <meta itemprop="name" content="{{publicacion.title}}">
     <meta itemprop="description" content="{{publicacion.resume}}">
-    {% if publicacion.image | length > 0 %}
-    <meta itemprop="image" content="{{ (publicacion.webPath | imagine_filter('image_social') )}}" />
-    {% else %}
     <meta itemprop="image" content="{{ urlAbsolutaFoto }}" />
-    {% endif %}
     
     <meta name="pubexchange:headline" content="{{publicacion.title}}">
     <meta name="pubexchange:description" content="{{publicacion.resume}}">
-    {% if publicacion.image | length > 0 %}
-    <meta name="pubexchange:image" content="{{ (publicacion.webPath | imagine_filter('image_social') )}}" />
-    {% else %}
     <meta name="pubexchange:image" content="{{ urlAbsolutaFoto }}" />
-    {% endif %}
 {% endblock %}    
 
 {% block class_body ' class="noticias"' %}
@@ -57,6 +47,7 @@
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" media="screen" href="{{asset('css/muyvisible/publicacion.css')}}"/>
+    <link rel="stylesheet" href="{{asset('css/modal.css')}}"/>
     <div id="fb-root"></div>
     <script>(function(d, s, id) {
       var js, fjs = d.getElementsByTagName(s)[0];
@@ -120,9 +111,9 @@
                         {% set via = ' by @MuyVisible' %}
                         <span class="share">COMPARTIR</span><br>
                         <div class="flex-container">
-                            <a class="flex-a facebook compartir" href="http://www.facebook.com/sharer.php?u={{urlPagina}}&display=popup"><span class="flaticon-facebook55"></span>&nbsp;FACEBOOK</a>
-                            <a class="flex-a twitter compartir" href="http://twitter.com/share?url=/&text={{title ~' ' ~ urlPagina ~ ' ' ~ via | url_encode }}"><span class="flaticon-twitter1"></span>&nbsp;TWITTER</a>
-                            <a class="flex-a shares" href="#"><span class="flaticon-share14"></span>&nbsp;SHARE</a>
+                            <a class="flex-a facebook  js-social-button" href="http://www.facebook.com/sharer.php?u={{urlPagina}}&display=popup" data-popup-width="555" data-popup-height="370"><span class="flaticon-facebook55"></span>&nbsp;FACEBOOK</a>
+                            <a class="flex-a twitter  js-social-button" href="http://twitter.com/share?url=/&text={{title ~' ' ~ urlPagina ~ ' ' ~ via | url_encode }}"  data-popup-width="555" data-popup-height="395"><span class="flaticon-twitter1"></span>&nbsp;TWITTER</a>
+                            <a class="flex-a shares open-modal-social" href="#"><span class="flaticon-share14"></span>&nbsp;SHARE</a>
                         </div>
                     </div>
                     <div class="comentarios_face">
@@ -136,13 +127,13 @@
                 <div class="publicidad_der"><img style="width:300px;" src="/images/box.png" alt=""></div>
                 <div class="sociales_2">
                     <span class="share">COMPARTIR</span>
-                    <a class="red-social facebook compartir" href="http://www.facebook.com/sharer.php?u={{urlPagina}}&display=popup">
+                    <a class="red-social facebook  js-social-button" href="http://www.facebook.com/sharer.php?u={{urlPagina}}&display=popup" data-popup-width="555" data-popup-height="370">
                         <span class="icon flaticon-facebook55"></span>&nbsp;FACEBOOK
                     </a>
-                    <a class="red-social twitter compartir" href="http://twitter.com/share?url=/&text={{title ~' ' ~ urlPagina ~ ' ' ~ via | url_encode }}">
+                    <a class="red-social twitter  js-social-button" href="http://twitter.com/share?url=/&text={{title ~' ' ~ urlPagina ~ ' ' ~ via | url_encode }}" data-popup-width="555" data-popup-height="395">
                         <span class="icon flaticon-twitter1"></span>&nbsp;TWITTER
                     </a>
-                    <a class="red-social shares text-center" href="#">
+                    <a class="red-social shares open-modal-social" href="#">
                         <span class="icon flaticon-share14"></span>&nbsp;SHARE
                     </a>
                 </div>
@@ -168,91 +159,74 @@
 
     <footer></footer>
     
-    <div id="share-modal" class="reveal-modal large open" style=" display: none;">
-            <ul class="block-grid eight-up mobile-four-up">
-                <li class="active">
-                    <a class="googleplus button js-social-button js-social-button-service" href="https://plus.google.com/share?url=http%3A%2F%2Fwww.fastcodesign.com%2F3047272%2Fattention-shoppers-brace-yourselves-for-beacons" data-social-slug="googleplus" data-popup-width="480" data-popup-height="665">
+    <div id="dialog-modal" class="bgmodal" style=" display: none;">
+            <ul class="list-redes-sociales">
+                <!--li class="item-red-social active">
+                    <a class="googleplus button js-social-button js-social-button-service" href="https://plus.google.com/share?url={{url('publicacion',{'slug':publicacion.slug})}}" data-social-slug="googleplus" data-popup-width="480" data-popup-height="665">
                         <span class="overlay">
                             <i class="icon-google-plus"></i>
                             <span class="label hide-for-medium-down">Google +</span>
                         </span>
-                        <img src="//b.fastcompany.net/multisite_files/fastcompany/static/sites/images/201410/all/spacer-1px.gif" width="1" height="1" class="spacer">
+                    </a>
+                </li-->
+                <li class="item-red-social">
+                    <a class="facebook button js-social-button js-social-button-service" href="http://www.facebook.com/sharer.php?u={{urlPagina|url_encode}}&display=popup" data-social-slug="facebook" data-popup-width="555" data-popup-height="370">
+                        <span class="icon flaticon-facebook55"></span>
                     </a>
                 </li>
-                <li class="">
-                    <a class="twitter button js-social-button js-social-button-service" href="http://twitter.com/share?url=%2F&amp;text=Attention%20shoppers%3A%20brace%20yourselves%20for%20beacons%20http%3A%2F%2Fwww.fastcodesign.com%2F3047272%2Fattention-shoppers-brace-yourselves-for-beacons%20by%20%40giovannicalabro%20via%20%40FastCoDesign" data-social-slug="twitter" data-popup-width="555" data-popup-height="395">
-                        <span class="overlay">
-                            <i class="icon-twitter"></i>
-                            <span class="label hide-for-medium-down">Twitter</span>
-                        </span>
-                        <img src="//b.fastcompany.net/multisite_files/fastcompany/static/sites/images/201410/all/spacer-1px.gif" width="1" height="1" class="spacer">
+                <li class="item-red-social">
+                    <a class="twitter button js-social-button js-social-button-service" href="http://twitter.com/share?url=/&text={{title ~' ' ~ urlPagina ~ ' ' ~ via | url_encode }}" data-social-slug="twitter" data-popup-width="555" data-popup-height="395">
+                        <span class="icon flaticon-twitter1"></span>
                     </a>
                 </li>
-                <li class="">
-                    <a class="facebook button js-social-button js-social-button-service" href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Fwww.fastcodesign.com%2F3047272%2Fattention-shoppers-brace-yourselves-for-beacons&amp;app_id=123388861116012&amp;display=popup" data-social-slug="facebook" data-popup-width="555" data-popup-height="370">
-                        <span class="overlay">
-                            <i class="icon-facebook"></i>
-                            <span class="label hide-for-medium-down">Facebook</span>
-                        </span>
-                        <img src="//b.fastcompany.net/multisite_files/fastcompany/static/sites/images/201410/all/spacer-1px.gif" width="1" height="1" class="spacer">
-                    </a>
-                </li>
-                <li class="">
-                    <a class="linkedin button js-social-button js-social-button-service" href="http://www.linkedin.com/shareArticle?mini=true&amp;url=http%3A%2F%2Fwww.fastcodesign.com%2F3047272%2Fattention-shoppers-brace-yourselves-for-beacons&amp;media=Attention%20Shoppers%3A%20Brace%20Yourselves%20For%20Beacons" data-social-slug="linkedin" data-popup-width="600" data-popup-height="465">
+                <!--li class="item-red-social">
+                    <a class="linkedin button js-social-button js-social-button-service" href="http://www.linkedin.com/shareArticle?mini=true&url={{urlPagina|url_encode}}&amp;media={{title|url_encode}}" data-social-slug="linkedin" data-popup-width="600" data-popup-height="465">
                         <span class="overlay">
                             <i class="icon-linkedin"></i>
                             <span class="label hide-for-medium-down">Linkedin</span>
                         </span>
-                        <img src="//b.fastcompany.net/multisite_files/fastcompany/static/sites/images/201410/all/spacer-1px.gif" width="1" height="1" class="spacer">
                     </a>
                 </li>
-                <li class="">
-                    <a class="pinterest button js-social-button js-social-button-service" href="http://www.pinterest.com/pin/create/button/?url=http%3A%2F%2Fwww.fastcodesign.com%2F3047272%2Fattention-shoppers-brace-yourselves-for-beacons&amp;description=Attention%20Shoppers%3A%20Brace%20Yourselves%20For%20Beacons&amp;media=http%3A%2F%2Fwww.fastcompany.com%2Fmultisite_files%2Ffastcompany%2Fimagecache%2F620x350%2Fposter%2F2015%2F06%2F3047272-poster-p-1-attention-shoppers-brace-yourselves-for-beacons.jpg" data-social-slug="pinterest" data-popup-width="750" data-popup-height="316">
+                <li class="item-red-social">
+                    <a class="pinterest button js-social-button js-social-button-service" href="http://www.pinterest.com/pin/create/button/?url={{urlPagina|url_encode}}&description={{title|url_encode}}&media={{ urlAbsolutaFoto | url_encode}}" data-social-slug="pinterest" data-popup-width="750" data-popup-height="316">
                         <span class="overlay">
                             <i class="icon-pinterest"></i>
                             <span class="label hide-for-medium-down">Pinterest</span>
                         </span>
-                        <img src="//b.fastcompany.net/multisite_files/fastcompany/static/sites/images/201410/all/spacer-1px.gif" width="1" height="1" class="spacer">
                     </a>
                 </li>
-                <li class="">
-                    <a class="stumbleupon button js-social-button js-social-button-service" href="http://www.stumbleupon.com/submit?url=http%3A%2F%2Fwww.fastcodesign.com%2F3047272%2Fattention-shoppers-brace-yourselves-for-beacons&amp;title=Attention%20Shoppers%3A%20Brace%20Yourselves%20For%20Beacons" data-social-slug="stumbleupon" data-popup-width="980" data-popup-height="575">
+                <li class="item-red-social">
+                    <a class="stumbleupon button js-social-button js-social-button-service" href="http://www.stumbleupon.com/submit?url={{urlPagina|url_encode}}&title={{title|url_encode}}" data-social-slug="stumbleupon" data-popup-width="980" data-popup-height="575">
                         <span class="overlay">
                             <i class="icon-stumbleupon"></i>
                             <span class="label hide-for-medium-down">Stumbleupon</span>
                         </span>
-                        <img src="//b.fastcompany.net/multisite_files/fastcompany/static/sites/images/201410/all/spacer-1px.gif" width="1" height="1" class="spacer">
                     </a>
                 </li>
-                <li class="">
-                    <a class="reddit button js-social-button js-social-button-service" href="http://www.reddit.com/submit?url=http%3A%2F%2Fwww.fastcodesign.com%2F3047272%2Fattention-shoppers-brace-yourselves-for-beacons&amp;title=Attention%20Shoppers%3A%20Brace%20Yourselves%20For%20Beacons" data-social-slug="reddit" data-popup-width="980" data-popup-height="750">
+                <li class="item-red-social">
+                    <a class="reddit button js-social-button js-social-button-service" href="http://www.reddit.com/submit?url={{urlPagina|url_encode}}&title={{title|url_encode}}" data-social-slug="reddit" data-popup-width="980" data-popup-height="750">
                         <span class="overlay">
                             <i class="icon-reddit"></i>
                             <span class="label hide-for-medium-down">Reddit</span>
                         </span>
-                        <img src="//b.fastcompany.net/multisite_files/fastcompany/static/sites/images/201410/all/spacer-1px.gif" width="1" height="1" class="spacer">
                     </a>
-                </li>
-                <li>
-                    <a class="email button js-social-button js-social-button-email" href="mailto:?body=Attention Shoppers: Brace Yourselves For Beacons%0A%0AThe spread of mobile payment platforms opens a door for stores to cater to customers' personal preferences on site.%0A%0Ahttp://www.fastcodesign.com/3047272/attention-shoppers-brace-yourselves-for-beacons" data-social-slug="email" data-popup-width="500" data-popup-height="400">
-                        <span class="overlay">
-                            <i class="icon-envelope"></i>
-                            <span class="label hide-for-medium-down">Email</span>
-                        </span>
-                        <img src="//b.fastcompany.net/multisite_files/fastcompany/static/sites/images/201410/all/spacer-1px.gif" width="1" height="1" class="spacer">
+                </li-->
+                <li class="item-red-social">
+                    <a class="email button js-social-button js-social-button-email" href="mailto:?body={{title|url_encode}}.%0A%0A{{urlPagina}}." data-social-slug="email" data-popup-width="500" data-popup-height="400">
+                        <span class="icon flaticon-share14"></span>
                     </a>
                 </li>
             </ul>
-            <button class="button close-reveal-modal share-modal-close">
-                <i class="icon-times"></i>
-            </button>
+            <a href="#" class="close-modal"><span class="icon flaticon-share14"></span></a>
         </div>
     
     {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
+    <script src="{{asset('js/jquery.modal-social.js')}}"></script>
     <script>
+        var openModal = false;
         $(function () {
             $(window).scroll(function () {
                 if ($(window).scrollTop() > 620){
@@ -268,10 +242,16 @@
                 posicionarMenu();
             });
             
-            $('.compartir').on('click',function(e){
+            $('.js-social-button').on('click',function(e){
                e.preventDefault();
                e.stopPropagation();
-               window.open($(this).attr('href'),'','width=600,height=400,left=50,top=50,toolbar=yes');
+               if(openModal){
+                   closeModalSocial();
+               }
+               var url = $(this).attr('href');
+               var width = $(this).data('popup-width');
+               var height = $(this).data('popup-height');
+               window.open(url,'','width='+width+',height='+height+',left=50,top=50,toolbar=yes');
                return false;
             });
             var anchoCentral = $(".central").width();
@@ -287,6 +267,18 @@
                e.preventDefault();
                window.clipboardData.setData("Text", $(".url-publicacion").val());
             });
+            
+            $(".open-modal-social").on("click",function(){
+                $().modalSocial();
+                openModal = true;
+            });
+            
+            $(".close-modal").on("click",function(e){
+               e.preventDefault();
+               closeModalSocial();
+               openModal = false;
+            });
+            
             posicionarMenu();
         });
         function posicionarMenu() {

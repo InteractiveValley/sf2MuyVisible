@@ -143,6 +143,7 @@ p{
 .derecha_2.fijo{
     position: fixed;
     top: 30px;
+    width: 300px;
 }
 
 
@@ -559,6 +560,27 @@ a:hover{
     opacity: .8;
 }
 
+.list-redes-sociales{
+    padding: 0px;
+    margin: 0px;
+}
+
+.list-redes-sociales .item-red-social{
+    list-style: none;
+    display: inline-block;
+    vertical-align: top;
+    margin: 0px 20px;
+}
+
+.list-redes-sociales .item-red-social a.js-social-button{
+    background-color: black;
+    color: white;
+    padding: 20px;
+    display: block;
+    border-radius: 50%;
+}
+
+
 @media (max-width: 768px){
     .central{
         width: 55%;
@@ -601,7 +623,7 @@ a:hover{
 
 
 
-@media (max-width: 480px) {
+@media (max-width: 640px) {
     .head_noticias figure {
         margin: 0 auto
     }
