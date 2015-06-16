@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use InteractiveValley\FrontendBundle\Form\ContactoType;
 use InteractiveValley\FrontendBundle\Entity\Contacto;
+use InteractiveValley\BackendBundle\Utils\Richsys as RpsStms;
 
 class DefaultController extends Controller
 {
@@ -59,9 +60,16 @@ class DefaultController extends Controller
                 $this->setVAloresSession('publicaciones', $publicacionesSession);
             }
         }
-
+        $url= $this->generateUrl('publicacion', array('slug'=>$publicacion->getSlug()), true);
+        //var_dump($url); die;
+        $url = "http://www.fastcodesign.com/3047272/attention-shoppers-brace-yourselves-for-beacons";
+        $shareFacebook = RpsStms::getCountShareFacebook($url);
+        $shareTwitter = RpsStms::getCountShareTwitter($url);
+        //var_dump(array('shareFacebook' => $shareFacebook,'shareTwitter' => $shareTwitter)); die;
         return array(
             'publicacion'=>$publicacion,
+            'shareFacebook' => $shareFacebook,
+            'shareTwitter' => $shareTwitter
         );
     }
     

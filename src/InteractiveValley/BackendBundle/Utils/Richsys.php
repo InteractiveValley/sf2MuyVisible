@@ -461,6 +461,40 @@ EOF;
         }
     }
     
+    static public function getCountShareFacebook($url){
+        $browser = new Browser();
+        try {
+            $pagina = "http://graph.facebook.com/$url";
+            $response = $browser->get($pagina);
+        } catch (\RuntimeException $e) {
+            throw new \RuntimeException('Unable to retrieve the video information for :' . $url, null, $e);
+        }
+
+        $metadata = json_decode($response->getContent(), true);
+
+        if (!$metadata) {
+            throw new \RuntimeException('Unable to decode the link information :' . $url);
+        }
+        return $metadata['shares'];
+    }
+    
+    static public function getCountShareTwitter($url){
+        $browser = new Browser();
+        try {
+            $pagina = "https://cdn.api.twitter.com/1/urls/count.json?url=$url";
+            $response = $browser->get($pagina);
+        } catch (\RuntimeException $e) {
+            throw new \RuntimeException('Unable to retrieve the video information for :' . $url, null, $e);
+        }
+
+        $metadata = json_decode($response->getContent(), true);
+
+        if (!$metadata) {
+            throw new \RuntimeException('Unable to decode the video information for :' . $url);
+        }
+        return $metadata['count'];
+    }
+    
     static public function cut_string($string, $charlimit)
     {
         if(substr($string,$charlimit-1,1) != ' ')
