@@ -62,7 +62,7 @@ class DefaultController extends Controller
         }
         $url= $this->generateUrl('publicacion', array('slug'=>$publicacion->getSlug()), true);
         //var_dump($url); die;
-        $url = "http://www.fastcodesign.com/3047272/attention-shoppers-brace-yourselves-for-beacons";
+        //$url = "http://www.fastcodesign.com/3047272/attention-shoppers-brace-yourselves-for-beacons";
         $shareFacebook = RpsStms::getCountShareFacebook($url);
         $shareTwitter = RpsStms::getCountShareTwitter($url);
         //var_dump(array('shareFacebook' => $shareFacebook,'shareTwitter' => $shareTwitter)); die;
