@@ -475,7 +475,12 @@ EOF;
         if (!$metadata) {
             throw new \RuntimeException('Unable to decode the link information :' . $url);
         }
-        return $metadata['shares'];
+        //var_dump($metadata); die;
+        if(isset($metadata['shares'])){
+            return $metadata['shares'];
+        }else{
+            return '0';
+        }
     }
     
     static public function getCountShareTwitter($url){
@@ -492,7 +497,11 @@ EOF;
         if (!$metadata) {
             throw new \RuntimeException('Unable to decode the video information for :' . $url);
         }
-        return $metadata['count'];
+        if(isset($metadata['count'])){
+            return $metadata['count'];
+        }else{
+            return '0';
+        }
     }
     
     static public function cut_string($string, $charlimit)

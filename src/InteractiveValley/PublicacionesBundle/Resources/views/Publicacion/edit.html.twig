@@ -131,10 +131,7 @@
             focus: true,
             onImageUpload: function(files) {
                 sendFile(files[0],$descripcion,'editor.insertImage');
-            },
-            toolbar : [
-                ['group', [ 'video' ]]
-            ]
+            }
         });
 
         {% if errores | length > 0 %}

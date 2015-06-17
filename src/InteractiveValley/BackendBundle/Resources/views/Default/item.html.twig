@@ -9,16 +9,20 @@
     </td>
     <td>{{ entity.title }}</td>
     <td>{{ entity.resume | raw }}</td>
-    <td>{{ entity.isActive | isActive | raw }}</td>
-    <td>{{ entity.createdAt | date('d/m/Y Gia') }}</td>
-    <td>{{ entity.author.name }}</td>
-    <td>{{ entity.contViews }}</td>
-    <td>{{ entity.status }}</td>
+    <td>
+        <ul>
+            <li>Activo?: {{ entity.isActive | isActive | raw }}</li>
+            <li>Creado: {{ entity.createdAt | date('d/m/Y G:ia') }}</li>
+            <li>Author: {{ entity.author.name }}</li>
+            <li>Views: {{ entity.contViews }}</li>
+        </ul>
+    </td>
+    <td>{{ entity.status | status | raw }}</td>
     <td>
         <button onclick="javascript:editarRegistro('{{ path('publicaciones_show', { 'id': entity.id }) }}', '#registro-{{entity.id}}')" class="btn btn-xs btn-info"><i class="fa fa-folder-open"></i> </button>
         <a href="{{ path('publicacion', { 'slug': entity.slug,'no-count':'1' }) }}" target="_blank" class="btn btn-xs btn-warning"><i class="fa fa-eye"></i> </a>
         {% if entity.status  is constant('InteractiveValley\\PublicacionesBundle\\Entity\\Publicacion::STATUS_EN_PROCESO') %}
-            <button data-url="{{path('publicacion_revisar', { 'id': entity.id }) }}" onclick="javascript:backend({{entity.id}}, '.revisar')" class="btn btn-xs btn-danger revisar"><i class="fa fa-times"></i></button>
+            <button data-url="{{path('publicacion_revisar', { 'id': entity.id }) }}" onclick="javascript:backend({{entity.id}}, '.revisar')" class="btn btn-xs btn-danger revisar"><i class="fa fa-frown-o"></i></button>
             <button data-url="{{path('publicacion_publicar', { 'id': entity.id }) }}" onclick="javascript:backend({{entity.id}}, '.publicar')" class="btn btn-xs btn-success publicar"><i class="fa fa-check"></i></button>
             {% endif %}
     </td>

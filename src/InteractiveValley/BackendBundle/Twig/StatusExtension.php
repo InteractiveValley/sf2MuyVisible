@@ -17,13 +17,13 @@ class StatusExtension extends \Twig_Extension
     {
         switch($status){
             case Publicacion::STATUS_EN_PROCESO:
-                $label = '<span class="label label-warning">En proceso</span>';
+                $label = '<span class="label label-warning">Pendiente</span>';
                 break;
             case Publicacion::STATUS_REVISAR:
                 $label = '<span class="label label-info">Revisar</span>';
                 break;
             case Publicacion::STATUS_POSTEADO:
-                $label = '<span class="label label-success">Publicada</span>';
+                $label = '<span class="label label-success">Posteado</span>';
                 break;
         }
         return $label;
