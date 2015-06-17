@@ -10,8 +10,8 @@
                                 
 {% block redes_sociales %}
     
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="{{publicacion.title}}" />
+    <meta property="og:type" content="website"/>
+    <meta property="og:title" content="{{publicacion.title}}"/>
     <meta property="og:url" content="{{url('publicacion',{'slug':publicacion.slug})}}" />
     <meta property="og:locale" content="es_ES">
     <meta property="og:description" content="{{publicacion.resume|striptags}}">
@@ -47,17 +47,17 @@
     {{ parent() }}
     <link rel="stylesheet" media="screen" href="{{asset('css/muyvisible/publicacion.css')}}"/>
     <link rel="stylesheet" href="{{asset('css/modal.css')}}"/>
-    <div id="fb-root"></div>
-    <script>(function(d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
-      js.src = "//connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v2.3&appId=1461130887533217";
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));</script>
 {% endblock %}
 
 {% block body %}
+       <div id="fb-root"></div>
+        <script>(function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) return;
+          js = d.createElement(s); js.id = id;
+          js.src = "//connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v2.3&appId=1461130887533217";
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
     {% if publicacion.image | length > 0 %}
         <header class="head_noticias">
             <div class="publicidad_head"><img src="/images/banner1.png" alt=""></div>
