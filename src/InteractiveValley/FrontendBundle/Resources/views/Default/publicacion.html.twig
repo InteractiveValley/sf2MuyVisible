@@ -13,7 +13,7 @@
     <meta property="og:title" content="{{publicacion.title}}" />
     <meta property="og:url" content="{{url('publicacion',{'slug':publicacion.slug})}}" />
     <meta property="og:locale" content="es_ES">
-    <meta property="og:description" content="{{publicacion.resume}}">
+    <meta property="og:description" content="{{publicacion.resume|striptags}}">
     <meta property="og:image" content="{{ urlAbsolutaFoto }}" />
     <meta property="og:site_name" content="muyvisible.com">
     <meta property="fb:app_id" content="1461130887533217">
@@ -25,18 +25,18 @@
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{publicacion.title}}">
-    <meta name="twitter:description" content="{{publicacion.resume}}">
+    <meta name="twitter:description" content="{{publicacion.resume|striptags}}">
     <meta name="twitter:url" content="{{url('publicacion',{'slug':publicacion.slug})}}">
     <meta name="twitter:site" content="@MuyVisible">
     <meta property="og:image" content="{{ urlAbsolutaFoto }}" />
     <meta name="twitter:domain" content="muyvisible.com">
     
     <meta itemprop="name" content="{{publicacion.title}}">
-    <meta itemprop="description" content="{{publicacion.resume}}">
+    <meta itemprop="description" content="{{publicacion.resume|striptags}}">
     <meta itemprop="image" content="{{ urlAbsolutaFoto }}" />
     
     <meta name="pubexchange:headline" content="{{publicacion.title}}">
-    <meta name="pubexchange:description" content="{{publicacion.resume}}">
+    <meta name="pubexchange:description" content="{{publicacion.resume|striptags}}">
     <meta name="pubexchange:image" content="{{ urlAbsolutaFoto }}" />
 {% endblock %}    
 
