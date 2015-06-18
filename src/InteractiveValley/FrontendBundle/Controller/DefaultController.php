@@ -36,49 +36,6 @@ class DefaultController extends Controller
     }
     
     /**
-     * @Route("/p/{slug}", name="publicacion")
-     * @Template("FrontendBundle:Default:publicacion.html.twig")
-     */
-    public function publicacionAction(Request $request,$slug)
-    {
-        $noCount = $request->query->get('no-count',0);
-        $em = $this->getDoctrine()->getManager();
-        
-        $publicacion = $em->getRepository('PublicacionesBundle:Publicacion')
-                          ->findOneBy(array('slug'=>$slug));
-        
-        if (!$publicacion) {
-            return $this->redirect($this->generateUrl('homepage'));
-        }
-        
-        if (!$noCount) {
-            $publicacionesSession = $this->getValoresSession('publicaciones');
-            if (!isset($publicacionesSession[$publicacion->getSlug()])) {
-                $publicacion->setContViews($publicacion->getContViews() + 1);
-                $em->flush();
-                $publicacionesSession[$publicacion->getSlug()] = true;
-                $this->setVAloresSession('publicaciones', $publicacionesSession);
-            }
-        }
-        $url= $this->generateUrl('publicacion', array('slug'=>$publicacion->getSlug()), true);
-        //var_dump($url); die;
-        //$url = "http://www.fastcodesign.com/3047272/attention-shoppers-brace-yourselves-for-beacons";
-        try{
-        $shareFacebook = RpsStms::getCountShareFacebook($url);
-        $shareTwitter = RpsStms::getCountShareTwitter($url);
-        }catch(\RuntimeException $e){
-            $shareFacebook = 0;
-            $shareTwitter = 0;
-        }
-        //var_dump(array('shareFacebook' => $shareFacebook,'shareTwitter' => $shareTwitter)); die;
-        return array(
-            'publicacion'=>$publicacion,
-            'shareFacebook' => $shareFacebook,
-            'shareTwitter' => $shareTwitter
-        );
-    }
-    
-    /**
      * @Route("/contacto", name="contacto")
      * @Method({"GET", "POST"})
      */
@@ -131,4 +88,49 @@ class DefaultController extends Controller
                     'mensaje' => $mensaje
         ));
     }
+    
+    /**
+     * @Route("/{slug}", name="publicacion")
+     * @Template("FrontendBundle:Default:publicacion.html.twig")
+     */
+    public function publicacionAction(Request $request,$slug)
+    {
+        $noCount = $request->query->get('no-count',0);
+        $em = $this->getDoctrine()->getManager();
+        
+        $publicacion = $em->getRepository('PublicacionesBundle:Publicacion')
+                          ->findOneBy(array('slug'=>$slug));
+        
+        if (!$publicacion) {
+            return $this->redirect($this->generateUrl('homepage'));
+        }
+        
+        if (!$noCount) {
+            $publicacionesSession = $this->getValoresSession('publicaciones');
+            if (!isset($publicacionesSession[$publicacion->getSlug()])) {
+                $publicacion->setContViews($publicacion->getContViews() + 1);
+                $em->flush();
+                $publicacionesSession[$publicacion->getSlug()] = true;
+                $this->setVAloresSession('publicaciones', $publicacionesSession);
+            }
+        }
+        $url= $this->generateUrl('publicacion', array('slug'=>$publicacion->getSlug()), true);
+        //var_dump($url); die;
+        //$url = "http://www.fastcodesign.com/3047272/attention-shoppers-brace-yourselves-for-beacons";
+        try{
+            $shareFacebook = RpsStms::getCountShareFacebook($url);
+            $shareTwitter = RpsStms::getCountShareTwitter($url);
+        }catch(\RuntimeException $e){
+            $shareFacebook = 0;
+            $shareTwitter = 0;
+        }
+        //var_dump(array('shareFacebook' => $shareFacebook,'shareTwitter' => $shareTwitter)); die;
+        return array(
+            'publicacion'=>$publicacion,
+            'shareFacebook' => $shareFacebook,
+            'shareTwitter' => $shareTwitter
+        );
+    }
+    
+    
 }

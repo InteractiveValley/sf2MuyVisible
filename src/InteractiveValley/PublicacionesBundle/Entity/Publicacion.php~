@@ -89,6 +89,13 @@ class Publicacion
      * @ORM\Column(name="contViews", type="integer")
      */
     private $contViews = 0;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="referencia", type="string", length=255,nullable=true)
+     */
+    private $referencia;
 
     /**
      * @var integer
@@ -690,5 +697,28 @@ class Publicacion
     public function getAuthor()
     {
         return $this->author;
+    }
+
+    /**
+     * Set status
+     *
+     * @param integer $status
+     * @return Publicacion
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return integer 
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 }

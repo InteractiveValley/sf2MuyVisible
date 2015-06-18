@@ -24,6 +24,6 @@
         {% if entity.status  is constant('InteractiveValley\\PublicacionesBundle\\Entity\\Publicacion::STATUS_EN_PROCESO') %}
             <button data-url="{{path('publicacion_revisar', { 'id': entity.id }) }}" onclick="javascript:backend({{entity.id}}, '.revisar')" class="btn btn-xs btn-danger revisar"><i class="fa fa-frown-o"></i></button>
             <button data-url="{{path('publicacion_publicar', { 'id': entity.id }) }}" onclick="javascript:backend({{entity.id}}, '.publicar')" class="btn btn-xs btn-success publicar"><i class="fa fa-check"></i></button>
-            {% endif %}
+        {% endif %}
     </td>
 </tr>

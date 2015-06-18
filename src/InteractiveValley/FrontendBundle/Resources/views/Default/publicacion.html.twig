@@ -62,14 +62,24 @@
 {% endblock %}
 
 {% block body %}
-       <div id="fb-root"></div>
-        <script>(function(d, s, id) {
-          var js, fjs = d.getElementsByTagName(s)[0];
-          if (d.getElementById(id)) return;
-          js = d.createElement(s); js.id = id;
-          js.src = "//connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v2.3&appId=1461130887533217";
-          fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));</script>
+    <div id="fb-root"></div>
+        <script>
+        window.fbAsyncInit = function() {
+          FB.init({
+            appId      : '1461130887533217',
+            xfbml      : true,
+            version    : 'v2.3'
+          });
+        };
+
+        (function(d, s, id){
+           var js, fjs = d.getElementsByTagName(s)[0];
+           if (d.getElementById(id)) {return;}
+           js = d.createElement(s); js.id = id;
+           js.src = "//connect.facebook.net/es_LA/sdk.js";
+           fjs.parentNode.insertBefore(js, fjs);
+         }(document, 'script', 'facebook-jssdk'));
+    </script>
     {% if publicacion.image | length > 0 %}
         <header class="head_noticias">
             <div class="publicidad_head"><img src="/images/banner1.png" alt=""></div>
@@ -115,7 +125,10 @@
                     {{ publicacion.description | raw }}
                 </div>
                 <footer>
-                    <div class="fecha">{{ publicacion.createdAt | translate_date }} | {{ publicacion.createdAt|date("G:i A") }}</div>
+                    <div class="info">
+                        <div class="referencia">{{ ( publicacion.referencia|length>0)? 'Fuente/Referencia: '~ publicacion.referencia :'' }}</div>
+                        <div class="fecha">{{ publicacion.createdAt | translate_date }} | {{ publicacion.createdAt|date("G:i A") }}</div>
+                    </div>
                     <div class="sociales">
                         {% set urlPagina = url('publicacion',{'slug':publicacion.slug}) %}
                         {% set title = publicacion.title %}
@@ -128,7 +141,7 @@
                         </div>
                     </div>
                     <div class="comentarios_face">
-                        <div class="fb-comments" data-href="{{url('publicacion',{'slug':publicacion.slug})}}" data-numposts="5"></div>
+                        <div class="fb-comments" data-href="{{url('publicacion',{'slug':publicacion.slug})}}" data-numposts="5" data-width="100%"></div>
                     </div>
                 </footer>
             </article>
@@ -266,13 +279,13 @@
                return false;
             });
             var anchoCentral = $(".central").width();
-            setTimeout(function(){
+            /*setTimeout(function(){
                 if(anchoCentral>500){
                     $("iframe").css({'width': (anchoCentral-98)+'px'});
                 }else{
                     $("iframe").css({'width': anchoCentral+'px'});
                 }
-            },2000);
+            },2000);*/
             
             $(".botonCopiarUrlPublicacion").on("click",function(e){
                e.preventDefault();

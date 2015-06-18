@@ -66,6 +66,7 @@ class PublicacionType extends AbstractType
                     'data-bind'=>'value: categoria',
                     )
                 ))
+            ->add('referencia','text',array('label'=>'Fuente/Referencia','attr'=>array('class'=>'form-control')))
             ->add($builder->create('author', 'hidden')->addModelTransformer($usuarioTransformer))
         ;
     }

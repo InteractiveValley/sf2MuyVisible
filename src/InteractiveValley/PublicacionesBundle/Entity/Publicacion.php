@@ -89,6 +89,13 @@ class Publicacion
      * @ORM\Column(name="contViews", type="integer")
      */
     private $contViews = 0;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="referencia", type="string", length=255,nullable=true)
+     */
+    private $referencia;
 
     /**
      * @var integer
@@ -713,5 +720,28 @@ class Publicacion
     public function getStatus()
     {
         return $this->status;
+    }
+
+    /**
+     * Set referencia
+     *
+     * @param string $referencia
+     * @return Publicacion
+     */
+    public function setReferencia($referencia)
+    {
+        $this->referencia = $referencia;
+
+        return $this;
+    }
+
+    /**
+     * Get referencia
+     *
+     * @return string 
+     */
+    public function getReferencia()
+    {
+        return $this->referencia;
     }
 }

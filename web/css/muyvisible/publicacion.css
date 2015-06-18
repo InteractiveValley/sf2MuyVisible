@@ -440,8 +440,8 @@ a:hover{
     background: #333333;
 }
 .comentarios_face{
-    background-color: #919191;
-    margin-top: 40px;
+    /*background-color: #919191;*/
+    margin-top: 1em;
 }
 .sociales_2{
     font-family:"Museo-500";
