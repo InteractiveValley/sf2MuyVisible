@@ -47,11 +47,13 @@ class DefaultController extends Controller
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
             if ($form->isValid()) {
+                $configuracion = $em->getRepository('BackendBundle:Configuraciones')
+                                    ->findOneBy(array('slug' => 'email-contacto'));
                 $datos = $form->getData();
                 $message = \Swift_Message::newInstance()
                         ->setSubject('Contacto desde pagina')
                         ->setFrom($datos->getEmail())
-                        ->setTo($this->container->getParameter('richpolis.emails.to_email'))
+                        ->setTo($configuracion->getTexto())
                         ->setBody($this->renderView('FrontendBundle:Default:contactoEmail.html.twig', array('datos' => $datos)), 'text/html');
                 $this->get('mailer')->send($message);
                 // Redirige - Esto es importante para prevenir que el usuario
@@ -97,6 +99,13 @@ class DefaultController extends Controller
     {
         $noCount = $request->query->get('no-count',0);
         $em = $this->getDoctrine()->getManager();
+        
+        $configuracion = $em->getRepository('BackendBundle:Configuraciones')
+                        ->findOneBy(array('slug' => 'turn-down-for-what'));
+        
+        if($configuracion->getTexto()=='on'){
+            return $this->redirect($this->generateUrl('homepage'));
+        }
         
         $publicacion = $em->getRepository('PublicacionesBundle:Publicacion')
                           ->findOneBy(array('slug'=>$slug));

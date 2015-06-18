@@ -29,6 +29,25 @@ a{
     transition: color .5s ease-out;
 }
 
+footer .info{
+    margin-top: 3em;
+    overflow: hidden;
+    font-family: 'Open Sans';
+    font-size: 10px;
+    color #9d9d9d;
+}
+
+footer .info .referencia{
+    float: left;
+    color: #4a4a4a;
+    font-weight:  bold;
+}
+
+footer .info .fecha{
+    float: right;
+    font-size: 14px;
+}
+
 h1{
     color: #4a4a4a;
     line-height: 60px;
@@ -61,11 +80,7 @@ p{
 .home_visible_2{
     padding-top: 56px
 }
-.fecha{
-    text-align: right;
-    margin-top: 236px;
-    margin-right: 13px;
-}
+
 .sociales span{
     font-family:"Museo-500";
 }

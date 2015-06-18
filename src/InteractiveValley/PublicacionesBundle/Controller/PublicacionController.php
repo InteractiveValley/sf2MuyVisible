@@ -63,7 +63,8 @@ class PublicacionController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('PublicacionesBundle:Publicacion')->findAll();
+        $entities = $em->getRepository('PublicacionesBundle:Publicacion')
+                       ->findBy(array(),array('createdAt'=>'DESC'));
 
         return array(
             'entities' => $entities,

@@ -4,10 +4,10 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block redes_sociales %}{% endblock %}
         {% block favicon %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
         {% endblock %}
-        {% block redes_sociales %}{% endblock %}
         {% block stylesheets %}{% endblock %}
     </head>
     <body {% block class_body %}{% endblock %}>

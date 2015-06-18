@@ -2,32 +2,16 @@
 
 {% block stylesheets %}
   {{ parent() }}
-  <!-- Calendar -->
-  <link rel="stylesheet" href="{{asset('css/fullcalendar.css')}}">
-  <!-- prettyPhoto -->
-  <link rel="stylesheet" href="{{asset('css/prettyPhoto.css')}}">  
-  <!-- Star rating -->
-  <link rel="stylesheet" href="{{asset('css/rateit.css')}}">
-  <!-- Date picker -->
-  <link rel="stylesheet" href="{{asset('css/bootstrap-datetimepicker.min.css')}}">
-  <!-- CLEditor -->
-  <link rel="stylesheet" href="{{asset('css/jquery.cleditor.css')}}"> 
-  <!-- Uniform -->
-  <link rel="stylesheet" href="{{asset('css/uniform.default.html')}}"> 
-  <!-- Uniform -->
-  <link rel="stylesheet" href="{{asset('css/daterangepicker-bs3.css')}}" />
-  <!-- Bootstrap toggle -->
-  <link rel="stylesheet" href="{{asset('css/bootstrap-switch.css')}}">
-    <!-- Bootstrap toggle -->
-  <link rel="stylesheet" href="{{asset('js/datatables/css/dataTables.bootstrap.css')}}">
-  <!-- Main stylesheet -->
-  <link rel="stylesheet" href="{{asset('css/style.css')}}">
-  <!-- Widgets stylesheet -->
-  <link rel="stylesheet" href="{{asset('css/widgets.css')}}">   
+    <!-- Datatables -->
+    <link rel="stylesheet" href="{{asset('js/datatables/css/dataTables.bootstrap.css')}}">
+    <!-- Main stylesheet -->
+    <link rel="stylesheet" href="{{asset('css/style.css')}}">
+    <!-- Widgets stylesheet -->
+    <link rel="stylesheet" href="{{asset('css/widgets.css')}}">   
     <!-- Gritter Notifications stylesheet -->
-  <link rel="stylesheet" href="{{asset('css/jquery.gritter.css')}}"> 
-
+    <link rel="stylesheet" href="{{asset('css/jquery.gritter.css')}}"> 
 {% endblock %}
+
 
 {% block mainbar %}
           <!-- Main bar -->
@@ -43,7 +27,7 @@
           <!--Divider-->
           <span class="divider">/</span> 
           <a href="{{path('configuraciones')}}" class="bread-current">Configuraciones</a>
-          {% if is_granted('ROLE_SUPER_ADMIN') %}
+          {% if is_granted('ROLE_ADMIN') %}
           <a href="{{path('configuraciones_select')}}" class="btn btn-info pull-right" style="color: white; margin-left: 5px;">Crear configuracion</a>
           {% endif %}
         </div>
@@ -149,16 +133,6 @@
   {{ parent() }}
 
 <script src="{{asset('js/jquery-ui-1.9.2.custom.min.js')}}"></script> <!-- jQuery UI -->
-<script src="{{asset('js/fullcalendar.min.js')}}"></script> <!-- Full Google Calendar - Calendar -->
-<script src="{{asset('js/jquery.rateit.min.js')}}"></script> <!-- RateIt - Star rating -->
-<script src="{{asset('js/jquery.prettyPhoto.js')}}"></script> <!-- prettyPhoto -->
-
-<!-- jQuery Flot -->
-<script src="{{asset('js/excanvas.min.js')}}"></script>
-<script src="{{asset('js/jquery.flot.js')}}"></script>
-<script src="{{asset('js/jquery.flot.resize.js')}}"></script>
-<script src="{{asset('js/jquery.flot.pie.js')}}"></script>
-<script src="{{asset('js/jquery.flot.stack.js')}}"></script>
 
 <!-- jQuery Notification - Noty -->
 <script src="{{asset('js/jquery.noty.js')}}"></script> <!-- jQuery Notify -->
@@ -171,14 +145,12 @@
 <script src="{{asset('js/datatables/js/jquery.dataTables.js')}}"></script>
 
 <script src="{{asset('js/sparklines.js')}}"></script> <!-- Sparklines -->
-<script src="{{asset('js/jquery.cleditor.min.js')}}"></script> <!-- CLEditor -->
-<script src="{{asset('js/bootstrap-datetimepicker.min.js')}}"></script> <!-- Date picker -->
 <script src="{{asset('js/jquery.uniform.min.html')}}"></script> <!-- jQuery Uniform -->
 <script src="{{asset('js/jquery.slimscroll.min.js')}}"></script> <!-- jQuery SlimScroll -->
 <script src="{{asset('js/bootstrap-switch.min.js')}}"></script> <!-- Bootstrap Toggle -->
 <script src="{{asset('js/bootbox.min.js')}}"></script> <!-- Filter for support page -->
 <script src="{{asset('js/custom.js')}}"></script> <!-- Custom codes -->
-<script src="{{asset('js/charts.js')}}"></script> <!-- Charts & Graphs -->
+
 
 
 <script>

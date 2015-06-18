@@ -17,12 +17,58 @@ class DefaultController extends Controller
      */
     public function backendAction(){
         $em = $this->getDoctrine()->getManager();
-
+        
+        $configuracion = $em->getRepository('BackendBundle:Configuraciones')
+                        ->findOneBy(array('slug' => 'turn-down-for-what'));
+        
         $entities = $em->getRepository('PublicacionesBundle:Publicacion')
-                       ->findBy(array(),array('status'=>'ASC','title'=>'ASC'));
+                       ->findBy(array(),array('createdAt'=>'DESC'),5, 0);
 
         return array(
             'entities' => $entities,
+            'configuracion'=>$configuracion,
+        );
+    }
+    
+    /**
+     * @Route("/backend/turn/down", name="backend_homepage_turn_down")
+     * @Template("BackendBundle:Default:index.html.twig")
+     */
+    public function turnDownAction(){
+        $em = $this->getDoctrine()->getManager();
+        
+        $configuracion = $em->getRepository('BackendBundle:Configuraciones')
+                        ->findOneBy(array('slug' => 'turn-down-for-what'));
+        $configuracion->setTexto('on');
+        $em->flush();
+        
+        $entities = $em->getRepository('PublicacionesBundle:Publicacion')
+                       ->findBy(array(),array('createdAt'=>'DESC'),5, 0);
+
+        return array(
+            'entities' => $entities,
+            'configuracion'=>$configuracion,
+        );
+    }
+    
+    /**
+     * @Route("/backend/turn/up", name="backend_homepage_turn_up")
+     * @Template("BackendBundle:Default:index.html.twig")
+     */
+    public function turnUpAction(){
+        $em = $this->getDoctrine()->getManager();
+        
+        $configuracion = $em->getRepository('BackendBundle:Configuraciones')
+                        ->findOneBy(array('slug' => 'turn-down-for-what'));
+        $configuracion->setTexto('off');
+        $em->flush();
+        
+        $entities = $em->getRepository('PublicacionesBundle:Publicacion')
+                       ->findBy(array(),array('createdAt'=>'DESC'),5, 0);
+        
+        return array(
+            'entities' => $entities,
+            'configuracion'=>$configuracion,
         );
     }
     
