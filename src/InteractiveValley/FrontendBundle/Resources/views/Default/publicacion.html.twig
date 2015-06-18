@@ -11,34 +11,61 @@
 {% block redes_sociales %}
     
     <meta property="og:type" content="website">
+    
     <meta property="og:title" content="{{publicacion.title}}">
-    <meta property="og:url" content="{{url('publicacion',{'slug':publicacion.slug})}}" >
-    <meta property="og:locale" content="es_ES">
+    
+    <meta property="og:url" content="{{url('publicacion',{'slug':publicacion.slug})}}">
+    
+    <meta property="og:locale" content="en_US">
+    
     <meta property="og:description" content="{{publicacion.resume|striptags}}">
-    <meta property="og:image" content="{{ urlAbsolutaFoto }}" >
+    
+    <meta property="og:image" content="{{ urlAbsolutaFoto }}">
+    
     <meta property="og:site_name" content="muyvisible.com">
+    
     <meta property="fb:app_id" content="1461130887533217">
+    
     <!--meta property="fb:admins" content="100000062710915"-->
+    
     <meta property="article:published_time" content="{{publicacion.createdAt|date('c')}}">
+    
     <meta property="article:modified_time" content="{{publicacion.updatedAt|date('c')}}">
+    
     <!--meta property="article:publisher" content="https://www.facebook.com/MuyVisible"-->
+    
     <meta property="article:section" content="MuyVisible">
+    
+    
 
     <meta name="twitter:card" content="summary_large_image">
+    
     <meta name="twitter:title" content="{{publicacion.title}}">
+    
     <meta name="twitter:description" content="{{publicacion.resume|striptags}}">
+    
     <meta name="twitter:url" content="{{url('publicacion',{'slug':publicacion.slug})}}">
+    
     <meta name="twitter:site" content="@MuyVisible">
-    <meta property="og:image" content="{{ urlAbsolutaFoto }}" >
+    
+    <meta property="og:image" content="{{ urlAbsolutaFoto }}">
+    
     <meta name="twitter:domain" content="muyvisible.com">
     
+    
     <meta itemprop="name" content="{{publicacion.title}}">
+    
     <meta itemprop="description" content="{{publicacion.resume|striptags}}">
+    
     <meta itemprop="image" content="{{ urlAbsolutaFoto }}" >
     
+    
     <meta name="pubexchange:headline" content="{{publicacion.title}}">
+    
     <meta name="pubexchange:description" content="{{publicacion.resume|striptags}}">
+    
     <meta name="pubexchange:image" content="{{ urlAbsolutaFoto }}" >
+    
 {% endblock %}    
 
 {% block class_body ' class="noticias"' %}
@@ -80,6 +107,9 @@
            fjs.parentNode.insertBefore(js, fjs);
          }(document, 'script', 'facebook-jssdk'));
     </script>
+    <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+        <![endif]-->
     {% if publicacion.image | length > 0 %}
         <header class="head_noticias">
             <div class="publicidad_head"><img src="/images/banner1.png" alt=""></div>
