@@ -1,6 +1,40 @@
 {% extends "FrontendBundle::layout.html.twig" %}
 
+{% set urlAbsoluta = 'http://' ~ app.request.server.get('SERVER_NAME') %}
 
+{% set urlAbsolutaFoto = urlAbsoluta ~ asset('images/logo.png') %}
+                                
+{% block redes_sociales %}
+    
+    <meta property="og:url" content="{{url('homepage')}}" />
+    <meta property="og:title" content="Muy Visible" />
+    <meta property="og:description" content="Muy Visible contenidos." />
+    <meta property="og:image" content="{{ urlAbsolutaFoto }}" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="muyvisible.com" />
+    <meta property="fb:app_id" content="1461130887533217">
+    <!--meta property="fb:admins" content="100000062710915"-->
+    
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Muy Visible" />
+    <meta name="twitter:description" content="Muy Visible contenidos." />
+    <meta name="twitter:url" content="{{url('homepage')}}" />
+    <meta name="twitter:site" content="@MuyVisible" />
+    <meta name="twitter:image:src" content="{{ urlAbsolutaFoto }}" />
+    <meta name="twitter:domain" content="muyvisible.com" />
+    
+    
+    <meta itemprop="name" content="Muy Visible" />
+    <meta itemprop="description" content="Muy Visible contenidos." />
+    <meta itemprop="image" content="{{ urlAbsolutaFoto }}" />
+    
+    
+    <meta name="pubexchange:headline" content="Muy Visible" />
+    <meta name="pubexchange:description" content="Muy Visible contenidos." />
+    <meta name="pubexchange:image" content="{{ urlAbsolutaFoto }}" />
+    
+{% endblock %}    
 
 {% block stylesheets %}
     {{ parent() }}
