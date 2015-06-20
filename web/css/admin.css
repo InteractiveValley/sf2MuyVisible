@@ -101,57 +101,12 @@
     height: 40px;
 }
 
-.is-principal, .in-carrusel{
-    font-size: 20px;
+.list-info-publicacion{
+    margin: 0;
+    padding: 0;
 }
 
-td.is-principal{
-    text-align: center;
+.list-info-publicacion .item-info-publicacion{
+    padding: 5px;
+    list-style: none;
 }
-
-td.in-carrusel{
-    text-align: center;
-}
-
-td.titulo
-{
-    position: relative;
-    height: 80px;
-}
-
-td.titulo .badge
-{
-    font-size: 10px;
-}
-
-td.titulo .visitas-comentarios
-{
-    position: absolute;
-    bottom: 0px;
-    font-size: 10px;
-    overflow: hidden;
-    width: 100%;
-    
-}
-
-td.titulo .visitas-comentarios .visitas,
-td.titulo .visitas-comentarios .comentarios
-{
-    display: inline-block;
-    vertical-align: bottom;
-}
-
-td.titulo .visitas-comentarios .comentarios
-{
-    margin-right: 20px;
-}
-
-.comentario-publicacion{width:100%;}
-.comentario-publicacion > .contenido{padding-left:16px;}
-.comentario-publicacion > .contenido p{margin-bottom:5px;margin-top:5px}
-.comentario-publicacion > .contenido .fecha{color:#808080;font-size:12px;font-style:italic}
-.comentario-publicacion > .contenido .publicado-por{display:block;font-size:14px;color:#000;}
-.comentario-publicacion > .contenido .publicado-por .username{font-style:normal;font-weight:bold;text-transform:capitalize}
-.comentario-publicacion > .contenido .contenido{font-size:14px;font-style:italic;padding-left:0}
-.comentario-publicacion figure,.comentario-publicacion .contenido.con-imagen{display:inline-block;vertical-align:top}
-.comentario-publicacion figure{margin:0}

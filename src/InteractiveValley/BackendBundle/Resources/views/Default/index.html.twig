@@ -22,14 +22,7 @@
             <!-- Breadcrumb -->
             <div class="bread-crumb">
                 <a href="{{path('backend_homepage')}}"><i class="fa fa-home"></i>Dashboard</a> 
-                {% if configuracion.texto == 'off' %}
-                    {% set rutaConfiguracionApagar = 'backend_homepage_turn_down' %}
-                    {% set textoApagar = 'Turn down for what!' %}
-                {% else %}
-                    {% set rutaConfiguracionApagar = 'backend_homepage_turn_up' %}
-                    {% set textoApagar = 'Turn Up' %}
-                {% endif %}
-                <a href="{{path(rutaConfiguracionApagar)}}" class="btn btn-info pull-right" style="color: white; margin-left: 5px;">{{textoApagar}}</a>
+                
             </div>
             <div class="clearfix"></div>
         </div>
@@ -46,7 +39,7 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="widget-content">
-                            {% include 'BackendBundle:Default:table.html.twig' with { 'entities': entities } %}
+                            {# include 'BackendBundle:Default:table.html.twig' with { 'entities': entities } #}
                         </div>
                         <div class="widget-foot">
                                 <br/>

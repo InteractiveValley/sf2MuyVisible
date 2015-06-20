@@ -23,8 +23,8 @@ Creacion de una ventana modal y transparencia al fondo.
 
 $(window).resize(function () {
     // dimensiones de la ventana
-    var ancho = 400;
-    var alto = 70;
+    var ancho = '80%';
+    var alto = 'auto';
 
     var wscr = $(window).width();
     var hscr = $(window).height();
@@ -34,8 +34,8 @@ $(window).resize(function () {
     $('#bgtransparent').css("height", hscr);
 
     // definiendo tama�o del contenedor
-    $('#dialog-modal').css("width", ancho + 'px');
-    $('#dialog-modal').css("height", alto + 'px');
+    $('#dialog-modal').css("width", ancho);
+    $('#dialog-modal').css("height", alto);
 
 
 

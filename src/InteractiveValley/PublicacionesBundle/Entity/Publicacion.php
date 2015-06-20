@@ -162,7 +162,7 @@ class Publicacion
     
     public function __construct() {
         $this->status = self::STATUS_EN_PROCESO;
-        $this->isActive = true;
+        $this->isActive = false;
     }
     
     /*
@@ -296,7 +296,20 @@ class Publicacion
     {
         return null === $this->image ? null : $this->getUploadRootDir().'/'.$this->image;
     }
-
+    
+    // custom functions
+    
+    public function getIsEnProceso(){
+        return ($this->getStatus()==self::STATUS_EN_PROCESO);
+    }
+    
+    public function getIsPosteada(){
+        return ($this->getStatus()==self::STATUS_POSTEADO) && ($this->isActive);
+    }
+    
+    public function getIsRevisar(){
+        return ($this->getStatus()==self::STATUS_REVISAR) && ($this->isActive==false);
+    }
 
     /**
      * Get id

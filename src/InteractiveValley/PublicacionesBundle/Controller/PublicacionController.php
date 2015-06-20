@@ -328,6 +328,50 @@ class PublicacionController extends Controller
     }
     
     /**
+     * Revisar publicacion.
+     *
+     * @Route("/{id}/revisar/publicacion", name="publicaciones_revisar", requirements = {"id"="\d+"})
+     * @Method({"PATCH"})
+     */
+    public function revisarAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $publicacion = $em->getRepository('PublicacionesBundle:Publicacion')->find($id);
+
+        if (!$publicacion) {
+            throw $this->createNotFoundException('Unable to find envio entity.');
+        }
+        $publicacion->setStatus(Publicacion::STATUS_REVISAR);
+        $publicacion->setIsActive(false);
+        $em->flush();
+
+        return $this->render("PublicacionesBundle:Publicacion:item.html.twig", array(
+            'entity' => $publicacion
+        ));
+    }
+    
+    /**
+     * Publicar publicacion.
+     *
+     * @Route("/{id}/publicar/publicacion", name="publicaciones_publicar", requirements = {"id"="\d+"})
+     * @Method({"PATCH"})
+     */
+    public function publicarAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $publicacion = $em->getRepository('PublicacionesBundle:Publicacion')->find($id);
+
+        if (!$publicacion) {
+            throw $this->createNotFoundException('Unable to find envio entity.');
+        }
+        $publicacion->setStatus(Publicacion::STATUS_POSTEADO);
+        $publicacion->setIsActive(true);
+        $em->flush();
+
+        return $this->render("PublicacionesBundle:Publicacion:item.html.twig", array(
+            'entity' => $publicacion
+        ));
+    }
+    
+    /**
      * upload images.
      *
      * @Route("/image/upload", name="publicaciones_image_upload")
@@ -369,6 +413,7 @@ class PublicacionController extends Controller
     {
         return $this->getUploadRootDir().'/'.$filename;
     }
+    
     
     
 }

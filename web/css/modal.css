@@ -18,7 +18,7 @@
 	position:fixed; 
 	/*font-family:arial;*/
 	font-size:1em;
-	overflow:auto;
+	/*overflow:hidden;*/
         /*border:0.05em solid black;
 	background-color:#000;
         opacity:0.6;
@@ -30,8 +30,14 @@
 
 .bgmodal .close-modal{
     position: absolute;
-    top: 0px;
-    right: 0px;
+    top: -20px;
+    right: 10%;
+    color: white;
+    font-size: 10px;
+    background-color: black;
+    border-radius: 50%;
+    padding: 10px;
+    z-index: 3000;
 }
 
 .bgmodal2{

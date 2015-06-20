@@ -115,7 +115,20 @@
             focus: true,
             onImageUpload: function(files) {
                 sendFile(files[0],$descripcion,'editor.insertImage');
-            }
+            },
+            toolbar: [
+                //[groupname, [button list]]
+                ['edition', ['undo', 'redo']],
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['font', ['strikethrough', 'superscript', 'subscript']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['height', ['height']],
+                ['insert', ['picture','link','video','table','hr']],
+                ['misc', ['fullscreen','codeview','help']],
+                
+              ]
         });
 
         {% if errores | length > 0 %}

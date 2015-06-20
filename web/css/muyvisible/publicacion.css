@@ -198,6 +198,15 @@ p{
     margin-left: -96px;
 }
 
+.publicacion .contenido-publicacion iframe{
+    margin: 0;
+    margin-bottom: 18px;
+    position: relative;
+    text-align: right;
+    border: none !important;
+    margin-left: -96px;
+}
+
 .head_noticias figure{
     max-width: 173px;
     width: 100%;
@@ -584,7 +593,7 @@ a:hover{
     list-style: none;
     display: inline-block;
     vertical-align: top;
-    margin: 0px 20px;
+    margin: 0px 10px;
 }
 
 .list-redes-sociales .item-red-social a.js-social-button{
@@ -593,6 +602,7 @@ a:hover{
     padding: 20px;
     display: block;
     border-radius: 50%;
+    font-size: 20px;
 }
 
 

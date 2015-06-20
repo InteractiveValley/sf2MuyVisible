@@ -88,7 +88,7 @@
         <![endif]-->
     {% if publicacion.image | length > 0 %}
         <header class="head_noticias">
-            <div class="publicidad_head"><img src="/images/banner1.png" alt=""></div>
+            <div class="publicidad_head"><img src="http://placehold.it/731x92/2A2A2A/2A2A2A" alt=""></div>
             <figure><a href="{{path('homepage')}}"><img src="/images/muyvisible_mini_logo.png" alt=""></a></figure>
         </header>
         <section>
@@ -98,7 +98,7 @@
         </section>
     {% else %}
         <header class="head_noticias no-fixed">
-            <div class="publicidad_head"><img src="/images/banner1.png" alt=""></div>
+            <div class="publicidad_head"><img src="http://placehold.it/731x92/2A2A2A/2A2A2A" alt=""></div>
             <figure><a href="{{path('homepage')}}"><img src="/images/muyvisible_mini_logo.png" alt=""></a></figure>
         </header>
         <div class="sin-portada"></div>   
@@ -141,9 +141,9 @@
                         {% set via = ' @MuyVisible' %}
                         <span class="share">COMPARTIR</span><br>
                         <div class="flex-container">
-                            <a class="flex-a facebook  js-social-button" href="http://www.facebook.com/sharer.php?u={{urlPagina}}&display=popup" data-popup-width="555" data-popup-height="370"><span class="flaticon-facebook55"></span>&nbsp;FACEBOOK</a>
-                            <a class="flex-a twitter  js-social-button" href="http://twitter.com/share?url=/&text={{title ~' ' ~ urlPagina ~ ' ' ~ via | url_encode }}"  data-popup-width="555" data-popup-height="395"><span class="flaticon-twitter1"></span>&nbsp;TWITTER</a>
-                            <a class="flex-a shares open-modal-social" href="#"><span class="flaticon-share14"></span>&nbsp;SHARE</a>
+                            <a class="flex-a facebook  js-social-button" href="http://www.facebook.com/sharer.php?u={{urlPagina}}&display=popup" data-popup-width="555" data-popup-height="370"><span class="flaticon-facebook"></span>&nbsp;FACEBOOK</a>
+                            <a class="flex-a twitter  js-social-button" href="http://twitter.com/share?url=/&text={{title ~' ' ~ urlPagina ~ ' ' ~ via | url_encode }}"  data-popup-width="555" data-popup-height="395"><span class="flaticon-twitter"></span>&nbsp;TWITTER</a>
+                            <a class="flex-a shares open-modal-social" href="#"><span class="flaticon-share"></span>&nbsp;SHARE</a>
                         </div>
                     </div>
                     <div class="comentarios_face">
@@ -154,28 +154,28 @@
         </section>
         <aside class="derecha">
             <div class="derecha_2">
-                <div class="publicidad_der"><img style="width:300px;" src="/images/box.png" alt=""></div>
+                <div class="publicidad_der"><img style="width:300px;" src="http://placehold.it/300x250/ffffff/ffffff" alt=""></div>
                 <div class="sociales_2">
                     <span class="share">COMPARTIR</span>
                     <a class="red-social facebook  js-social-button" href="http://www.facebook.com/sharer.php?u={{urlPagina}}&display=popup" data-popup-width="555" data-popup-height="370">
-                        <span class="icon flaticon-facebook55"></span>&nbsp;FACEBOOK
+                        <span class="icon flaticon-facebook"></span>&nbsp;FACEBOOK
                     </a>
                     <a class="red-social twitter  js-social-button" href="http://twitter.com/share?url=/&text={{title ~' ' ~ urlPagina ~ ' ' ~ via | url_encode }}" data-popup-width="555" data-popup-height="395">
-                        <span class="icon flaticon-twitter1"></span>&nbsp;TWITTER
+                        <span class="icon flaticon-twitter"></span>&nbsp;TWITTER
                     </a>
                     <a class="red-social shares open-modal-social" href="#">
-                        <span class="icon flaticon-share14"></span>&nbsp;SHARE
+                        <span class="icon flaticon-share"></span>&nbsp;SHARE
                     </a>
                 </div>
                 <div class="sociales_2 compartir-url">
                     <span class="share">VINCULO DE PUBLICACION</span>
                     <div class="group-url-publicacion">
-                        <input class="url-publicacion" type="text" value="{{url('publicacion',{'slug':publicacion.slug})}}">
+                        <input id="url_publicacion" class="url-publicacion" type="text" value="{{url('publicacion',{'slug':publicacion.slug})}}">
                         <a  class="copy botonCopiarUrlPublicacion" href="#">COPIAR</a>
                     </div>
                 </div>
                  <div class="sociales_2 compartir-url margin-top">
-                     <a href="#">
+                     <a href="https://www.facebook.com/pages/Muy-Visible/684809468330914" target="_blank">
                         <div class="mas_notas">
                             <img src="/images/lentes.png" alt="">
                             Ver más NOTAS
@@ -191,63 +191,48 @@
     
     <div id="dialog-modal" class="bgmodal" style=" display: none;">
             <ul class="list-redes-sociales">
-                <!--li class="item-red-social active">
+                <li class="item-red-social active">
                     <a class="googleplus button js-social-button js-social-button-service" href="https://plus.google.com/share?url={{url('publicacion',{'slug':publicacion.slug})}}" data-social-slug="googleplus" data-popup-width="480" data-popup-height="665">
-                        <span class="overlay">
-                            <i class="icon-google-plus"></i>
-                            <span class="label hide-for-medium-down">Google +</span>
-                        </span>
+                        <span class="icon flaticon-googleplus"></span>
                     </a>
-                </li-->
+                </li>
                 <li class="item-red-social">
                     <a class="facebook button js-social-button js-social-button-service" href="http://www.facebook.com/sharer.php?u={{urlPagina|url_encode}}&display=popup" data-social-slug="facebook" data-popup-width="555" data-popup-height="370">
-                        <span class="icon flaticon-facebook55"></span>
+                        <span class="icon flaticon-facebook"></span>
                     </a>
                 </li>
                 <li class="item-red-social">
                     <a class="twitter button js-social-button js-social-button-service" href="http://twitter.com/share?url=/&text={{title ~' ' ~ urlPagina ~ ' ' ~ via | url_encode }}" data-social-slug="twitter" data-popup-width="555" data-popup-height="395">
-                        <span class="icon flaticon-twitter1"></span>
+                        <span class="icon flaticon-twitter"></span>
                     </a>
                 </li>
-                <!--li class="item-red-social">
+                <li class="item-red-social">
                     <a class="linkedin button js-social-button js-social-button-service" href="http://www.linkedin.com/shareArticle?mini=true&url={{urlPagina|url_encode}}&amp;media={{title|url_encode}}" data-social-slug="linkedin" data-popup-width="600" data-popup-height="465">
-                        <span class="overlay">
-                            <i class="icon-linkedin"></i>
-                            <span class="label hide-for-medium-down">Linkedin</span>
-                        </span>
+                        <span class="icon flaticon-linkedin"></span>
                     </a>
                 </li>
                 <li class="item-red-social">
                     <a class="pinterest button js-social-button js-social-button-service" href="http://www.pinterest.com/pin/create/button/?url={{urlPagina|url_encode}}&description={{title|url_encode}}&media={{ urlAbsolutaFoto | url_encode}}" data-social-slug="pinterest" data-popup-width="750" data-popup-height="316">
-                        <span class="overlay">
-                            <i class="icon-pinterest"></i>
-                            <span class="label hide-for-medium-down">Pinterest</span>
-                        </span>
+                        <span class="icon flaticon-pinterest"></span>
                     </a>
                 </li>
                 <li class="item-red-social">
                     <a class="stumbleupon button js-social-button js-social-button-service" href="http://www.stumbleupon.com/submit?url={{urlPagina|url_encode}}&title={{title|url_encode}}" data-social-slug="stumbleupon" data-popup-width="980" data-popup-height="575">
-                        <span class="overlay">
-                            <i class="icon-stumbleupon"></i>
-                            <span class="label hide-for-medium-down">Stumbleupon</span>
-                        </span>
+                        <span class="icon flaticon-stumbleupon"></span>
                     </a>
                 </li>
                 <li class="item-red-social">
                     <a class="reddit button js-social-button js-social-button-service" href="http://www.reddit.com/submit?url={{urlPagina|url_encode}}&title={{title|url_encode}}" data-social-slug="reddit" data-popup-width="980" data-popup-height="750">
-                        <span class="overlay">
-                            <i class="icon-reddit"></i>
-                            <span class="label hide-for-medium-down">Reddit</span>
-                        </span>
+                        <span class="icon flaticon-reddit"></span>
                     </a>
-                </li-->
+                </li>
                 <li class="item-red-social">
                     <a class="email button js-social-button js-social-button-email" href="mailto:?body={{title|url_encode}}.%0A%0A{{urlPagina}}." data-social-slug="email" data-popup-width="500" data-popup-height="400">
-                        <span class="icon flaticon-share14"></span>
+                        <span class="icon flaticon-arroba"></span>
                     </a>
                 </li>
             </ul>
-            <a href="#" class="close-modal"><span class="icon flaticon-share14"></span></a>
+            <a href="#" class="close-modal"><span class="icon flaticon-close" style="font-size:10px;"></span></a>
         </div>
     
     {% endblock %}
@@ -295,7 +280,9 @@
             
             $(".botonCopiarUrlPublicacion").on("click",function(e){
                e.preventDefault();
-               window.clipboardData.setData("Text", $(".url-publicacion").val());
+               var urlPublicacion = document.getElementById("url_publicacion");
+               urlPublicacion.select() 
+               copy_clip(urlPublicacion.value);
             });
             
             $(".open-modal-social").on("click",function(){
@@ -307,6 +294,18 @@
                e.preventDefault();
                closeModalSocial();
                openModal = false;
+            });
+            
+            var $imagenes = $(".contenido-publicacion img");
+            var contador = 1;
+            $imagenes.each(function(index,imagen){
+               var figure = $("<figure/>");
+               var img = $("<img/>");
+               figure.append(img);
+               img.attr({'src':$(imagen).attr('src'),'id': 'imagen-'+contador});
+               $(imagen).before(figure);
+               contador++;
+               $(imagen).remove();
             });
             
             posicionarMenu();
@@ -323,5 +322,61 @@
                 $('.img_cabezera').css('margin-top', '0');
             }
         }
+        
+        function copy_clip(meintext) 
+        { 
+        if (window.clipboardData) 
+            { 
+
+            // the IE-manier 
+           window.clipboardData.setData("Text", meintext); 
+
+           // waarschijnlijk niet de beste manier om Moz/NS te detecteren; 
+           // het is mij echter onbekend vanaf welke versie dit precies werkt: 
+           } 
+           else if (window.netscape) 
+           { 
+
+           // dit is belangrijk maar staat nergens duidelijk vermeld: 
+           // you have to sign the code to enable this, or see notes below 
+           netscape.security.PrivilegeManager.enablePrivilege('UniversalXPConnect'); 
+
+           // maak een interface naar het clipboard 
+           var clip = Components.classes['@mozilla.org/widget/clipboard;1'] 
+               .createInstance(Components.interfaces.nsIClipboard); 
+           if (!clip) return; 
+
+           // maak een transferable 
+           var trans = Components.classes['@mozilla.org/widget/transferable;1'] 
+               .createInstance(Components.interfaces.nsITransferable); 
+           if (!trans) return; 
+
+           // specificeer wat voor soort data we op willen halen; text in dit geval 
+           trans.addDataFlavor('text/unicode'); 
+
+           // om de data uit de transferable te halen hebben we 2 nieuwe objecten 
+           // nodig om het in op te slaan 
+           var str = new Object(); 
+           var len = new Object(); 
+
+           var str = Components.classes["@mozilla.org/supports-string;1"] 
+               .createInstance(Components.interfaces.nsISupportsString); 
+
+           var copytext=meintext; 
+
+           str.data=copytext; 
+
+           trans.setTransferData("text/unicode",str,copytext.length*2); 
+
+           var clipid=Components.interfaces.nsIClipboard; 
+
+           if (!clip) return false; 
+
+           clip.setData(trans,null,clipid.kGlobalClipboard); 
+
+           } 
+           alert("Following info was copied to your clipboard:\n\n" + meintext); 
+           return false; 
+        } 
     </script>
 {% endblock %}

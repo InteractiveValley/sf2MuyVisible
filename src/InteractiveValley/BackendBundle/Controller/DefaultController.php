@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use InteractiveValley\PublicacionesBundle\Entity\Publicacion;
+
 
 class DefaultController extends Controller
 {
@@ -16,7 +16,7 @@ class DefaultController extends Controller
      * @Template("BackendBundle:Default:index.html.twig")
      */
     public function backendAction(){
-        $em = $this->getDoctrine()->getManager();
+        /*$em = $this->getDoctrine()->getManager();
         
         $configuracion = $em->getRepository('BackendBundle:Configuraciones')
                         ->findOneBy(array('slug' => 'turn-down-for-what'));
@@ -27,7 +27,8 @@ class DefaultController extends Controller
         return array(
             'entities' => $entities,
             'configuracion'=>$configuracion,
-        );
+        );*/
+        return $this->redirect($this->generateUrl('publicaciones'));
     }
     
     /**
@@ -42,13 +43,15 @@ class DefaultController extends Controller
         $configuracion->setTexto('on');
         $em->flush();
         
-        $entities = $em->getRepository('PublicacionesBundle:Publicacion')
+        /*$entities = $em->getRepository('PublicacionesBundle:Publicacion')
                        ->findBy(array(),array('createdAt'=>'DESC'),5, 0);
 
         return array(
             'entities' => $entities,
             'configuracion'=>$configuracion,
-        );
+        );*/
+        
+        return $this->redirect($this->generateUrl('configuraciones'));
     }
     
     /**
@@ -63,13 +66,15 @@ class DefaultController extends Controller
         $configuracion->setTexto('off');
         $em->flush();
         
-        $entities = $em->getRepository('PublicacionesBundle:Publicacion')
+        /*$entities = $em->getRepository('PublicacionesBundle:Publicacion')
                        ->findBy(array(),array('createdAt'=>'DESC'),5, 0);
         
         return array(
             'entities' => $entities,
             'configuracion'=>$configuracion,
-        );
+        );*/
+        
+        return $this->redirect($this->generateUrl('configuraciones'));
     }
     
     /**
@@ -151,47 +156,5 @@ class DefaultController extends Controller
             }
         }
         return array('msg' => $msg);
-    }
-    
-    /**
-     * Revisar una publicacion.
-     *
-     * @Route("/publicacion/{id}/revisar", name="publicacion_revisar", requirements={"id" = "\d+"})
-     * @Method("PATCH")
-     */
-    public function revisarAction($id) {
-        $em = $this->getDoctrine()->getManager();
-        $publicacion = $em->getRepository('PublicacionesBundle:Publicacion')->find($id);
-
-        if (!$publicacion) {
-            throw $this->createNotFoundException('Unable to find envio entity.');
-        }
-        $publicacion->setStatus(Publicacion::STATUS_REVISAR);
-        $em->flush();
-
-        return $this->render("BackendBundle:Default:item.html.twig", array(
-                    'entity' => $publicacion
-        ));
-    }
-    
-    /**
-     * Publicar la publicacion.
-     *
-     * @Route("/publicacion/{id}/publicar", name="publicacion_publicar", requirements={"id" = "\d+"})
-     * @Method("PATCH")
-     */
-    public function publicarAction($id) {
-        $em = $this->getDoctrine()->getManager();
-        $publicacion = $em->getRepository('PublicacionesBundle:Publicacion')->find($id);
-
-        if (!$publicacion) {
-            throw $this->createNotFoundException('Unable to find envio entity.');
-        }
-        $publicacion->setStatus(Publicacion::STATUS_POSTEADO);
-        $em->flush();
-
-        return $this->render("BackendBundle:Default:item.html.twig", array(
-                    'entity' => $publicacion
-        ));
     }
 }

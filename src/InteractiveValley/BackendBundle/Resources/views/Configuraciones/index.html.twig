@@ -28,6 +28,16 @@
           <span class="divider">/</span> 
           <a href="{{path('configuraciones')}}" class="bread-current">Configuraciones</a>
           {% if is_granted('ROLE_ADMIN') %}
+            {% if configuracion.texto == 'off' %}
+              {% set rutaConfiguracionApagar = 'backend_homepage_turn_down' %}
+              {% set textoApagar = 'Turn down for what!' %}
+              {% set claseApagar = 'btn-danger' %}
+            {% else %}
+              {% set rutaConfiguracionApagar = 'backend_homepage_turn_up' %}
+              {% set textoApagar = 'Turn Up' %}
+              {% set claseApagar = 'btn-success' %}
+            {% endif %}
+          <a href="{{path(rutaConfiguracionApagar)}}" class="btn {{claseApagar}} pull-right" style="color: white; margin-left: 5px;">{{textoApagar}}</a>    
           <a href="{{path('configuraciones_select')}}" class="btn btn-info pull-right" style="color: white; margin-left: 5px;">Crear configuracion</a>
           {% endif %}
         </div>

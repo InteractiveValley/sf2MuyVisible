@@ -30,11 +30,15 @@ class ConfiguracionesController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-
+        
+        $configuracion = $em->getRepository('BackendBundle:Configuraciones')
+                        ->findOneBy(array('slug' => 'turn-down-for-what'));
+        
         $entities = $em->getRepository('BackendBundle:Configuraciones')->findAll();
 
         return array(
-            'entities' => $entities,
+            'entities'      =>  $entities,
+            'configuracion' =>  $configuracion
         );
     }
     
