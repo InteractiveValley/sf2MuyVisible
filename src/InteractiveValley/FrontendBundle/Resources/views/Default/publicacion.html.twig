@@ -308,6 +308,14 @@
                $(imagen).remove();
             });
             
+            var $videos = $(".contenido-publicacion iframe");
+            $videos.each(function(index,iframe){
+               $(iframe).removeAttr('height').removeAttr('width');
+               $(iframe).css({'height':'350px','width': anchoCentral+'px'});
+            });
+            
+            initSharesCount();
+
             posicionarMenu();
         });
         function posicionarMenu() {
@@ -377,6 +385,29 @@
            } 
            alert("Following info was copied to your clipboard:\n\n" + meintext); 
            return false; 
-        } 
+        }
+        function initSharesCount(){
+            $URL = location.href;
+
+            // Facebook Shares Count
+            $.getJSON( 'http://graph.facebook.com/?id=' + $URL, function( fbdata ) {
+                $('.count-likes').text(ReplaceNumberWithCommas(fbdata.shares))
+            });
+
+            // Twitter Shares Count
+            $.getJSON( 'http://cdn.api.twitter.com/1/urls/count.json?url=' + $URL + '&callback=?', function( twitdata ) {
+                $('.count-tweets').text(ReplaceNumberWithCommas(twitdata.count))
+            });
+
+        }
+        // Format Number functions
+        function ReplaceNumberWithCommas(yourNumber) {
+            //Seperates the components of the number
+            var components = yourNumber.toString().split(".");
+            //Comma-fies the first part
+            components [0] = components [0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            //Combines the two sections
+            return components.join(".");
+        }
     </script>
 {% endblock %}
