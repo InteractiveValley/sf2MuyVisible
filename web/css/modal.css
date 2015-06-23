@@ -40,6 +40,8 @@
     z-index: 3000;
 }
 
+
+
 .bgmodal2{
     margin: 0 auto;
     padding: 0 auto;
@@ -54,4 +56,11 @@
     -webkit-border-radius: 10px;
     border-radius: 10px;
     overflow: none;
+}
+
+@media screen and (min-width: 1024px) {
+    .bgmodal .close-modal{
+        top: -30px;
+        right: 0px;
+    }
 }

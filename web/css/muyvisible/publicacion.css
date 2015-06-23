@@ -603,6 +603,7 @@ a:hover{
     display: block;
     border-radius: 50%;
     font-size: 20px;
+    margin: 3px;
 }
 
 
@@ -623,9 +624,18 @@ a:hover{
     .publicacion figure{
         margin-left: 0px;
     }
+
+    .publicacion .contenido-publicacion iframe{
+        margin-left: 0px;
+    }
+
     .sociales{
         margin: 0px;
         padding: 11px 0px 20px;
+    }
+    .list-redes-sociales .item-red-social a.js-social-button{
+        width: auto;
+        margin: 10px;
     }
 }
 
@@ -642,6 +652,10 @@ a:hover{
     .sociales_2 .shares{
         width: 100%;
         margin-bottom: 20px;
+    }
+    .list-redes-sociales .item-red-social a.js-social-button{
+        width: auto;
+        margin: 10px;
     }
 }
 
@@ -704,6 +718,10 @@ a:hover{
     }
     .flex-container .flex-a{
         font-size: .7em;
+    }
+    .list-redes-sociales .item-red-social a.js-social-button{
+        width: auto;
+        margin: 10px;
     }
 }
 

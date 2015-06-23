@@ -6,7 +6,7 @@ Creacion de una ventana modal y transparencia al fondo.
 
     $.fn.modalSocial = function () {
         var bgdiv = $('<div>').attr({'id': 'bgtransparent'});
-        bgdiv.addClass('bgtransparent');
+        bgdiv.addClass('bgtransparent').on('click',closeModalSocial);
         $('body').append(bgdiv);
 
         var wscr = $(window).width();

@@ -32,10 +32,15 @@ class AppKernel extends Kernel
 
         return $bundles;
     }
+    
+    public function init()
+    {
+        date_default_timezone_set( 'America/Mexico_City' );
+        parent::init();
+    }
 
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
-        date_default_timezone_set( 'America/Mexico_City' );
         $loader->load($this->getRootDir().'/config/config_'.$this->getEnvironment().'.yml');
     }
 }
