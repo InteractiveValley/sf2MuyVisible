@@ -35,7 +35,7 @@ class DefaultController extends Controller
         $pagination = $paginator->paginate(
             $query,
             $request->query->getInt('page', 1)/*page number*/,
-            1/*limit per page*/
+            5/*limit per page*/
         );
         
         $lasMasVistas = $em->getRepository('PublicacionesBundle:Publicacion')

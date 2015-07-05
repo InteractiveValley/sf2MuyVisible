@@ -168,12 +168,16 @@ p{
     vertical-align: middle;
 }
 
-.lo-mas-visto .list-lomasvisto .item-lomasvisto div.contenido-lomasvisto .titulo-lomasvisto{
+.lo-mas-visto .list-lomasvisto .item-lomasvisto div.contenido-lomasvisto{
+    width: 280px;
+}
+
+.lo-mas-visto .list-lomasvisto .item-lomasvisto div.contenido-lomasvisto .title-lomasvisto{
     margin: 5px 0px 10px;
     text-transform: lowercase;
 }
 
-.lo-mas-visto .list-lomasvisto .item-lomasvisto div.contenido-lomasvisto .titulo-lomasvisto:first-letter{
+.lo-mas-visto .list-lomasvisto .item-lomasvisto div.contenido-lomasvisto .title-lomasvisto:first-letter{
     text-transform: uppercase;
 }
 
@@ -188,7 +192,9 @@ p{
     text-align: left;
     text-transform: lowercase;
     font-size: .8em;
-    width: 33%;
+    width: 32%;
+    float: right;
+    margin: .5%;
 }
 
 .list-relacionadas .item-relacionada figure{

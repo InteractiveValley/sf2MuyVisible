@@ -356,7 +356,7 @@
 
         
         function initSharesCount(){
-            $URL = location.href;
+            var $URL = location.href;
             var contLikes = $('.count-likes').text();
             var contTwits = $('.count-tweets').text();
             var updateConts = false;
@@ -379,23 +379,21 @@
                 }
             });
             
-            if(updateConts){
                 $.ajax({
                    url: '{{path('publicacion_update_conts',{'slug': publicacion.id})}}',
                    type: 'POST',
                    data: {'likes': contLikes, 'tweets': contTwits},
                    dataType: 'json',
                    success: function(data){
-                       alert(data);
+                       //alert(data);
+                       console.log(data);
                    },
                    error: function(data){
                        console.log(data);
-                       alert("Error al actualizar contadores");
+                       //alert("Error al actualizar contadores");
                    }
                 });
-            }
             
-
         }
         // Format Number functions
         function ReplaceNumberWithCommas(yourNumber) {
