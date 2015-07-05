@@ -206,8 +206,14 @@ p{
     border: none !important;
     margin-left: -96px;
 }
+.head_noticias{
+    background-color: #2a2a2a;
+    border-bottom: solid 0px #c4e5fc;
+    display: block;
+    position: relative;
+}
 
-.head_noticias figure{
+.head_noticias figure.logo{
     max-width: 173px;
     width: 100%;
     -webkit-margin-end: 0px;
@@ -216,20 +222,36 @@ p{
     -webkit-margin-start: 0px;
     margin-right: 70%;
     margin-left: auto;
-}
-.head_noticias{
-    background-color: #2a2a2a;
-    border-bottom: solid 0px #c4e5fc;
     display: block;
 }
+
+.head_noticias figure.logo.logo-movil{
+    opacity: 0.0;
+}
+
+.head_noticias figure.logo.logo-grande{
+    position: absolute;
+    top: 20px;
+    left: 5%;
+    -webkit-transition: all .5s ease;
+    -o-transition: all .5s ease;
+    transition: all .5s ease;
+}
+
+.head_noticias figure img{
+    width: 100%;
+}
+
 .publicidad_head{
     width: 100%;
     max-width: 733px;
     margin: 0 auto;
 }
+
 a:hover{
     color: #53b4f5;
 }
+
 .space{
     width: 100%;
     max-width: 700px;
@@ -563,10 +585,14 @@ a:hover{
    * flex-direction: row;
    * flex-wrap: wrap;
    */
-  flex-flow: row wrap;
+  display: -webkit-flex; /* Safari */
+  -webkit-flex-flow: row wrap;
+  -ms-flex-flow: row wrap;
+  display: flex; 
+  flex-flow: row;
   
   /* Then we define how is distributed the remaining space */
-  justify-content: space-around;
+  /*justify-content: space-around;*/
 }
 
 .flex-container .flex-a{
@@ -577,6 +603,16 @@ a:hover{
     transition: all .5s ease-in;
     opacity: 1;
     text-align: center;
+    margin-left:1%;
+    margin-right:1%;
+}
+
+.flex-container .flex-a:first-child{
+   margin-left: 0px;
+}
+
+.flex-container .flex-a:last-child{
+  margin-right: 0px;
 }
 
 .flex-container .flex-a:hover{
@@ -606,8 +642,23 @@ a:hover{
     margin: 3px;
 }
 
+@media (max-width: 1024px){
+  
+  .head_noticias figure.logo.logo-grande{
+    left: 5px;
+    width: 130px;
+    top: 20px;
+  }
+  
 
+}
 @media (max-width: 768px){
+    .head_noticias figure.logo.logo-grande{
+      display: none;
+    }
+    .head_noticias figure.logo.logo-movil{
+      opacity: 1;
+    }
     .central{
         width: 55%;
         padding: 0px 15px;

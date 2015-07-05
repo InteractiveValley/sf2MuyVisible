@@ -89,7 +89,8 @@
     {% if publicacion.image | length > 0 %}
         <header class="head_noticias">
             <div class="publicidad_head"><img src="http://placehold.it/731x92/2A2A2A/2A2A2A" alt=""></div>
-            <figure><a href="{{path('homepage')}}"><img src="/images/muyvisible_mini_logo.png" alt=""></a></figure>
+            <figure class="logo logo-movil"><a href="{{path('homepage')}}"><img src="/images/muyvisible_mini_logo.png" alt=""></a></figure>
+            <figure class="logo logo-grande"><a href="{{path('homepage')}}"><img src="/images/logo_grande_pagina.png" alt=""></a></figure>
         </header>
         <section>
             <figure class="img_cabezera">
@@ -100,6 +101,7 @@
         <header class="head_noticias no-fixed">
             <div class="publicidad_head"><img src="http://placehold.it/731x92/2A2A2A/2A2A2A" alt=""></div>
             <figure><a href="{{path('homepage')}}"><img src="/images/muyvisible_mini_logo.png" alt=""></a></figure>
+
         </header>
         <div class="sin-portada"></div>   
     {% endif  %}
@@ -133,7 +135,7 @@
                 <footer>
                     <div class="info">
                         <div class="referencia">{{ ( publicacion.referencia|length>0)? 'Fuente/Referencia: '~ publicacion.referencia :'' }}</div>
-                        <div class="fecha">{{ publicacion.createdAt | translate_date }} | {{ publicacion.createdAt|date("G:i A") }}</div>
+                        <div class="fecha">{{ publicacion.createdAt | translate_date }} | {{ publicacion.createdAt|date("G:i A", "America/Mexico_City") }}</div>
                     </div>
                     <div class="sociales">
                         {% set urlPagina = url('publicacion',{'slug':publicacion.slug}) %}
