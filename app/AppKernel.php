@@ -17,6 +17,7 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Liip\ImagineBundle\LiipImagineBundle(),
+            new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new InteractiveValley\BackendBundle\BackendBundle(),
             new InteractiveValley\PublicacionesBundle\PublicacionesBundle(),
             new InteractiveValley\FrontendBundle\FrontendBundle(),

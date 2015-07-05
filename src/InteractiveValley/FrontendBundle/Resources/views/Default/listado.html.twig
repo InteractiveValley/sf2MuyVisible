@@ -1,0 +1,31 @@
+{% for publicacion in publicaciones %}
+    <article class="article">
+        <figure class="portada article-portada">
+            <a href="{{path('publicacion',{'slug':publicacion.slug})}}">
+                <img src="{{publicacion.webPath | imagine_filter('image_portada')}}" alt="{{publicacion.title}}" />
+            </a>
+        </figure>
+        <div class="contentido article-contenido">
+            <h2><a href="{{path('publicacion',{'slug':publicacion.slug})}}">{{publicacion.title}}</a></h2>
+            <div class="article-resumen">
+                {{ publicacion.resume | raw }}
+            </div>
+            <div class="article-counts">
+                <table>
+                    <tr class="numero">
+                        <td class="count-likes">{{publicacion.contLikes}}</td>
+                        <td class="count-tweets">{{publicacion.contTwits}}</td>
+                        <td class="count-views">{{publicacion.contViews}}</td>
+                    </tr>
+                    <tr class="comentarios">
+                        <td>FACEBOOK</td>
+                        <td>TWEETS</td>
+                        <td>VIEWS</td>
+                    </tr>
+                </table>
+            </div>
+            <a class="ver-publicacion" href="{{path('publicacion',{'slug':publicacion.slug})}}">leer más...</a>
+        </div>
+    </article>
+{% endfor %}
+{{ knp_pagination_render(publicaciones) }} 

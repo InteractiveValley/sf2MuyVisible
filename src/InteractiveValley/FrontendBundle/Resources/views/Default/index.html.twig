@@ -34,11 +34,13 @@
     <meta name="pubexchange:description" content="Muy Visible contenidos." />
     <meta name="pubexchange:image" content="{{ urlAbsolutaFoto }}" />
     
-{% endblock %}    
+{% endblock %}  
+
+{% block class_body ' class="noticias"' %}
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" media="screen" href="{{asset('css/muyvisible/portada.css')}}"/>
+    <link rel="stylesheet" media="screen" href="{{asset('css/muyvisible/publicacion.css')}}"/>
     {% if app.environment == 'prod' %}
         <script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -54,80 +56,90 @@
 {% endblock %}
 
 {% block body %}
-    <header></header>
-    <!-- particles.js container -->
-    <div id="particles-js"></div>
-    <section class="homepage">
-        <div class="container">
-            <figure class="logo_par">
-                <img src="{{asset('images/logo.png')}}" alt="">
-            </figure>
-            <nav>
-                <a href="#"><span class="flaticon-facebook2"></span></a>
-                <a href="#"><span class="flaticon-twitter"></span></a>
-            </nav>
-            <p class="text mayusculas">
-                muy visible es un equipo de profesionales creativos en<br> la búsqueda constante y creación<br/>de los mejores contenidos.</br>
-            </p>
-            <div class="advertising">
-                <a href="#contacto">CONTACTO &amp; ADVERTISING</a>
+    <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+        <![endif]-->
+        {% include 'FrontendBundle:Default:header.html.twig' with {'noFixed': true } %} 
+        <div class="sin-portada"></div>  
+        <section class="cuerpo">
+        <div class="main-wrapper">
+        <section class="central list-articles">
+            {% include 'FrontendBundle:Default:listado.html.twig' with { 'publicaciones': publicaciones } %}
+        </section>
+        <aside class="derecha">
+            <div class="contenedor-aside">
+                <div class="publicidad-der"><img style="width:300px;" src="http://placehold.it/300x250/ffffff/ffffff" alt=""></div>
+                <div class="facebook-box">
+                    
+                </div>
+                <div class="lo-mas-visto">
+                    <h3 class="title title-azul">LO MAS VISTO</h3>
+                    <ul class="list list-lomasvisto">
+                        {% for publicacionlm in lomasvisto %}
+                        <li class="item item-lomasvisto">
+                            <a href="{{path('publicacion',{'slug':publicacionlm.slug})}}">
+                              <span class="numero">{{loop.index}}</span>
+                              <div class="contenido contenido-lomasvisto">
+                                  <figure class="portada portada-mini">
+                                      <img src="{{publicacionlm.webPath | imagine_filter('image_portada_mini')}}" alt=""/>
+                                  </figure>
+                                  <h4 class="title title-lomasvisto">{{publicacionlm.title}}</h4>
+                              </div>  
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="publicidad">
+                    
+                </div>
             </div>
-            <p class="text_2">
-                Ya sea que quieras saludarnos o platicar sobre publicidad, escríbenos y nos pondremos en contacto contigo.
-            </p>
-            
-            <section id="contacto" class="formulario contenido-form">
-                {% include 'FrontendBundle:Default:formContacto.html.twig' with {'form': form } %}
-            </section>
-            <div class="direction">CIUDAD DE MÉXICO | SANTA FE</div>
+        </aside>
         </div>
     </section>
+
     <footer></footer>
-{% endblock %}
+    
+    {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{asset('js/particles/particles.js')}}"></script>
-    <script src="{{asset('js/particles/stats.js')}}"></script>
-    <script src="{{asset('js/particles/app.js')}}"></script>
     <script>
-        $(document).on('ready',function(){
-            
-            linkInterno = $('a[href^="#"]');
-            linkInterno.on('click',function(e) {
-                e.preventDefault();
-                var href = $(this).attr('href');
-                $('html, body').animate({ scrollTop : $( href ).offset().top }, 'slow');
+        $(function () {
+            var $imagenes = $(".contenido-publicacion img");
+            var contador = 1;
+            $imagenes.each(function(index,imagen){
+               var figure = $("<figure/>");
+               var img = $("<img/>");
+               figure.append(img);
+               img.attr({'src':$(imagen).attr('src'),'id': 'imagen-'+contador});
+               $(imagen).before(figure);
+               contador++;
+               $(imagen).remove();
             });
-            
-            inicializarBotonEnviarContacto();
+            cargarMasArticlesA();
         });
-        function inicializarBotonEnviarContacto() {
-            $("#botonEnviarFormContacto").on('click', function (e) {
+        
+        function cargarMasArticlesA(){
+            $(".cargar-mas-articles a").on('click',function(e){
                 e.preventDefault();
-                var $form = $("#formContacto");
-                var datos = $form.serialize();
-                $(this).attr('disabled', 'disabled').val('Enviando...');
+                var $parent = $(this).parent();
                 $.ajax({
-                    url: $form.attr('action'),
-                    type: 'POST',
-                    dataType: 'json',
-                    data: datos,
-                    success: function (data) {
-                        $(".contenido-form").html(data.form);
-                        inicializarBotonEnviarContacto();
-                        setTimeout(function () {
-                            $(".alert-success").fadeOut('fast');
-                            $(".alert-error").fadeOut('fast');
-                        }, 2000);
-						console.log(data);
-                    },
-                    error: function (data) {
-                        alert("Error al enviar el formulario");
-                        console.log(data);
-                    }
+                   url: $(this).attr('href'),
+                   type: 'GET',
+                   dataType: 'html',
+                   success: function(data){
+                       $parent.before(data);
+                       $parent.remove();
+                       cargarMasArticlesA();
+                   }, 
+                   error: function(data){
+                       alert("Error");
+                       console.log(data);
+                   }
                 });
             });
         }
+
     </script>
 {% endblock %}

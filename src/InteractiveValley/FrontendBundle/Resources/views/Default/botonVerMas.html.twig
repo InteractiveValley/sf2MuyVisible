@@ -1,0 +1,13 @@
+{#
+    /**
+     * @file
+     * Para implementar boton de ver mas publicaciones en MuyVisible.
+     * @autor Ricardo Alcantara <richpolis@gmail.com>
+     */
+#}
+
+{% if pageCount > 1 and current < endPage %}
+<div class="cargar-mas-articles">
+    <a href="{{ path(route, query|merge({(pageParameterName): current + 1 })) }}"  class="boton-ver-mas-articles">Ver Mas</a>
+</div>
+{% endif %}

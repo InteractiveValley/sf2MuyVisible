@@ -102,3 +102,24 @@ liip_imagine:
         image_twitter:
             filters:
                 thumbnail: { size: [241, 241], mode: outbound }
+        image_relacionada:
+            filters:
+                thumbnail: { size: [209, 105], mode: outbound }
+        image_portada:
+            filters:
+                thumbnail: { size: [615, 346], mode: outbound }
+        image_portada_mini:
+            filters:
+                thumbnail: { size: [132, 74], mode: outbound }
+
+
+knp_paginator:
+    page_range: 10                      # default page range used in pagination control
+    default_options:
+        page_name: page                # page query parameter name
+        sort_field_name: sort          # sort field query parameter name
+        sort_direction_name: direction # sort direction query parameter name
+        distinct: true                 # ensure distinct results, useful when ORM queries are using GROUP BY statements
+    template:
+        pagination:     FrontendBundle:Default:botonVerMas.html.twig     # template para cargar mas articles
+        sortable:       KnpPaginatorBundle:Pagination:sortable_link.html.twig # sort link template

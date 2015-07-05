@@ -86,23 +86,14 @@
     <!--[if lt IE 7]>
             <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
         <![endif]-->
+    {% include 'FrontendBundle:Default:header.html.twig' with {'noFixed': (not (publicacion.image | length > 0)) } %} 
     {% if publicacion.image | length > 0 %}
-        <header class="head_noticias">
-            <div class="publicidad_head"><img src="http://placehold.it/731x92/2A2A2A/2A2A2A" alt=""></div>
-            <figure class="logo logo-movil"><a href="{{path('homepage')}}"><img src="/images/muyvisible_mini_logo.png" alt=""></a></figure>
-            <figure class="logo logo-grande"><a href="{{path('homepage')}}"><img src="/images/logo_grande_pagina.png" alt=""></a></figure>
-        </header>
         <section>
             <figure class="img_cabezera">
                 <img src="{{publicacion.webPath}}" alt="">
             </figure>
         </section>
     {% else %}
-        <header class="head_noticias no-fixed">
-            <div class="publicidad_head"><img src="http://placehold.it/731x92/2A2A2A/2A2A2A" alt=""></div>
-            <figure><a href="{{path('homepage')}}"><img src="/images/muyvisible_mini_logo.png" alt=""></a></figure>
-
-        </header>
         <div class="sin-portada"></div>   
     {% endif  %}
     <section class="cuerpo">
@@ -147,29 +138,29 @@
                         </div>
                     </div>
                     <div class="publicaciones-relacionadas">
-                        <h3 class="titulo titulo-relacionadas">MÁS NOTAS</h3>
+                        <h3 class="title title-azul title-relacionadas">MÁS NOTAS</h3>
                         <ul class="list list-relacionadas">
                             {% for relacionada in relacionadas %}
                             <li class="item item-relacionada">
-                                <a href="{{path('publicacion',{'slug': publicacion.slug})}}">
+                                <a href="{{path('publicacion',{'slug': relacionada.slug})}}">
                                 <figure class="portada portada-relacionada">
-                                    <img src="http://placehold.it/209x105/2A2A2A/2A2A2A" alt="Portada relacionada" style="max-width: 209px; max-height: 105px;">
+                                    <img src="{{relacionada.webPath | imagine_filter('image_relacionada')}}" alt="Portada relacionada" style="max-width: 209px; max-height: 105px;">
                                 </figure>
-                                <span class="titulo-relacionada">{{relacionada.title}}</span>
+                                <span class="title title-relacionada">{{relacionada.title}}</span>
                                 </a>
                             </li>
                             {% endfor %}
                         </ul>
                     </div>
-                    <div class="comentarios_face">
+                    <div class="comentarios-face">
                         <div class="fb-comments" data-href="{{url('publicacion',{'slug':publicacion.slug})}}" data-numposts="5" data-width="100%"></div>
                     </div>
                 </footer>
             </article>
         </section>
         <aside class="derecha">
-            <div class="derecha_2">
-                <div class="publicidad_der"><img style="width:300px;" src="http://placehold.it/300x250/ffffff/ffffff" alt=""></div>
+            <div class="contenedor-aside">
+                <div class="publicidad-der"><img style="width:300px;" src="http://placehold.it/300x250/ffffff/ffffff" alt=""></div>
                 <div class="sociales_2">
                     <span class="share">COMPARTIR</span>
                     <a class="red-social facebook  js-social-button" href="http://www.facebook.com/sharer.php?u={{urlPagina}}&display=popup" data-popup-width="555" data-popup-height="370">
@@ -260,14 +251,14 @@
         $(function () {
             $(window).scroll(function () {
                 if ($(window).scrollTop() > 620){
-                    $(".head_noticias").fadeOut();
+                    $(".head-noticias").fadeOut();
                 }else{
-                    $(".head_noticias").fadeIn();
+                    $(".head-noticias").fadeIn();
                 }
                 if ($(window).scrollTop() > 715){
-                    $(".derecha_2").addClass('fijo');
+                    $(".contenedor-aside").addClass('fijo');
                 }else{
-                    $(".derecha_2").removeClass('fijo');
+                    $(".contenedor-aside").removeClass('fijo');
                 }
                 posicionarMenu();
             });
@@ -333,14 +324,14 @@
             posicionarMenu();
         });
         function posicionarMenu() {
-            var altura_del_header = $('.head_noticias').outerHeight(true);
-            var altura_del_menu = $('.head_noticias').outerHeight(true);
+            var altura_del_header = $('.head-noticias').outerHeight(true);
+            var altura_del_menu = $('.head-noticias').outerHeight(true);
 
             if ($(window).scrollTop() >= 0){
-                $('.head_noticias').addClass('fixed');
+                $('.head-noticias').addClass('fixed');
                 $('.img_cabezera').css('margin-top', (altura_del_menu) + 'px');
             } else {
-                $('.head_noticias').removeClass('fixed');
+                $('.head-noticias').removeClass('fixed');
                 $('.img_cabezera').css('margin-top', '0');
             }
         }

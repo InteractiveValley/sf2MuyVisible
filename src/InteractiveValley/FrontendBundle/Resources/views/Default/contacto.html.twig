@@ -1,0 +1,133 @@
+{% extends "FrontendBundle::layout.html.twig" %}
+
+{% set urlAbsoluta = 'http://' ~ app.request.server.get('SERVER_NAME') %}
+
+{% set urlAbsolutaFoto = urlAbsoluta ~ asset('images/logo.png') %}
+                                
+{% block redes_sociales %}
+    
+    <meta property="og:url" content="{{url('homepage')}}" />
+    <meta property="og:title" content="Muy Visible" />
+    <meta property="og:description" content="Muy Visible contenidos." />
+    <meta property="og:image" content="{{ urlAbsolutaFoto }}" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="muyvisible.com" />
+    <meta property="fb:app_id" content="1461130887533217">
+    <!--meta property="fb:admins" content="100000062710915"-->
+    
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Muy Visible" />
+    <meta name="twitter:description" content="Muy Visible contenidos." />
+    <meta name="twitter:url" content="{{url('homepage')}}" />
+    <meta name="twitter:site" content="@MuyVisible" />
+    <meta name="twitter:image:src" content="{{ urlAbsolutaFoto }}" />
+    <meta name="twitter:domain" content="muyvisible.com" />
+    
+    
+    <meta itemprop="name" content="Muy Visible" />
+    <meta itemprop="description" content="Muy Visible contenidos." />
+    <meta itemprop="image" content="{{ urlAbsolutaFoto }}" />
+    
+    
+    <meta name="pubexchange:headline" content="Muy Visible" />
+    <meta name="pubexchange:description" content="Muy Visible contenidos." />
+    <meta name="pubexchange:image" content="{{ urlAbsolutaFoto }}" />
+    
+{% endblock %}    
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" media="screen" href="{{asset('css/muyvisible/portada.css')}}"/>
+    {% if app.environment == 'prod' %}
+        <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-63720003-1', 'auto');
+        ga('send', 'pageview');
+
+      </script>
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <header></header>
+    <!-- particles.js container -->
+    <div id="particles-js"></div>
+    <section class="homepage">
+        <div class="container">
+            <figure class="logo_par">
+                <img src="{{asset('images/logo.png')}}" alt="">
+            </figure>
+            <nav class="redes-sociales">
+                <a class="red-social" href="#"><span class="flaticon-facebook"></span></a>
+                <a class="red-social" href="#"><span class="flaticon-twitter"></span></a>
+            </nav>
+            <p class="text mayusculas">
+                muy visible es un equipo de profesionales creativos en<br> la búsqueda constante y creación<br/>de los mejores contenidos.</br>
+            </p>
+            <div class="advertising">
+                <a href="#contacto">CONTACTO &amp; ADVERTISING</a>
+            </div>
+            <p class="text_2">
+                Ya sea que quieras saludarnos o platicar sobre publicidad, escríbenos y nos pondremos en contacto contigo.
+            </p>
+            
+            <section id="contacto" class="formulario contenido-form">
+                {% include 'FrontendBundle:Default:formContacto.html.twig' with {'form': form } %}
+            </section>
+            <div class="direction">CIUDAD DE MÉXICO | SANTA FE</div>
+        </div>
+    </section>
+    <footer></footer>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{asset('js/particles/particles.js')}}"></script>
+    <script src="{{asset('js/particles/stats.js')}}"></script>
+    <script src="{{asset('js/particles/app.js')}}"></script>
+    <script>
+        $(document).on('ready',function(){
+            
+            linkInterno = $('a[href^="#"]');
+            linkInterno.on('click',function(e) {
+                e.preventDefault();
+                var href = $(this).attr('href');
+                $('html, body').animate({ scrollTop : $( href ).offset().top }, 'slow');
+            });
+            
+            inicializarBotonEnviarContacto();
+        });
+        function inicializarBotonEnviarContacto() {
+            $("#botonEnviarFormContacto").on('click', function (e) {
+                e.preventDefault();
+                var $form = $("#formContacto");
+                var datos = $form.serialize();
+                $(this).attr('disabled', 'disabled').val('Enviando...');
+                $.ajax({
+                    url: $form.attr('action'),
+                    type: 'POST',
+                    dataType: 'json',
+                    data: datos,
+                    success: function (data) {
+                        $(".contenido-form").html(data.form);
+                        inicializarBotonEnviarContacto();
+                        setTimeout(function () {
+                            $(".alert-success").fadeOut('fast');
+                            $(".alert-error").fadeOut('fast');
+                        }, 2000);
+						console.log(data);
+                    },
+                    error: function (data) {
+                        alert("Error al enviar el formulario");
+                        console.log(data);
+                    }
+                });
+            });
+        }
+    </script>
+{% endblock %}

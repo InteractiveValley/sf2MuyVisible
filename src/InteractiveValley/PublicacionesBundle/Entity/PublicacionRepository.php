@@ -25,6 +25,42 @@ class PublicacionRepository extends EntityRepository
         return $max[0]['value'];
     }
     
+    public function queryFindRecientes(){
+        $query = $this->getEntityManager()->createQueryBuilder();
+        $query->select('p')
+                ->from('InteractiveValley\PublicacionesBundle\Entity\Publicacion', 'p')
+                ->orderBy('p.createdAt', 'DESC');
+        return $query->getQuery();
+    }
+    
+    public function queryFindPublicacionesMasVistas(){
+        $query = $this->getEntityManager()->createQueryBuilder();
+        $query->select('p')
+                ->from('InteractiveValley\PublicacionesBundle\Entity\Publicacion', 'p')
+                ->orderBy('p.contViews', 'DESC');
+        return $query->getQuery();
+    }
+    
+    public function findPublicacionesMasVistas($max = 10){
+        $query = $this->queryFindPublicacionesMasVistas();
+        return $query->setMaxResults($max)->getResult();
+    }
+    
+    public function queryFindPublicacionesRelacionadas($excepto = 0){
+        $query = $this->getEntityManager()->createQueryBuilder();
+        $query->select('p')
+                ->from('InteractiveValley\PublicacionesBundle\Entity\Publicacion', 'p')
+                ->where('p.id<>:exceptoId')
+                ->setParameter('exceptoId', $excepto)
+                ->orderBy('p.contViews', 'DESC');
+        return $query->getQuery();
+    }
+    
+    public function findPublicacionesRelacionadas($excepto = 0, $max=3){
+        $query = $this->queryFindPublicacionesRelacionadas($excepto);
+        return $query->setMaxResults($max)->getResult();
+    }
+    
     public function findTitleSluggable($slug, $excepto = 0){
         $query= $this->getEntityManager()->createQueryBuilder();
         if($excepto > 0){

@@ -28,15 +28,33 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $contacto = new Contacto();
-        $form = $this->createForm(new ContactoType(), $contacto);
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->getRepository('PublicacionesBundle:Publicacion')
+                          ->queryFindRecientes();
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1)/*page number*/,
+            1/*limit per page*/
+        );
+        
+        $lasMasVistas = $em->getRepository('PublicacionesBundle:Publicacion')
+                          ->findPublicacionesMasVistas(5);
+        
+        if($request->isXmlHttpRequest()){
+            return $this->render('FrontendBundle:Default:listado.html.twig', array(
+                'publicaciones' => $pagination,
+            ));
+        }
+        
         return array(
-            'form'=>$form->createView()
+            'publicaciones'=>$pagination,
+            'lomasvisto' => $lasMasVistas
         );
     }
     
     /**
-     * @Route("/contacto", name="contacto")
+     * @Route("/contact-and-advertising", name="contacto")
      * @Method({"GET", "POST"})
      */
     public function contactoAction(Request $request) {
@@ -84,11 +102,41 @@ class DefaultController extends Controller
             ));
         }
 
-        return $this->render('FrontendBundle:Default:index.html.twig', array(
+        return $this->render('FrontendBundle:Default:contacto.html.twig', array(
                     'form' => $form->createView(),
                     'status' => $status,
                     'mensaje' => $mensaje
         ));
+    }
+    
+    /**
+     * @Route("/{slug}/update/cont", name="publicacion_update_conts")
+     * @Method({"POST"})
+     */
+    public function updateContsAction(Request $request, $slug){
+        $contLikes = intVal($request->request->get('likes', '0'));
+        $contTwits = intVal($request->request->get('tweets', '0'));
+        $actualizacion = false;
+        $em = $this->getDoctrine()->getManager();
+        
+        $publicacion = $em->getRepository('PublicacionesBundle:Publicacion')
+                          ->findOneBy(array('slug'=>$slug));
+        
+        if (!$publicacion) {
+            return new JsonResponse(array('publicacion'=>'publicacion no existe'));
+        }
+        
+        if($publicacion->getContLikes()<$contLikes){
+            $publicacion->setContLikes($contLikes);
+            $actualizacion = true;
+        }
+        if($publicacion->getContTwits()<$contTwits){
+            $publicacion->setContTwits($contTwits);
+            $actualizacion = true;
+        }
+        $em->flush();
+        
+        return new JsonResponse(array('actulizacion'=>($actualizacion?'Yes':'No')));
     }
     
     /**
@@ -126,20 +174,24 @@ class DefaultController extends Controller
             }
         }
         $url= $this->generateUrl('publicacion', array('slug'=>$publicacion->getSlug()), true);
+        
         //var_dump($url); die;
         //$url = "http://www.fastcodesign.com/3047272/attention-shoppers-brace-yourselves-for-beacons";
         //try{
         //    $shareFacebook = RpsStms::getCountShareFacebook($url);
         //    $shareTwitter = RpsStms::getCountShareTwitter($url);
         //}catch(\RuntimeException $e){
-            $shareFacebook = 0;
-            $shareTwitter = 0;
+            //$shareFacebook = 0;
+            //$shareTwitter = 0;
         //}
         //var_dump(array('shareFacebook' => $shareFacebook,'shareTwitter' => $shareTwitter)); die;
+        
+        $relacionadas = $em->getRepository('PublicacionesBundle:Publicacion')
+                           ->findPublicacionesRelacionadas($publicacion->getId());    
+            
         return array(
             'publicacion'=>$publicacion,
-            'shareFacebook' => $shareFacebook,
-            'shareTwitter' => $shareTwitter
+            'relacionadas'=> $relacionadas,
         );
     }
     
