@@ -115,15 +115,13 @@
                     <div class="contador">
                         <table>
                             <tr class="numero">
-                                <td class="count-likes">{{shareFacebook}}</td>
-                                <td class="count-tweets">{{shareTwitter}}</td>
-                                <!--td class="count-plus">0</td-->
+                                <td class="count-likes">{{publicacion.contLikes}}</td>
+                                <td class="count-tweets">{{publicacion.contTwits}}</td>
                                 <td class="count-views">{{publicacion.contViews}}</td>
                             </tr>
                             <tr class="comentarios">
                                 <td>FACEBOOK</td>
                                 <td>TWEETS</td>
-                                <!--td>PLUS</td-->
                                 <td>VIEWS</td>
                             </tr>
                         </table>
@@ -147,6 +145,21 @@
                             <a class="flex-a twitter  js-social-button" href="http://twitter.com/share?url=/&text={{title ~' ' ~ urlPagina ~ ' ' ~ via | url_encode }}"  data-popup-width="555" data-popup-height="395"><span class="flaticon-twitter"></span>&nbsp;TWITTER</a>
                             <a class="flex-a shares open-modal-social" href="#"><span class="flaticon-share"></span>&nbsp;SHARE</a>
                         </div>
+                    </div>
+                    <div class="publicaciones-relacionadas">
+                        <h3 class="titulo titulo-relacionadas">MÁS NOTAS</h3>
+                        <ul class="list list-relacionadas">
+                            {% for relacionada in relacionadas %}
+                            <li class="item item-relacionada">
+                                <a href="{{path('publicacion',{'slug': publicacion.slug})}}">
+                                <figure class="portada portada-relacionada">
+                                    <img src="http://placehold.it/209x105/2A2A2A/2A2A2A" alt="Portada relacionada" style="max-width: 209px; max-height: 105px;">
+                                </figure>
+                                <span class="titulo-relacionada">{{relacionada.title}}</span>
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
                     </div>
                     <div class="comentarios_face">
                         <div class="fb-comments" data-href="{{url('publicacion',{'slug':publicacion.slug})}}" data-numposts="5" data-width="100%"></div>
@@ -353,16 +366,44 @@
         
         function initSharesCount(){
             $URL = location.href;
+            var contLikes = $('.count-likes').text();
+            var contTwits = $('.count-tweets').text();
+            var updateConts = false;
 
             // Facebook Shares Count
             $.getJSON( 'http://graph.facebook.com/?id=' + $URL, function( fbdata ) {
-                $('.count-likes').text(ReplaceNumberWithCommas(fbdata.shares))
+                if(contLikes != ReplaceNumberWithCommas(fbdata.shares)){
+                    $('.count-likes').text(ReplaceNumberWithCommas(fbdata.shares));
+                    updateConts = true;
+                    contLikes = $('.count-likes').text();
+                }
             });
 
             // Twitter Shares Count
             $.getJSON( 'http://cdn.api.twitter.com/1/urls/count.json?url=' + $URL + '&callback=?', function( twitdata ) {
-                $('.count-tweets').text(ReplaceNumberWithCommas(twitdata.count))
+                if(contTwits != ReplaceNumberWithCommas(twitdata.count)){
+                    $('.count-tweets').text(ReplaceNumberWithCommas(twitdata.count));
+                    updateConts = true;
+                    contTwits = $('.count-tweets').text();
+                }
             });
+            
+            if(updateConts){
+                $.ajax({
+                   url: '{{path('publicacion_update_conts',{'slug': publicacion.id})}}',
+                   type: 'POST',
+                   data: {'likes': contLikes, 'tweets': contTwits},
+                   dataType: 'json',
+                   success: function(data){
+                       alert(data);
+                   },
+                   error: function(data){
+                       console.log(data);
+                       alert("Error al actualizar contadores");
+                   }
+                });
+            }
+            
 
         }
         // Format Number functions
