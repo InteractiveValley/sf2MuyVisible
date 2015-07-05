@@ -356,17 +356,17 @@
 
         
         function initSharesCount(){
+            debugger;
             var $URL = location.href;
             var contLikes = $('.count-likes').text();
             var contTwits = $('.count-tweets').text();
-            var updateConts = false;
 
             // Facebook Shares Count
             $.getJSON( 'http://graph.facebook.com/?id=' + $URL, function( fbdata ) {
                 if(contLikes != ReplaceNumberWithCommas(fbdata.shares)){
                     $('.count-likes').text(ReplaceNumberWithCommas(fbdata.shares));
-                    updateConts = true;
                     contLikes = $('.count-likes').text();
+                    actualizarConts(contLikes,contTwits);
                 }
             });
 
@@ -374,27 +374,29 @@
             $.getJSON( 'http://cdn.api.twitter.com/1/urls/count.json?url=' + $URL + '&callback=?', function( twitdata ) {
                 if(contTwits != ReplaceNumberWithCommas(twitdata.count)){
                     $('.count-tweets').text(ReplaceNumberWithCommas(twitdata.count));
-                    updateConts = true;
                     contTwits = $('.count-tweets').text();
+                    actualizarConts(contLikes,contTwits);
                 }
             });
-            
-                $.ajax({
-                   url: '{{path('publicacion_update_conts',{'slug': publicacion.slug})}}',
-                   type: 'POST',
-                   data: {'likes': contLikes, 'tweets': contTwits},
-                   dataType: 'json',
-                   success: function(data){
-                       //alert(data);
-                       console.log(data);
-                   },
-                   error: function(data){
-                       console.log(data);
-                       //alert("Error al actualizar contadores");
-                   }
-                });
-            
         }
+        
+        function actualizarConts(contLikes, contTwits){
+            contLikes = contLikes || 0;
+            contTwits = contTwits || 0;
+            $.ajax({
+                url: '{{path('publicacion_update_conts',{'slug': publicacion.slug})}}',
+                type: 'POST',
+                data: {'likes': contLikes, 'tweets': contTwits},
+                dataType: 'json',
+                success: function(data){
+                   console.log(data);
+                },
+                error: function(data){
+                   console.log(data);
+                }
+            });
+        }
+        
         // Format Number functions
         function ReplaceNumberWithCommas(yourNumber) {
             //Seperates the components of the number
