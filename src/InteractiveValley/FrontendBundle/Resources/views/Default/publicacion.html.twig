@@ -380,7 +380,7 @@
             });
             
                 $.ajax({
-                   url: '{{path('publicacion_update_conts',{'slug': publicacion.id})}}',
+                   url: '{{path('publicacion_update_conts',{'slug': publicacion.slug})}}',
                    type: 'POST',
                    data: {'likes': contLikes, 'tweets': contTwits},
                    dataType: 'json',
