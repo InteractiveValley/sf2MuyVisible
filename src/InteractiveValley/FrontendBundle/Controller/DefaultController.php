@@ -187,7 +187,7 @@ class DefaultController extends Controller
         //var_dump(array('shareFacebook' => $shareFacebook,'shareTwitter' => $shareTwitter)); die;
         
         $relacionadas = $em->getRepository('PublicacionesBundle:Publicacion')
-                           ->findPublicacionesRelacionadas($publicacion->getId(),20);
+                           ->findPublicacionesRelacionadas($publicacion->getId(),100);
         
         shuffle($relacionadas);
             

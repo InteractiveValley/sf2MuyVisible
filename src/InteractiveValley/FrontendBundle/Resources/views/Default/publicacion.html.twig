@@ -163,11 +163,15 @@
             <div class="contenedor-aside">
                 <div class="publicidad-der">
                     {% if app.environment == 'prod' %}
+                        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
                         <!-- Aside1 -->
                         <ins class="adsbygoogle"
-                             style="display:inline-block;width:300px;height:280px"
+                             style="display:inline-block;width:336px;height:280px"
                              data-ad-client="ca-pub-5524852012428343"
                              data-ad-slot="1444051116"></ins>
+                        <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                        </script>
                     {% else %}    
                         <img style="width:300px;" src="http://placehold.it/300x250/ffffff/ffffff" alt="">
                     {% endif %}
@@ -369,7 +373,6 @@
 
         
         function initSharesCount(){
-            debugger;
             var $URL = location.href;
             var contLikes = $('.count-likes').text();
             var contTwits = $('.count-tweets').text();

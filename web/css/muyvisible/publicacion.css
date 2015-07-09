@@ -188,13 +188,14 @@ p{
 
 .list-relacionadas .item-relacionada {
     display: block; 
-    width: 210px;
+    height: 149px;
     text-align: left;
     text-transform: lowercase;
     font-size: .8em;
     width: 32%;
     float: right;
     margin: .5%;
+    overflow: hidden;
 }
 
 .list-relacionadas .item-relacionada figure{

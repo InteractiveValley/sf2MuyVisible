@@ -42,7 +42,6 @@
     {{ parent() }}
     <link rel="stylesheet" media="screen" href="{{asset('css/muyvisible/publicacion.css')}}"/>
     {% if app.environment == 'prod' %}
-        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
         <script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -71,11 +70,15 @@
             <div class="contenedor-aside">
                 <div class="publicidad-der">
                     {% if app.environment == 'prod' %}
+                        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
                         <!-- Aside1 -->
                         <ins class="adsbygoogle"
-                             style="display:inline-block;width:300px;height:280px"
+                             style="display:inline-block;width:336px;height:280px"
                              data-ad-client="ca-pub-5524852012428343"
                              data-ad-slot="1444051116"></ins>
+                        <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                        </script>
                     {% else %}    
                         <img style="width:300px;" src="http://placehold.it/300x250/ffffff/ffffff" alt="">
                     {% endif %}
@@ -103,11 +106,15 @@
                 </div>
                 <div class="publicidad">
                     {% if app.environment == 'prod' %}
+                        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
                         <!-- Aside 3 -->
                         <ins class="adsbygoogle"
                              style="display:inline-block;width:300px;height:600px"
                              data-ad-client="ca-pub-5524852012428343"
                              data-ad-slot="2920784315"></ins>
+                        <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                        </script>
                     {% else %}    
                         <img style="width:300px;" src="http://placehold.it/300x250/ffffff/ffffff" alt="">
                     {% endif %}
@@ -137,8 +144,6 @@
                $(imagen).remove();
             });
             cargarMasArticlesA();
-            
-            (adsbygoogle = window.adsbygoogle || []).push({});
             
         });
         
