@@ -140,7 +140,7 @@
                     <div class="publicaciones-relacionadas">
                         <h3 class="title title-azul title-relacionadas">MÁS NOTAS</h3>
                         <ul class="list list-relacionadas">
-                            {% for relacionada in relacionadas %}
+                            {% for relacionada in relacionadas|slice(0, 6)  %}
                             <li class="item item-relacionada">
                                 <a href="{{path('publicacion',{'slug': relacionada.slug})}}">
                                 <figure class="portada portada-relacionada">
@@ -160,7 +160,17 @@
         </section>
         <aside class="derecha">
             <div class="contenedor-aside">
-                <div class="publicidad-der"><img style="width:300px;" src="http://placehold.it/300x250/ffffff/ffffff" alt=""></div>
+                <div class="publicidad-der">
+                    {% if app.environment == 'prod' %}
+                        <!-- Aside1 -->
+                        <ins class="adsbygoogle"
+                             style="display:inline-block;width:300px;height:280px"
+                             data-ad-client="ca-pub-5524852012428343"
+                             data-ad-slot="1444051116"></ins>
+                    {% else %}    
+                        <img style="width:300px;" src="http://placehold.it/300x250/ffffff/ffffff" alt="">
+                    {% endif %}
+                </div>
                 <div class="sociales_2">
                     <span class="share">COMPARTIR</span>
                     <a class="red-social facebook  js-social-button" href="http://www.facebook.com/sharer.php?u={{urlPagina}}&display=popup" data-popup-width="555" data-popup-height="370">
@@ -181,7 +191,7 @@
                     </div>
                 </div>
                  <div class="sociales_2 compartir-url margin-top">
-                     <a href="https://www.facebook.com/pages/Muy-Visible/684809468330914" target="_blank">
+                     <a href="{{path('homepage')}}">
                         <div class="mas_notas">
                             <img src="/images/lentes.png" alt="">
                             Ver más NOTAS
@@ -322,6 +332,8 @@
             initSharesCount();
 
             posicionarMenu();
+            
+            (adsbygoogle = window.adsbygoogle || []).push({});
         });
         function posicionarMenu() {
             var altura_del_header = $('.head-noticias').outerHeight(true);

@@ -1,5 +1,15 @@
 <header class="head-noticias {{ (noFixed)?'no-fixed': '' }}">
-    <div class="publicidad-head"><img src="http://placehold.it/731x92/2A2A2A/2A2A2A" alt=""></div>
+    <div class="publicidad-head">
+        {% if app.environment == 'prod' %}
+            <!-- Header -->
+            <ins class="adsbygoogle"
+                 style="display:inline-block;width:728px;height:90px"
+                 data-ad-client="ca-pub-5524852012428343"
+                 data-ad-slot="8967317918"></ins>
+        {% else %}    
+            <img src="http://placehold.it/731x92/2A2A2A/2A2A2A" alt="">
+        {% endif %}
+    </div>
     <figure class="logo logo-movil"><a href="{{path('homepage')}}"><img src="/images/muyvisible_mini_logo.png" alt=""/></a></figure>
     <figure class="logo logo-grande"><a href="{{path('homepage')}}"><img src="/images/logo_grande_pagina.png" alt=""></a></figure>
     <div class="head-noticias-redes-sociales">
@@ -10,9 +20,9 @@
     </div>
     <nav class="menu">
         <ul class="list list-menu">
-            <li class="item item-menu"><a href="{{path('contacto')}}">Contacto & adversiting</a></li>
-            <li class="item item-menu item-menu-red-social"><a href=""><span class="flaticon-facebook"></span></a></li>
-            <li class="item item-menu item-menu-red-social"><a href=""><span class="flaticon-twitter"></span></a></li>
+            <li class="item item-menu item-menu-contacto"><a href="{{path('contacto')}}" target="_blank">Contacto & adversiting</a></li>
+            <li class="item item-menu item-menu-red-social"><a href="https://www.facebook.com/MuyVisible" target="_blank"><span class="flaticon-facebook"></span></a></li>
+            <li class="item item-menu item-menu-red-social"><a href="https://www.twitter.com/muyvisible" target="_blank"><span class="flaticon-twitter"></span></a></li>
         </ul>
     </nav>
 </header>

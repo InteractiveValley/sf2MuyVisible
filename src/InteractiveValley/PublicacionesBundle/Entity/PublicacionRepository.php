@@ -3,6 +3,7 @@
 namespace InteractiveValley\PublicacionesBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use InteractiveValley\PublicacionesBundle\Entity\Publicacion;
 
 /**
  * PublicacionRepository
@@ -29,6 +30,8 @@ class PublicacionRepository extends EntityRepository
         $query = $this->getEntityManager()->createQueryBuilder();
         $query->select('p')
                 ->from('InteractiveValley\PublicacionesBundle\Entity\Publicacion', 'p')
+                ->where('p.status=:posteada')
+                ->setParameter('posteada', Publicacion::STATUS_POSTEADO)
                 ->orderBy('p.createdAt', 'DESC');
         return $query->getQuery();
     }
@@ -37,6 +40,8 @@ class PublicacionRepository extends EntityRepository
         $query = $this->getEntityManager()->createQueryBuilder();
         $query->select('p')
                 ->from('InteractiveValley\PublicacionesBundle\Entity\Publicacion', 'p')
+                ->where('p.status=:posteada')
+                ->setParameter('posteada', Publicacion::STATUS_POSTEADO)
                 ->orderBy('p.contViews', 'DESC');
         return $query->getQuery();
     }
@@ -51,7 +56,8 @@ class PublicacionRepository extends EntityRepository
         $query->select('p')
                 ->from('InteractiveValley\PublicacionesBundle\Entity\Publicacion', 'p')
                 ->where('p.id<>:exceptoId')
-                ->setParameter('exceptoId', $excepto)
+                ->andWhere('p.status=:posteada')
+                ->setParameters(array('exceptoId'=>$excepto,'posteada'=>Publicacion::STATUS_POSTEADO))
                 ->orderBy('p.contViews', 'DESC');
         return $query->getQuery();
     }

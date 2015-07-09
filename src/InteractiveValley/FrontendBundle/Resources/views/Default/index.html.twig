@@ -68,7 +68,17 @@
         </section>
         <aside class="derecha">
             <div class="contenedor-aside">
-                <div class="publicidad-der"><img style="width:300px;" src="http://placehold.it/300x250/ffffff/ffffff" alt=""></div>
+                <div class="publicidad-der">
+                    {% if app.environment == 'prod' %}
+                        <!-- Aside1 -->
+                        <ins class="adsbygoogle"
+                             style="display:inline-block;width:300px;height:280px"
+                             data-ad-client="ca-pub-5524852012428343"
+                             data-ad-slot="1444051116"></ins>
+                    {% else %}    
+                        <img style="width:300px;" src="http://placehold.it/300x250/ffffff/ffffff" alt="">
+                    {% endif %}
+                </div>
                 <div class="facebook-box">
                     
                 </div>
@@ -91,7 +101,15 @@
                     </ul>
                 </div>
                 <div class="publicidad">
-                    
+                    {% if app.environment == 'prod' %}
+                        <!-- Aside 3 -->
+                        <ins class="adsbygoogle"
+                             style="display:inline-block;width:300px;height:600px"
+                             data-ad-client="ca-pub-5524852012428343"
+                             data-ad-slot="2920784315"></ins>
+                    {% else %}    
+                        <img style="width:300px;" src="http://placehold.it/300x250/ffffff/ffffff" alt="">
+                    {% endif %}
                 </div>
             </div>
         </aside>
@@ -118,6 +136,9 @@
                $(imagen).remove();
             });
             cargarMasArticlesA();
+            
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            
         });
         
         function cargarMasArticlesA(){

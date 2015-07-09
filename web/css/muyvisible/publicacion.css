@@ -1036,7 +1036,22 @@ a:hover{
     nav ul.list li.item a{
         padding: 15px 10px 10px;
     }
-
+    
+    .article .article-contenido .article-counts{
+        display: none;
+    }
+    
+    .menu .list-menu .item-menu.item-menu-contacto{
+        display: none;
+    }
+    
+    .article .article-contenido h2{
+        padding-right: 0px;
+    }
+    
+    .article .article-contenido .article-resumen{
+        padding-right: 0px;
+    }
 }
 
 @media (max-width: 480px){
